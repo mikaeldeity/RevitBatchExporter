@@ -3,9 +3,9 @@
   <AddIn Type="Application">
     <Name>XPORT</Name>
     <Assembly>.\XPORT\XPORT.dll</Assembly>
-    <AddInId>8e96f26a-9217-4d7a-8ec2-9ed84bbb7832</AddInId>
+    <AddInId>14b6cf75-f1d4-4dc1-ac14-7e97e4db9d17</AddInId>
     <FullClassName>XPORT.App</FullClassName>
-    <VendorId></VendorId>
-    <VendorDescription></VendorDescription>
+    <VendorId>XPORT</VendorId>
+    <VendorDescription>XPORT</VendorDescription>
   </AddIn>
 </RevitAddIns>

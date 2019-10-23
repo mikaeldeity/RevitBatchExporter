@@ -17,13 +17,13 @@ namespace XPORT
         {
             RibbonPanel ribbonPanel = application.CreateRibbonPanel("XPORT");
 
-            string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
+            string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;            
 
             PushButtonData b1Data = new PushButtonData("XPORT", "XPORT", thisAssemblyPath, "XPORT.Start");
             b1Data.AvailabilityClassName = "XPORT.Availability";
             PushButton pb1 = ribbonPanel.AddItem(b1Data) as PushButton;
             pb1.ToolTip = "Export multiple Revit documents.";
-            BitmapImage pb1Image = new BitmapImage(new Uri(thisAssemblyPath + "XP.png"));
+            BitmapImage pb1Image = new BitmapImage(new Uri(thisAssemblyPath.Replace("XPORT.dll","") + "XP.png"));
             pb1.LargeImage = pb1Image;            
         }
 
