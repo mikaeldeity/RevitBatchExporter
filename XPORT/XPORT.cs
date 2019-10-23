@@ -20,7 +20,6 @@ namespace XPORT
         internal static string destinationpath = "";
 
         internal static string splash = "Splash";
-
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             UIApplication uiapp = commandData.Application;
@@ -42,9 +41,7 @@ namespace XPORT
 
             int docs = 0;
 
-            int fail = 0;
-
-            DateTime start = DateTime.Now;
+            int fail = 0;            
 
             var exportdialog = new XPORT.Dialogs.ExportDialog();
 
@@ -93,6 +90,8 @@ namespace XPORT
 
             uiapp.DialogBoxShowing += new EventHandler<DialogBoxShowingEventArgs>(OnDialogBoxShowing);
             uiapp.Application.FailuresProcessing += FailureProcessor;
+
+            DateTime start = DateTime.Now;
 
             foreach (string path in documents)
             {
