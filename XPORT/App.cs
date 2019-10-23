@@ -23,7 +23,7 @@ namespace XPORT
             b1Data.AvailabilityClassName = "XPORT.Availability";
             PushButton pb1 = ribbonPanel.AddItem(b1Data) as PushButton;
             pb1.ToolTip = "Export multiple Revit documents.";
-            BitmapImage pb1Image = new BitmapImage(new Uri(thisAssemblyPath.Replace("XP.dll","") + "XP.png"));
+            BitmapImage pb1Image = new BitmapImage(new Uri(thisAssemblyPath + "XP.png"));
             pb1.LargeImage = pb1Image;            
         }
 
