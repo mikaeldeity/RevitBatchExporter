@@ -1,0 +1,11 @@
+C:\Users\MSantrolli\source\repos\ExportProject\obj\Debug\XP.csprojAssemblyReference.cache
+C:\Users\MSantrolli\source\repos\ExportProject\obj\Debug\XP.Dialogs.ExportDialog.resources
+C:\Users\MSantrolli\source\repos\ExportProject\obj\Debug\XP.csproj.GenerateResource.cache
+C:\Users\MSantrolli\source\repos\ExportProject\obj\Debug\XP.csproj.CoreCompileInputs.cache
+C:\Users\MSantrolli\source\repos\ExportProject\obj\Debug\XP.dll
+C:\Users\MSantrolli\source\repos\ExportProject\obj\Debug\XP.pdb
+C:\ProgramData\Autodesk\Revit\Addins\2019\XP.addin
+C:\ProgramData\Autodesk\Revit\Addins\2019\XP.dll
+C:\ProgramData\Autodesk\Revit\Addins\2019\XP.pdb
+C:\ProgramData\Autodesk\Revit\Addins\2019\XP\XP.dll
+C:\ProgramData\Autodesk\Revit\Addins\2019\XP\XP.pdb

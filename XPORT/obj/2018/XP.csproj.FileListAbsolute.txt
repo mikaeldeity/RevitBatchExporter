@@ -1,0 +1,7 @@
+C:\Users\MSantrolli\source\repos\ExportProject\bin\Release\2018\XP.dll
+C:\Users\MSantrolli\source\repos\ExportProject\obj\2018\XP.csprojAssemblyReference.cache
+C:\Users\MSantrolli\source\repos\ExportProject\obj\2018\XP.Dialogs.ExportDialog.resources
+C:\Users\MSantrolli\source\repos\ExportProject\obj\2018\XP.csproj.GenerateResource.cache
+C:\Users\MSantrolli\source\repos\ExportProject\obj\2018\XP.csproj.CoreCompileInputs.cache
+C:\Users\MSantrolli\source\repos\ExportProject\obj\2018\XP.dll
+C:\Users\MSantrolli\source\repos\ExportProject\bin\Release\2018\XP\XP.dll
