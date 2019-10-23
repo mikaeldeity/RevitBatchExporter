@@ -1,4 +1,4 @@
-﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
@@ -160,6 +160,12 @@ namespace XPORT
                         docname = docname + namesuffix;
                     }
 
+                    if(File.Exists(destinationpath + docname + ".rvt"))
+                    {
+                        try { File.Delete(destinationpath + docname + ".rvt"); }
+                        catch { doc.Close(false); fail++; continue; }
+                    }
+
                     if (doc.IsWorkshared)
                     {
                         doc.SaveAs(destinationpath + docname + ".rvt", saveAs);
@@ -188,7 +194,7 @@ namespace XPORT
                 }
                 catch (Exception e)
                 {
-                    debugmessage = "\n" + e.Message;
+                    debugmessage = "\n" + "\n" + e.Message;
                     fail++;
                 }                
             }
@@ -203,6 +209,10 @@ namespace XPORT
             int minutes = (end - start).Minutes;
 
             int seconds = (end - start).Seconds;
+
+            documents.Clear();
+
+            destinationpath = "";
 
             TaskDialog.Show("XPORT", "Completed: " + docs.ToString() + "\nFailed: " + fail.ToString() + "\nTotal Time: " + hours.ToString() + " h " + minutes.ToString() + " m " + seconds.ToString() + " s" + debugmessage);
 
