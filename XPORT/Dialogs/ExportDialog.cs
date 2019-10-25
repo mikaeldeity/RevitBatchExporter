@@ -93,5 +93,103 @@ namespace XPORT.Dialogs
             catch { }
             
         }
+        private void ExportSettingsButton_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine(IssueReasonTextBox.Text);
+            sb.AppendLine(DateTextBox.Text);
+            sb.AppendLine(PrefixTextBox.Text);
+            sb.AppendLine(SuffixTextBox.Text);
+            sb.AppendLine(AutoCheckBox.Checked.ToString());
+            sb.AppendLine(RemoveRVTLinksCheckBox.Checked.ToString());
+            sb.AppendLine(RemoveCADLinksCheckBox.Checked.ToString());
+            sb.AppendLine(PurgeCheckBox.Checked.ToString());
+            sb.AppendLine(UngroupCheckBox.Checked.ToString());
+            sb.AppendLine(ViewsNotSheetsCheckBox.Checked.ToString());
+            sb.AppendLine(ViewsONSheetsCheckBox.Checked.ToString());
+            sb.AppendLine(SheetsCheckBox.Checked.ToString());
+            sb.AppendLine(SchedulesCheckBox.Checked.ToString());
+            sb.AppendLine(PathTextBox.Text.ToString());
+
+            if (XPORT.Start.documents.Count > 0)
+            {
+                foreach (string file in XPORT.Start.documents)
+                {
+                    sb.AppendLine(file);
+                }
+            }
+
+            string settings = sb.ToString();
+
+            var filedialog = new SaveFileDialog();
+
+            filedialog.InitialDirectory = "c:\\";
+
+            filedialog.Filter = "txt files (*.txt)|*.txt";
+
+            var dialog = filedialog.ShowDialog();
+
+            if (dialog != DialogResult.OK)
+            {
+                return;
+            }            
+            try
+            {
+                File.WriteAllText(filedialog.FileName, settings);
+            }
+            catch 
+            {
+                TaskDialog.Show("XPORT", "Cannot overwrite the file.");                    
+            }
+        }
+        private void ImportSettingsButton_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog();
+
+            openFileDialog.InitialDirectory = "c:\\";
+
+            openFileDialog.Filter = "txt files (*.txt)|*.txt";            
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string settingsfile = File.ReadAllText(openFileDialog.FileName);
+                    string[] settings = settingsfile.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+                    IssueReasonTextBox.Text = settings[0];
+                    DateTextBox.Text = settings[1];
+                    PrefixTextBox.Text = settings[2];
+                    SuffixTextBox.Text = settings[3];
+                    AutoCheckBox.Checked = bool.Parse(settings[4]);
+                    RemoveRVTLinksCheckBox.Checked = bool.Parse(settings[5]);
+                    RemoveCADLinksCheckBox.Checked = bool.Parse(settings[6]);
+                    PurgeCheckBox.Checked = bool.Parse(settings[7]);
+                    UngroupCheckBox.Checked = bool.Parse(settings[8]);
+                    ViewsNotSheetsCheckBox.Checked = bool.Parse(settings[9]);
+                    ViewsONSheetsCheckBox.Checked = bool.Parse(settings[10]);
+                    SheetsCheckBox.Checked = bool.Parse(settings[11]);
+                    SchedulesCheckBox.Checked = bool.Parse(settings[12]);
+                    PathTextBox.Text = settings[13];
+
+                    XPORT.Start.documents.Clear();
+                    DocumentListBox.Items.Clear();
+
+                    for (int i = 14; i < settings.Count() - 1; i++)
+                    {
+                        if(settings[i] != "")
+                        {
+                            XPORT.Start.documents.Add(settings[i]);
+                            DocumentListBox.Items.Add(settings[i]);
+                        }                        
+                    }
+                }
+                catch
+                {
+                    TaskDialog.Show("XPORT", "Cannot read the file.");
+                }
+            }
+        }
     }
 }

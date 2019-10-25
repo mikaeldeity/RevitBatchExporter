@@ -30,7 +30,7 @@
         {
             this.PurgeCheckBox = new System.Windows.Forms.CheckBox();
             this.UngroupCheckBox = new System.Windows.Forms.CheckBox();
-            this.RemoveSchedulesCheckBox = new System.Windows.Forms.CheckBox();
+            this.SchedulesCheckBox = new System.Windows.Forms.CheckBox();
             this.RemoveCADLinksCheckBox = new System.Windows.Forms.CheckBox();
             this.RemoveRVTLinksCheckBox = new System.Windows.Forms.CheckBox();
             this.ExportButton = new System.Windows.Forms.Button();
@@ -52,12 +52,14 @@
             this.SheetsCheckBox = new System.Windows.Forms.CheckBox();
             this.ViewsONSheetsCheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.ImportSettingsButton = new System.Windows.Forms.Button();
+            this.ExportSettingsButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // PurgeCheckBox
             // 
             this.PurgeCheckBox.AutoSize = true;
-            this.PurgeCheckBox.Location = new System.Drawing.Point(37, 464);
+            this.PurgeCheckBox.Location = new System.Drawing.Point(37, 494);
             this.PurgeCheckBox.Name = "PurgeCheckBox";
             this.PurgeCheckBox.Size = new System.Drawing.Size(86, 17);
             this.PurgeCheckBox.TabIndex = 1;
@@ -68,7 +70,7 @@
             // UngroupCheckBox
             // 
             this.UngroupCheckBox.AutoSize = true;
-            this.UngroupCheckBox.Location = new System.Drawing.Point(37, 487);
+            this.UngroupCheckBox.Location = new System.Drawing.Point(37, 517);
             this.UngroupCheckBox.Name = "UngroupCheckBox";
             this.UngroupCheckBox.Size = new System.Drawing.Size(104, 17);
             this.UngroupCheckBox.TabIndex = 2;
@@ -76,21 +78,21 @@
             this.UngroupCheckBox.Text = "Ungroup Groups";
             this.UngroupCheckBox.UseVisualStyleBackColor = true;
             // 
-            // RemoveSchedulesCheckBox
+            // SchedulesCheckBox
             // 
-            this.RemoveSchedulesCheckBox.AutoSize = true;
-            this.RemoveSchedulesCheckBox.Location = new System.Drawing.Point(212, 487);
-            this.RemoveSchedulesCheckBox.Name = "RemoveSchedulesCheckBox";
-            this.RemoveSchedulesCheckBox.Size = new System.Drawing.Size(76, 17);
-            this.RemoveSchedulesCheckBox.TabIndex = 4;
-            this.RemoveSchedulesCheckBox.TabStop = false;
-            this.RemoveSchedulesCheckBox.Text = "Schedules";
-            this.RemoveSchedulesCheckBox.UseVisualStyleBackColor = true;
+            this.SchedulesCheckBox.AutoSize = true;
+            this.SchedulesCheckBox.Location = new System.Drawing.Point(212, 517);
+            this.SchedulesCheckBox.Name = "SchedulesCheckBox";
+            this.SchedulesCheckBox.Size = new System.Drawing.Size(76, 17);
+            this.SchedulesCheckBox.TabIndex = 4;
+            this.SchedulesCheckBox.TabStop = false;
+            this.SchedulesCheckBox.Text = "Schedules";
+            this.SchedulesCheckBox.UseVisualStyleBackColor = true;
             // 
             // RemoveCADLinksCheckBox
             // 
             this.RemoveCADLinksCheckBox.AutoSize = true;
-            this.RemoveCADLinksCheckBox.Location = new System.Drawing.Point(37, 441);
+            this.RemoveCADLinksCheckBox.Location = new System.Drawing.Point(37, 471);
             this.RemoveCADLinksCheckBox.Name = "RemoveCADLinksCheckBox";
             this.RemoveCADLinksCheckBox.Size = new System.Drawing.Size(76, 17);
             this.RemoveCADLinksCheckBox.TabIndex = 5;
@@ -101,7 +103,7 @@
             // RemoveRVTLinksCheckBox
             // 
             this.RemoveRVTLinksCheckBox.AutoSize = true;
-            this.RemoveRVTLinksCheckBox.Location = new System.Drawing.Point(37, 418);
+            this.RemoveRVTLinksCheckBox.Location = new System.Drawing.Point(37, 448);
             this.RemoveRVTLinksCheckBox.Name = "RemoveRVTLinksCheckBox";
             this.RemoveRVTLinksCheckBox.Size = new System.Drawing.Size(79, 17);
             this.RemoveRVTLinksCheckBox.TabIndex = 6;
@@ -115,8 +117,8 @@
             this.ExportButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ExportButton.FlatAppearance.BorderSize = 0;
             this.ExportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ExportButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExportButton.Location = new System.Drawing.Point(37, 530);
+            this.ExportButton.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExportButton.Location = new System.Drawing.Point(37, 560);
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(320, 36);
             this.ExportButton.TabIndex = 0;
@@ -127,7 +129,7 @@
             // 
             // IssueReasonTextBox
             // 
-            this.IssueReasonTextBox.Location = new System.Drawing.Point(113, 276);
+            this.IssueReasonTextBox.Location = new System.Drawing.Point(113, 306);
             this.IssueReasonTextBox.Name = "IssueReasonTextBox";
             this.IssueReasonTextBox.Size = new System.Drawing.Size(244, 20);
             this.IssueReasonTextBox.TabIndex = 9;
@@ -136,7 +138,7 @@
             // IssueReasonLabel
             // 
             this.IssueReasonLabel.AutoSize = true;
-            this.IssueReasonLabel.Location = new System.Drawing.Point(34, 279);
+            this.IssueReasonLabel.Location = new System.Drawing.Point(34, 309);
             this.IssueReasonLabel.Name = "IssueReasonLabel";
             this.IssueReasonLabel.Size = new System.Drawing.Size(72, 13);
             this.IssueReasonLabel.TabIndex = 10;
@@ -145,6 +147,7 @@
             // DocumentListBox
             // 
             this.DocumentListBox.AllowDrop = true;
+            this.DocumentListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DocumentListBox.FormattingEnabled = true;
             this.DocumentListBox.HorizontalScrollbar = true;
             this.DocumentListBox.Location = new System.Drawing.Point(37, 38);
@@ -159,10 +162,10 @@
             // DocsLabel
             // 
             this.DocsLabel.AutoSize = true;
-            this.DocsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DocsLabel.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DocsLabel.Location = new System.Drawing.Point(34, 12);
             this.DocsLabel.Name = "DocsLabel";
-            this.DocsLabel.Size = new System.Drawing.Size(191, 13);
+            this.DocsLabel.Size = new System.Drawing.Size(214, 13);
             this.DocsLabel.TabIndex = 12;
             this.DocsLabel.Text = "Drag and Drop Revit Documents";
             // 
@@ -170,17 +173,17 @@
             // 
             this.PathLabel.AutoEllipsis = true;
             this.PathLabel.AutoSize = true;
-            this.PathLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PathLabel.Location = new System.Drawing.Point(34, 214);
+            this.PathLabel.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PathLabel.Location = new System.Drawing.Point(34, 248);
             this.PathLabel.Name = "PathLabel";
-            this.PathLabel.Size = new System.Drawing.Size(101, 13);
+            this.PathLabel.Size = new System.Drawing.Size(114, 13);
             this.PathLabel.TabIndex = 0;
             this.PathLabel.Text = "Destination Path";
             // 
             // DateLabel
             // 
             this.DateLabel.AutoSize = true;
-            this.DateLabel.Location = new System.Drawing.Point(34, 305);
+            this.DateLabel.Location = new System.Drawing.Point(34, 335);
             this.DateLabel.Name = "DateLabel";
             this.DateLabel.Size = new System.Drawing.Size(58, 13);
             this.DateLabel.TabIndex = 15;
@@ -188,7 +191,7 @@
             // 
             // DateTextBox
             // 
-            this.DateTextBox.Location = new System.Drawing.Point(113, 302);
+            this.DateTextBox.Location = new System.Drawing.Point(113, 332);
             this.DateTextBox.Name = "DateTextBox";
             this.DateTextBox.Size = new System.Drawing.Size(183, 20);
             this.DateTextBox.TabIndex = 14;
@@ -199,7 +202,7 @@
             this.AutoCheckBox.AutoSize = true;
             this.AutoCheckBox.Checked = true;
             this.AutoCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.AutoCheckBox.Location = new System.Drawing.Point(309, 305);
+            this.AutoCheckBox.Location = new System.Drawing.Point(309, 335);
             this.AutoCheckBox.Name = "AutoCheckBox";
             this.AutoCheckBox.Size = new System.Drawing.Size(48, 17);
             this.AutoCheckBox.TabIndex = 16;
@@ -211,7 +214,7 @@
             // PrefixLabel
             // 
             this.PrefixLabel.AutoSize = true;
-            this.PrefixLabel.Location = new System.Drawing.Point(34, 331);
+            this.PrefixLabel.Location = new System.Drawing.Point(34, 361);
             this.PrefixLabel.Name = "PrefixLabel";
             this.PrefixLabel.Size = new System.Drawing.Size(64, 13);
             this.PrefixLabel.TabIndex = 18;
@@ -219,7 +222,7 @@
             // 
             // PrefixTextBox
             // 
-            this.PrefixTextBox.Location = new System.Drawing.Point(113, 328);
+            this.PrefixTextBox.Location = new System.Drawing.Point(113, 358);
             this.PrefixTextBox.Name = "PrefixTextBox";
             this.PrefixTextBox.Size = new System.Drawing.Size(244, 20);
             this.PrefixTextBox.TabIndex = 17;
@@ -227,7 +230,7 @@
             // 
             // PathTextBox
             // 
-            this.PathTextBox.Location = new System.Drawing.Point(37, 237);
+            this.PathTextBox.Location = new System.Drawing.Point(37, 269);
             this.PathTextBox.Name = "PathTextBox";
             this.PathTextBox.Size = new System.Drawing.Size(320, 20);
             this.PathTextBox.TabIndex = 19;
@@ -237,7 +240,7 @@
             // SuffixLabel
             // 
             this.SuffixLabel.AutoSize = true;
-            this.SuffixLabel.Location = new System.Drawing.Point(34, 357);
+            this.SuffixLabel.Location = new System.Drawing.Point(34, 387);
             this.SuffixLabel.Name = "SuffixLabel";
             this.SuffixLabel.Size = new System.Drawing.Size(64, 13);
             this.SuffixLabel.TabIndex = 21;
@@ -245,7 +248,7 @@
             // 
             // SuffixTextBox
             // 
-            this.SuffixTextBox.Location = new System.Drawing.Point(113, 354);
+            this.SuffixTextBox.Location = new System.Drawing.Point(113, 384);
             this.SuffixTextBox.Name = "SuffixTextBox";
             this.SuffixTextBox.Size = new System.Drawing.Size(244, 20);
             this.SuffixTextBox.TabIndex = 20;
@@ -257,7 +260,7 @@
             this.RemoveButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.RemoveButton.FlatAppearance.BorderSize = 0;
             this.RemoveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RemoveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RemoveButton.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RemoveButton.Location = new System.Drawing.Point(290, 8);
             this.RemoveButton.Name = "RemoveButton";
             this.RemoveButton.Size = new System.Drawing.Size(67, 20);
@@ -270,7 +273,7 @@
             // ViewsNotSheetsCheckBox
             // 
             this.ViewsNotSheetsCheckBox.AutoSize = true;
-            this.ViewsNotSheetsCheckBox.Location = new System.Drawing.Point(212, 418);
+            this.ViewsNotSheetsCheckBox.Location = new System.Drawing.Point(212, 448);
             this.ViewsNotSheetsCheckBox.Name = "ViewsNotSheetsCheckBox";
             this.ViewsNotSheetsCheckBox.Size = new System.Drawing.Size(123, 17);
             this.ViewsNotSheetsCheckBox.TabIndex = 23;
@@ -281,7 +284,7 @@
             // SheetsCheckBox
             // 
             this.SheetsCheckBox.AutoSize = true;
-            this.SheetsCheckBox.Location = new System.Drawing.Point(212, 464);
+            this.SheetsCheckBox.Location = new System.Drawing.Point(212, 494);
             this.SheetsCheckBox.Name = "SheetsCheckBox";
             this.SheetsCheckBox.Size = new System.Drawing.Size(59, 17);
             this.SheetsCheckBox.TabIndex = 24;
@@ -292,7 +295,7 @@
             // ViewsONSheetsCheckBox
             // 
             this.ViewsONSheetsCheckBox.AutoSize = true;
-            this.ViewsONSheetsCheckBox.Location = new System.Drawing.Point(212, 441);
+            this.ViewsONSheetsCheckBox.Location = new System.Drawing.Point(212, 471);
             this.ViewsONSheetsCheckBox.Name = "ViewsONSheetsCheckBox";
             this.ViewsONSheetsCheckBox.Size = new System.Drawing.Size(105, 17);
             this.ViewsONSheetsCheckBox.TabIndex = 25;
@@ -303,12 +306,44 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(34, 390);
+            this.label1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(34, 420);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 13);
+            this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 26;
             this.label1.Text = "Remove";
+            // 
+            // ImportSettingsButton
+            // 
+            this.ImportSettingsButton.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ImportSettingsButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ImportSettingsButton.FlatAppearance.BorderSize = 0;
+            this.ImportSettingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ImportSettingsButton.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ImportSettingsButton.Location = new System.Drawing.Point(37, 208);
+            this.ImportSettingsButton.Name = "ImportSettingsButton";
+            this.ImportSettingsButton.Size = new System.Drawing.Size(155, 25);
+            this.ImportSettingsButton.TabIndex = 27;
+            this.ImportSettingsButton.TabStop = false;
+            this.ImportSettingsButton.Text = "Export Settings";
+            this.ImportSettingsButton.UseVisualStyleBackColor = false;
+            this.ImportSettingsButton.Click += new System.EventHandler(this.ExportSettingsButton_Click);
+            // 
+            // ExportSettingsButton
+            // 
+            this.ExportSettingsButton.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ExportSettingsButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ExportSettingsButton.FlatAppearance.BorderSize = 0;
+            this.ExportSettingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ExportSettingsButton.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExportSettingsButton.Location = new System.Drawing.Point(198, 208);
+            this.ExportSettingsButton.Name = "ExportSettingsButton";
+            this.ExportSettingsButton.Size = new System.Drawing.Size(159, 25);
+            this.ExportSettingsButton.TabIndex = 28;
+            this.ExportSettingsButton.TabStop = false;
+            this.ExportSettingsButton.Text = "Import Settings";
+            this.ExportSettingsButton.UseVisualStyleBackColor = false;
+            this.ExportSettingsButton.Click += new System.EventHandler(this.ImportSettingsButton_Click);
             // 
             // ExportDialog
             // 
@@ -316,7 +351,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(394, 595);
+            this.ClientSize = new System.Drawing.Size(394, 620);
+            this.Controls.Add(this.ExportSettingsButton);
+            this.Controls.Add(this.ImportSettingsButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ViewsONSheetsCheckBox);
             this.Controls.Add(this.SheetsCheckBox);
@@ -338,7 +375,7 @@
             this.Controls.Add(this.ExportButton);
             this.Controls.Add(this.RemoveRVTLinksCheckBox);
             this.Controls.Add(this.RemoveCADLinksCheckBox);
-            this.Controls.Add(this.RemoveSchedulesCheckBox);
+            this.Controls.Add(this.SchedulesCheckBox);
             this.Controls.Add(this.UngroupCheckBox);
             this.Controls.Add(this.PurgeCheckBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -359,7 +396,7 @@
         private System.Windows.Forms.Label IssueReasonLabel;
         private System.Windows.Forms.ListBox DocumentListBox;
         private System.Windows.Forms.Label DocsLabel;
-        public System.Windows.Forms.CheckBox RemoveSchedulesCheckBox;
+        public System.Windows.Forms.CheckBox SchedulesCheckBox;
         public System.Windows.Forms.CheckBox RemoveCADLinksCheckBox;
         public System.Windows.Forms.CheckBox RemoveRVTLinksCheckBox;
         public System.Windows.Forms.TextBox IssueReasonTextBox;
@@ -379,5 +416,7 @@
         public System.Windows.Forms.CheckBox SheetsCheckBox;
         public System.Windows.Forms.CheckBox ViewsONSheetsCheckBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button ImportSettingsButton;
+        private System.Windows.Forms.Button ExportSettingsButton;
     }
 }

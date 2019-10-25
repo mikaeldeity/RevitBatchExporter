@@ -1,0 +1,7 @@
+C:\Users\MSantrolli\source\repos\XPORT\Release\2017\XPORT.dll
+C:\Users\MSantrolli\source\repos\XPORT\obj\2017\XPORT.csprojAssemblyReference.cache
+C:\Users\MSantrolli\source\repos\XPORT\obj\2017\XPORT.Dialogs.ExportDialog.resources
+C:\Users\MSantrolli\source\repos\XPORT\obj\2017\XPORT.csproj.GenerateResource.cache
+C:\Users\MSantrolli\source\repos\XPORT\obj\2017\XPORT.csproj.CoreCompileInputs.cache
+C:\Users\MSantrolli\source\repos\XPORT\obj\2017\XPORT.dll
+C:\Users\MSantrolli\source\repos\XPORT\Release\2017\XPORT\XPORT.dll

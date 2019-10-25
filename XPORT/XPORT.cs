@@ -1,4 +1,4 @@
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
@@ -50,7 +50,7 @@ namespace XPORT
             if (dialog != DialogResult.OK)
             {
                 return Result.Cancelled;
-            }            
+            }
 
             bool purge = exportdialog.PurgeCheckBox.Checked;            
 
@@ -58,7 +58,7 @@ namespace XPORT
 
             bool removeRVTlinks = exportdialog.RemoveRVTLinksCheckBox.Checked;
 
-            bool removeSchedules = exportdialog.RemoveSchedulesCheckBox.Checked;
+            bool removeSchedules = exportdialog.SchedulesCheckBox.Checked;
 
             bool ungroup = exportdialog.UngroupCheckBox.Checked;
 
@@ -87,6 +87,40 @@ namespace XPORT
             string namesuffix = exportdialog.SuffixTextBox.Text.TrimEnd().TrimStart();
 
             string debugmessage = "";
+
+            bool samepath = false;
+
+            foreach(string path in documents)
+            {
+                string pathOnly = Path.GetDirectoryName(path);
+
+                if(pathOnly == destinationpath)
+                {
+                    samepath = true;
+                }
+            }
+
+            if (samepath)
+            {
+                TaskDialog td = new TaskDialog("XPORT");
+                td.MainInstruction = "Same path detected.";
+                td.MainContent = "Some documents have the same path as the destination path.\nThe files will be overritten, do you wish to continue?";
+
+                td.AddCommandLink(TaskDialogCommandLinkId.CommandLink1, "Continue");
+                td.AddCommandLink(TaskDialogCommandLinkId.CommandLink2, "Cancel");
+
+                switch (td.Show())
+                {
+                    case TaskDialogResult.CommandLink1:
+                        break;
+
+                    case TaskDialogResult.CommandLink2:
+                        return Result.Cancelled;
+
+                    default:
+                        return Result.Cancelled;
+                }
+            }            
 
             uiapp.DialogBoxShowing += new EventHandler<DialogBoxShowingEventArgs>(OnDialogBoxShowing);
             uiapp.Application.FailuresProcessing += FailureProcessor;
@@ -214,7 +248,7 @@ namespace XPORT
 
             destinationpath = "";
 
-            TaskDialog.Show("XPORT", "Completed: " + docs.ToString() + "\nFailed: " + fail.ToString() + "\nTotal Time: " + hours.ToString() + " h " + minutes.ToString() + " m " + seconds.ToString() + " s" + debugmessage);
+            TaskDialog.Show("Results", "Completed: " + docs.ToString() + "\nFailed: " + fail.ToString() + "\nTotal Time: " + hours.ToString() + " h " + minutes.ToString() + " m " + seconds.ToString() + " s" + debugmessage);
 
             return Result.Succeeded;
         }
@@ -222,76 +256,88 @@ namespace XPORT
         {
             var collector = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_RvtLinks).ToElementIds();
 
-            if (collector.Count == 0)
+            if (collector.Count != 0)
             {
-                return;
-            }
-
-            foreach(ElementId id in collector)
-            {
-                try
+                foreach (ElementId id in collector)
                 {
-                    doc.Delete(id);
+                    try
+                    {
+                        doc.Delete(id);
+                    }
+                    catch { }
                 }
-                catch { }
-            }
+            }            
         }
         private void DeleteCADLinks(Document doc)
         {
             var collector = new FilteredElementCollector(doc).OfClass(typeof(ImportInstance)).ToElementIds();
 
-            if (collector.Count == 0)
+            if (collector.Count != 0)
             {
-                return;
-            }
-
-            foreach (ElementId id in collector)
-            {
-                try
+                foreach (ElementId id in collector)
                 {
-                    doc.Delete(id);
+                    try
+                    {
+                        doc.Delete(id);
+                    }
+                    catch { }
                 }
-                catch { }
-            }
+            }            
         }
         private void DeleteViewsNotOnSheets(Document doc)
         {
-            var sheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();            
-
-            if (sheets.Count == 0) { return; }
+            var sheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
 
             List<ElementId> viewsONsheets = new List<ElementId>();
 
-            foreach (ElementId id in sheets)
+            //get views on sheets
+            if (sheets.Count != 0)
             {
-                ViewSheet sheet = doc.GetElement(id) as ViewSheet;
+                foreach (ElementId id in sheets)
+                {
+                    ViewSheet sheet = doc.GetElement(id) as ViewSheet;
 
-                viewsONsheets.AddRange(sheet.GetAllViewports());
+                    viewsONsheets.AddRange(sheet.GetAllPlacedViews());
+                }
             }
 
             List<ElementId> usedtemplates = new List<ElementId>();
 
+            //get used templates
             foreach (ElementId id in viewsONsheets)
             {
                 Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
 
-                if(view.ViewTemplateId != ElementId.InvalidElementId)
+                if (view.ViewTemplateId != ElementId.InvalidElementId)
                 {
                     if (!usedtemplates.Contains(id))
                     {
                         usedtemplates.Add(view.ViewTemplateId);
-                    }                    
-                }              
+                    }
+                }
             }
 
-            var viewsNOTsheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).Excluding(viewsONsheets).ToElementIds();
+            ICollection<ElementId> viewsNOTsheets = null;
 
+            //if no views on sheets collect differently
+            if (viewsONsheets.Count != 0)
+            {
+                viewsNOTsheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).Excluding(viewsONsheets).ToElementIds();
+            }
+            else
+            {
+                viewsNOTsheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElementIds();
+            }
+
+            //if no views not on sheets return
             if (viewsNOTsheets.Count == 0) { return; }
 
+            //delete views not on sheets and unused templates skip views with dependancy
             foreach (ElementId id in viewsNOTsheets)
             {
                 Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
-                if(!view.IsTemplate && view.GetDependentViewIds().Count == 0)
+
+                if (!view.IsTemplate && view.GetDependentViewIds().Count == 0)
                 {
                     doc.Delete(id);
                 }
@@ -301,8 +347,19 @@ namespace XPORT
                 }
             }
 
-            var remainingviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).Excluding(viewsONsheets).ToElementIds();
+            //get remaining views
+            ICollection<ElementId> remainingviews;
 
+            if (viewsONsheets.Count != 0)
+            {
+                remainingviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).Excluding(viewsONsheets).ToElementIds();
+            }
+            else
+            {
+                remainingviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElementIds();
+            }
+
+            //delete views without dependent views
             foreach (ElementId id in remainingviews)
             {
                 Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
@@ -324,7 +381,7 @@ namespace XPORT
             {
                 ViewSheet sheet = doc.GetElement(id) as ViewSheet;
 
-                viewsONsheets.AddRange(sheet.GetAllViewports());
+                viewsONsheets.AddRange(sheet.GetAllPlacedViews());
             }
 
             if(viewsONsheets.Count == 0) { return; }
@@ -344,6 +401,8 @@ namespace XPORT
             }
 
             var views = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElementIds();
+
+            if(views.Count == 0) { return; }
 
             List<ElementId> usedtemplates = new List<ElementId>();
 
@@ -378,45 +437,28 @@ namespace XPORT
         {
             var sheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
 
-            if (sheets.Count == 0)
+            if (sheets.Count != 0)
             {
-                return;
-            }
-
-            foreach (ElementId id in sheets)
-            {
-                if (!doc.GetElement(id).Name.Contains(splash))
+                foreach (ElementId id in sheets)
                 {
-                    try
+                    if (!doc.GetElement(id).Name.Contains(splash))
                     {
-                        doc.Delete(id);
+                        try
+                        {
+                            doc.Delete(id);
+                        }
+                        catch { }
                     }
-                    catch { }
                 }
-            }
+            }            
         }
         private void DeleteAllViewsSheets(Document doc)
         {            
             var views = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElementIds();
 
-            if (views.Count == 0) { return; }
-
-            foreach (ElementId id in views)
+            if (views.Count != 0)
             {
-                try
-                {
-                    doc.Delete(id);
-                }
-                catch { }
-            }
-
-            var sheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
-
-            if (sheets.Count == 0) { return; }
-
-            foreach (ElementId id in sheets)
-            {
-                if (!doc.GetElement(id).Name.Contains(splash))
+                foreach (ElementId id in views)
                 {
                     try
                     {
@@ -424,25 +466,40 @@ namespace XPORT
                     }
                     catch { }
                 }
-            }
+            }            
+
+            var sheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
+
+            if (sheets.Count != 0)
+            {
+                foreach (ElementId id in sheets)
+                {
+                    if (!doc.GetElement(id).Name.Contains(splash))
+                    {
+                        try
+                        {
+                            doc.Delete(id);
+                        }
+                        catch { }
+                    }
+                }
+            }            
         }
         private void DeleteSchedules(Document doc)
         {
             var collector = new FilteredElementCollector(doc).OfClass(typeof(ViewSchedule)).ToElementIds();
 
-            if (collector.Count == 0)
+            if (collector.Count != 0)
             {
-                return;
-            }
-
-            foreach (ElementId id in collector)
-            {
-                try
+                foreach (ElementId id in collector)
                 {
-                    doc.Delete(id);
+                    try
+                    {
+                        doc.Delete(id);
+                    }
+                    catch { }
                 }
-                catch { }
-            }
+            }            
         }
         private void UngroupGroups(Document doc)
         {
