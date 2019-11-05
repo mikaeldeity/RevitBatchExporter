@@ -54,23 +54,27 @@
             this.label1 = new System.Windows.Forms.Label();
             this.ImportSettingsButton = new System.Windows.Forms.Button();
             this.ExportSettingsButton = new System.Windows.Forms.Button();
+            this.NWCCheckBox = new System.Windows.Forms.CheckBox();
+            this.IFCCheckBox = new System.Windows.Forms.CheckBox();
+            this.ExportLabel = new System.Windows.Forms.Label();
+            this.RemoveCADImportsCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // PurgeCheckBox
             // 
             this.PurgeCheckBox.AutoSize = true;
-            this.PurgeCheckBox.Location = new System.Drawing.Point(37, 494);
+            this.PurgeCheckBox.Location = new System.Drawing.Point(37, 517);
             this.PurgeCheckBox.Name = "PurgeCheckBox";
-            this.PurgeCheckBox.Size = new System.Drawing.Size(86, 17);
+            this.PurgeCheckBox.Size = new System.Drawing.Size(54, 17);
             this.PurgeCheckBox.TabIndex = 1;
             this.PurgeCheckBox.TabStop = false;
-            this.PurgeCheckBox.Text = "Purge Model";
+            this.PurgeCheckBox.Text = "Purge";
             this.PurgeCheckBox.UseVisualStyleBackColor = true;
             // 
             // UngroupCheckBox
             // 
             this.UngroupCheckBox.AutoSize = true;
-            this.UngroupCheckBox.Location = new System.Drawing.Point(37, 517);
+            this.UngroupCheckBox.Location = new System.Drawing.Point(37, 540);
             this.UngroupCheckBox.Name = "UngroupCheckBox";
             this.UngroupCheckBox.Size = new System.Drawing.Size(104, 17);
             this.UngroupCheckBox.TabIndex = 2;
@@ -118,7 +122,7 @@
             this.ExportButton.FlatAppearance.BorderSize = 0;
             this.ExportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExportButton.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExportButton.Location = new System.Drawing.Point(37, 560);
+            this.ExportButton.Location = new System.Drawing.Point(37, 642);
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(320, 36);
             this.ExportButton.TabIndex = 0;
@@ -345,13 +349,60 @@
             this.ExportSettingsButton.UseVisualStyleBackColor = false;
             this.ExportSettingsButton.Click += new System.EventHandler(this.ImportSettingsButton_Click);
             // 
+            // NWCCheckBox
+            // 
+            this.NWCCheckBox.AutoSize = true;
+            this.NWCCheckBox.Location = new System.Drawing.Point(37, 606);
+            this.NWCCheckBox.Name = "NWCCheckBox";
+            this.NWCCheckBox.Size = new System.Drawing.Size(52, 17);
+            this.NWCCheckBox.TabIndex = 29;
+            this.NWCCheckBox.TabStop = false;
+            this.NWCCheckBox.Text = "NWC";
+            this.NWCCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // IFCCheckBox
+            // 
+            this.IFCCheckBox.AutoSize = true;
+            this.IFCCheckBox.Location = new System.Drawing.Point(212, 606);
+            this.IFCCheckBox.Name = "IFCCheckBox";
+            this.IFCCheckBox.Size = new System.Drawing.Size(42, 17);
+            this.IFCCheckBox.TabIndex = 30;
+            this.IFCCheckBox.TabStop = false;
+            this.IFCCheckBox.Text = "IFC";
+            this.IFCCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // ExportLabel
+            // 
+            this.ExportLabel.AutoSize = true;
+            this.ExportLabel.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExportLabel.Location = new System.Drawing.Point(34, 581);
+            this.ExportLabel.Name = "ExportLabel";
+            this.ExportLabel.Size = new System.Drawing.Size(50, 13);
+            this.ExportLabel.TabIndex = 31;
+            this.ExportLabel.Text = "Export";
+            // 
+            // RemoveCADImportsCheckBox
+            // 
+            this.RemoveCADImportsCheckBox.AutoSize = true;
+            this.RemoveCADImportsCheckBox.Location = new System.Drawing.Point(37, 494);
+            this.RemoveCADImportsCheckBox.Name = "RemoveCADImportsCheckBox";
+            this.RemoveCADImportsCheckBox.Size = new System.Drawing.Size(85, 17);
+            this.RemoveCADImportsCheckBox.TabIndex = 32;
+            this.RemoveCADImportsCheckBox.TabStop = false;
+            this.RemoveCADImportsCheckBox.Text = "CAD Imports";
+            this.RemoveCADImportsCheckBox.UseVisualStyleBackColor = true;
+            // 
             // ExportDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(394, 620);
+            this.ClientSize = new System.Drawing.Size(394, 700);
+            this.Controls.Add(this.RemoveCADImportsCheckBox);
+            this.Controls.Add(this.ExportLabel);
+            this.Controls.Add(this.IFCCheckBox);
+            this.Controls.Add(this.NWCCheckBox);
             this.Controls.Add(this.ExportSettingsButton);
             this.Controls.Add(this.ImportSettingsButton);
             this.Controls.Add(this.label1);
@@ -418,5 +469,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button ImportSettingsButton;
         private System.Windows.Forms.Button ExportSettingsButton;
+        public System.Windows.Forms.CheckBox NWCCheckBox;
+        public System.Windows.Forms.CheckBox IFCCheckBox;
+        private System.Windows.Forms.Label ExportLabel;
+        public System.Windows.Forms.CheckBox RemoveCADImportsCheckBox;
     }
 }

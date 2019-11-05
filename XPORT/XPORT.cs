@@ -13,7 +13,7 @@ namespace XPORT
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
 
-    class Start : IExternalCommand
+    class Export : IExternalCommand
     {
         internal static List<string> documents = new List<string>();
 
@@ -29,19 +29,23 @@ namespace XPORT
             openOptions.SetOpenWorksetsConfiguration(openConfig);
             openOptions.DetachFromCentralOption = DetachFromCentralOption.DetachAndPreserveWorksets;
 
-            SaveAsOptions saveAs = new SaveAsOptions();
+            SaveAsOptions wsaveAs = new SaveAsOptions();
             WorksharingSaveAsOptions saveConfig = new WorksharingSaveAsOptions();
             saveConfig.SaveAsCentral = true;
-            saveAs.SetWorksharingOptions(saveConfig);
+            wsaveAs.SetWorksharingOptions(saveConfig);
+            wsaveAs.OverwriteExistingFile = true;
+
+            SaveAsOptions saveAs = new SaveAsOptions();
+            saveAs.OverwriteExistingFile = true;
 
             destinationpath = "";
             documents.Clear();
 
             string date = DateTime.Now.ToString("dd/MM/yyyy");
 
-            int docs = 0;
+            int completed = 0;
 
-            int fail = 0;            
+            int failed = 0;
 
             var exportdialog = new XPORT.Dialogs.ExportDialog();
 
@@ -56,6 +60,8 @@ namespace XPORT
 
             bool removeCADlinks = exportdialog.RemoveCADLinksCheckBox.Checked;
 
+            bool removeCADImports = exportdialog.RemoveCADImportsCheckBox.Checked;
+
             bool removeRVTlinks = exportdialog.RemoveRVTLinksCheckBox.Checked;
 
             bool removeSchedules = exportdialog.SchedulesCheckBox.Checked;
@@ -67,6 +73,10 @@ namespace XPORT
             bool removeviewsON = exportdialog.ViewsONSheetsCheckBox.Checked;
 
             bool removeviewsNOT = exportdialog.ViewsNotSheetsCheckBox.Checked;
+
+            bool exportnwc = exportdialog.NWCCheckBox.Checked;
+
+            bool exportifc = exportdialog.IFCCheckBox.Checked;
 
             bool removeallsheetsviews = false;
 
@@ -90,21 +100,32 @@ namespace XPORT
 
             bool samepath = false;
 
+            List<string[]> results = new List<string[]>();
+
             foreach(string path in documents)
             {
-                string pathOnly = Path.GetDirectoryName(path);
+                string destdoc = nameprefix + Path.GetFileName(path.Replace(".rvt", "")) + namesuffix + ".rvt";
+
+                if (File.Exists(destinationpath + destdoc))
+                {
+                    samepath = true;
+                    break;
+                }
+
+                string pathOnly = Path.GetDirectoryName(path) + "\\";
 
                 if(pathOnly == destinationpath)
                 {
                     samepath = true;
+                    break;
                 }
             }
 
             if (samepath)
             {
                 TaskDialog td = new TaskDialog("XPORT");
-                td.MainInstruction = "Same path detected.";
-                td.MainContent = "Some documents have the same path as the destination path.\nThe files will be overritten, do you wish to continue?";
+                td.MainInstruction = "Some documents already exist in the destination path.";
+                td.MainContent = "The files will be overritten, do you wish to continue?";
 
                 td.AddCommandLink(TaskDialogCommandLinkId.CommandLink1, "Continue");
                 td.AddCommandLink(TaskDialogCommandLinkId.CommandLink2, "Cancel");
@@ -129,8 +150,24 @@ namespace XPORT
 
             foreach (string path in documents)
             {
+                string[] result = new string[5];
+
+                if (!File.Exists(path))
+                {
+                    result[0] = Path.GetFileName(path.Replace(".rvt", ""));
+                    result[1] = "false";
+                    result[2] = "false";
+                    result[3] = "File Not Found";
+                    result[4] = "";
+                    results.Add(result);
+                    failed++;
+                    continue;
+                }
+
                 try
                 {
+                    DateTime s1 = DateTime.Now;
+
                     Document doc = uiapp.Application.OpenDocumentFile(ModelPathUtils.ConvertUserVisiblePathToModelPath(path), openOptions);
 
                     Transaction t1 = new Transaction(doc, "XP");
@@ -164,6 +201,7 @@ namespace XPORT
                     }
                     
                     if (removeCADlinks) { DeleteCADLinks(doc); }
+                    if (removeCADImports) { DeleteCADImports(doc); }
                     if (removeRVTlinks) { DeleteRVTLinks(doc); }                    
                     if (removeviewsNOT) { DeleteViewsNotOnSheets(doc); }
                     if (removeviewsON) { DeleteViewsONSheets(doc); }
@@ -171,7 +209,7 @@ namespace XPORT
                     if (removeallsheetsviews) { DeleteAllViewsSheets(doc); }
                     if (removeSchedules) { DeleteSchedules(doc); }
                     if (ungroup) { UngroupGroups(doc); }
-                    if (purge) { PurgeDocument(doc); }
+                    if (purge) { PurgeDocument(doc); }                    
 
                     t1.Commit();
 
@@ -194,22 +232,27 @@ namespace XPORT
                         docname = docname + namesuffix;
                     }
 
-                    if(File.Exists(destinationpath + docname + ".rvt"))
-                    {
-                        try { File.Delete(destinationpath + docname + ".rvt"); }
-                        catch { doc.Close(false); fail++; continue; }
-                    }
+                    bool nwcexported = false;
 
-                    if (doc.IsWorkshared)
-                    {
-                        doc.SaveAs(destinationpath + docname + ".rvt", saveAs);
-                    }
-                    else
-                    {
-                        doc.SaveAs(destinationpath + docname + ".rvt");
-                    }                   
+                    bool ifcexported = false;                    
 
-                    doc.Close(false);
+                    if (exportnwc) { nwcexported = ExportNWC(doc, destinationpath, docname); }
+                    if (exportifc) { ifcexported = ExportIFC(doc, destinationpath, docname); }
+
+                    try
+                    {
+                        if (doc.IsWorkshared)
+                        {
+                            doc.SaveAs(destinationpath + docname + ".rvt", wsaveAs);
+                            doc.Close(false);
+                        }
+                        else
+                        {
+                            doc.SaveAs(destinationpath + docname + ".rvt", saveAs);
+                            doc.Close(false);
+                        }
+                    }
+                    catch { doc.Close(false);}                                  
 
                     try
                     {
@@ -224,12 +267,36 @@ namespace XPORT
                     catch { }
                     
                     doc.Dispose();
-                    docs++;
+                    completed++;
+
+                    DateTime e1 = DateTime.Now;
+
+                    int h = (e1 - s1).Hours;
+
+                    int m = (e1 - s1).Minutes;
+
+                    int s = (e1 - s1).Seconds;
+
+
+                    result[0] = Path.GetFileName(path.Replace(".rvt", ""));
+                    result[1] = nwcexported.ToString();
+                    result[2] = ifcexported.ToString();
+                    result[3] = "Completed";
+                    result[4] = h.ToString() + ":" + m.ToString() + ":" + s.ToString();
+
+                    results.Add(result);
                 }
                 catch (Exception e)
                 {
                     debugmessage = "\n" + "\n" + e.Message;
-                    fail++;
+                    result[0] = Path.GetFileName(path.Replace(".rvt", ""));
+                    result[1] = "false";
+                    result[2] = "false";
+                    result[3] = "Failed";
+                    result[4] = "";
+
+                    results.Add(result);
+                    failed++;
                 }                
             }
 
@@ -242,15 +309,43 @@ namespace XPORT
 
             int minutes = (end - start).Minutes;
 
-            int seconds = (end - start).Seconds;
+            int seconds = (end - start).Seconds;            
+
+            //TaskDialog.Show("Results", "Completed: " + completed.ToString() + "\nFailed: " + failed.ToString() + "\nTotal Time: " + hours.ToString() + " h " + minutes.ToString() + " m " + seconds.ToString() + " s" + debugmessage);
+
+            TaskDialog rd = new TaskDialog("XPORT");
+            rd.MainInstruction = "Results";
+            rd.MainContent = "Exported to: " + destinationpath + "\n" + "Completed: " + completed.ToString() + "\nFailed: " + failed.ToString() + "\nTotal Time: " + hours.ToString() + " h " + minutes.ToString() + " m " + seconds.ToString() + " s";
+
+            rd.AddCommandLink(TaskDialogCommandLinkId.CommandLink1, "Close");
+            rd.AddCommandLink(TaskDialogCommandLinkId.CommandLink2, "Show Details");
 
             documents.Clear();
 
             destinationpath = "";
 
-            TaskDialog.Show("Results", "Completed: " + docs.ToString() + "\nFailed: " + fail.ToString() + "\nTotal Time: " + hours.ToString() + " h " + minutes.ToString() + " m " + seconds.ToString() + " s" + debugmessage);
+            switch (rd.Show())
+            {
+                case TaskDialogResult.CommandLink1:
+                    return Result.Succeeded;
 
-            return Result.Succeeded;
+                case TaskDialogResult.CommandLink2:
+
+                    var resultsdialog = new XPORT.Dialogs.ResultsDialog();                 
+
+                    foreach (string[] r in results)
+                    {
+                        var item = new ListViewItem(r);
+                        resultsdialog.ResultsView.Items.Add(item);
+                    }
+
+                    var rdialog = resultsdialog.ShowDialog();
+
+                    return Result.Succeeded;
+
+                default:
+                    return Result.Succeeded;
+            }
         }
         private void DeleteRVTLinks(Document doc)
         {
@@ -276,13 +371,39 @@ namespace XPORT
             {
                 foreach (ElementId id in collector)
                 {
-                    try
+                    ImportInstance cad = doc.GetElement(id) as ImportInstance;
+
+                    if (cad.IsLinked)
                     {
-                        doc.Delete(id);
+                        try
+                        {
+                            doc.Delete(id);
+                        }
+                        catch { }
                     }
-                    catch { }
                 }
             }            
+        }
+        private void DeleteCADImports(Document doc)
+        {
+            var collector = new FilteredElementCollector(doc).OfClass(typeof(ImportInstance)).ToElementIds();
+
+            if (collector.Count != 0)
+            {
+                foreach (ElementId id in collector)
+                {
+                    ImportInstance cad = doc.GetElement(id) as ImportInstance;
+
+                    if (!cad.IsLinked)
+                    {
+                        try
+                        {
+                            doc.Delete(id);
+                        }
+                        catch { }
+                    }                    
+                }
+            }
         }
         private void DeleteViewsNotOnSheets(Document doc)
         {
@@ -339,11 +460,19 @@ namespace XPORT
 
                 if (!view.IsTemplate && view.GetDependentViewIds().Count == 0)
                 {
-                    doc.Delete(id);
+                    try
+                    {
+                        doc.Delete(id);
+                    }
+                    catch { }
                 }
                 else if (view.IsTemplate && !usedtemplates.Contains(id))
                 {
-                    doc.Delete(id);
+                    try
+                    {
+                        doc.Delete(id);
+                    }
+                    catch { }
                 }
             }
 
@@ -365,7 +494,11 @@ namespace XPORT
                 Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
                 if (!view.IsTemplate && view.GetDependentViewIds().Count == 0)
                 {
-                    doc.Delete(id);
+                    try
+                    {
+                        doc.Delete(id);
+                    }
+                    catch { }
                 }
             }
         }
@@ -568,6 +701,24 @@ namespace XPORT
                     }
                 }
             }
+        }
+        private bool ExportIFC(Document doc,string folder,string name)
+        {
+            try
+            {
+                doc.Export(folder, name, new IFCExportOptions());
+                return true;
+            }
+            catch { return false; }
+        }
+        private bool ExportNWC(Document doc, string folder, string name)
+        {
+            try
+            {
+                doc.Export(folder, name, new NavisworksExportOptions());
+                return true;
+            }
+            catch { return false; }
         }
         private void FailureProcessor(object sender, FailuresProcessingEventArgs e)
         {

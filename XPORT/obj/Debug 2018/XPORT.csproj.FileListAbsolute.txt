@@ -1,0 +1,9 @@
+C:\Users\MSantrolli\source\repos\XPORT\obj\Debug 2018\XPORT.csprojAssemblyReference.cache
+C:\Users\MSantrolli\source\repos\XPORT\obj\Debug 2018\XPORT.Dialogs.ExportDialog.resources
+C:\Users\MSantrolli\source\repos\XPORT\obj\Debug 2018\XPORT.Dialogs.ResultsDialog.resources
+C:\Users\MSantrolli\source\repos\XPORT\obj\Debug 2018\XPORT.csproj.GenerateResource.cache
+C:\Users\MSantrolli\source\repos\XPORT\obj\Debug 2018\XPORT.csproj.CoreCompileInputs.cache
+C:\ProgramData\Autodesk\Revit\Addins\2018\XPORT\XPORT.dll
+C:\ProgramData\Autodesk\Revit\Addins\2018\XPORT\XPORT.pdb
+C:\Users\MSantrolli\source\repos\XPORT\obj\Debug 2018\XPORT.dll
+C:\Users\MSantrolli\source\repos\XPORT\obj\Debug 2018\XPORT.pdb

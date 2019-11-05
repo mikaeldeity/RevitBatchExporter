@@ -19,12 +19,18 @@ namespace XPORT
 
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;            
 
-            PushButtonData b1Data = new PushButtonData("XPORT", "XPORT", thisAssemblyPath, "XPORT.Start");
+            PushButtonData b1Data = new PushButtonData("XPORT", "XPORT", thisAssemblyPath, "XPORT.Export");
             b1Data.AvailabilityClassName = "XPORT.Availability";
             PushButton pb1 = ribbonPanel.AddItem(b1Data) as PushButton;
-            pb1.ToolTip = "Export multiple Revit documents.";
+            pb1.ToolTip = "Export Revit documents.";
             BitmapImage pb1Image = new BitmapImage(new Uri(thisAssemblyPath.Replace("XPORT.dll","") + "XP.png"));
-            pb1.LargeImage = pb1Image;            
+            pb1.LargeImage = pb1Image;
+
+            PushButtonData b2Data = new PushButtonData("XCOPY", "XCOPY", thisAssemblyPath, "XPORT.Copy");
+            PushButton pb2 = ribbonPanel.AddItem(b2Data) as PushButton;
+            pb2.ToolTip = "Copy Elements from Link Instance to current Document.";
+            BitmapImage pb2Image = new BitmapImage(new Uri(thisAssemblyPath.Replace("XPORT.dll", "") + "XC.png"));
+            pb2.LargeImage = pb2Image;
         }
 
         public Result OnShutdown(UIControlledApplication application)

@@ -8,3 +8,4 @@ C:\Users\MSantrolli\source\repos\XPORT\obj\Debug\XPORT.dll
 C:\Users\MSantrolli\source\repos\XPORT\obj\Debug\XPORT.pdb
 C:\ProgramData\Autodesk\Revit\Addins\2019\XPORT\XPORT.dll
 C:\ProgramData\Autodesk\Revit\Addins\2019\XPORT\XPORT.pdb
+C:\Users\MSantrolli\source\repos\XPORT\obj\Debug\XPORT.Dialogs.ResultsDialog.resources

@@ -10,7 +10,9 @@ Global
 		2017|Any CPU = 2017|Any CPU
 		2018|Any CPU = 2018|Any CPU
 		2019|Any CPU = 2019|Any CPU
+		Debug 2018|Any CPU = Debug 2018|Any CPU
 		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8E96F26A-9217-4D7A-8EC2-9ED84BBB7832}.2017|Any CPU.ActiveCfg = 2017|Any CPU
@@ -19,8 +21,12 @@ Global
 		{8E96F26A-9217-4D7A-8EC2-9ED84BBB7832}.2018|Any CPU.Build.0 = 2018|Any CPU
 		{8E96F26A-9217-4D7A-8EC2-9ED84BBB7832}.2019|Any CPU.ActiveCfg = 2019|Any CPU
 		{8E96F26A-9217-4D7A-8EC2-9ED84BBB7832}.2019|Any CPU.Build.0 = 2019|Any CPU
+		{8E96F26A-9217-4D7A-8EC2-9ED84BBB7832}.Debug 2018|Any CPU.ActiveCfg = Debug 2018|Any CPU
+		{8E96F26A-9217-4D7A-8EC2-9ED84BBB7832}.Debug 2018|Any CPU.Build.0 = Debug 2018|Any CPU
 		{8E96F26A-9217-4D7A-8EC2-9ED84BBB7832}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E96F26A-9217-4D7A-8EC2-9ED84BBB7832}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E96F26A-9217-4D7A-8EC2-9ED84BBB7832}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E96F26A-9217-4D7A-8EC2-9ED84BBB7832}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
