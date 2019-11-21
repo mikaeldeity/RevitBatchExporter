@@ -1,4 +1,4 @@
-﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using System;
@@ -26,7 +26,7 @@ namespace XPORT
 
             try
             {
-                selected = uidoc.Selection.PickObjects(ObjectType.LinkedElement, "Select Elements");
+                selected = uidoc.Selection.PickObjects(ObjectType.LinkedElement, "Select Elements from Links");
             }
             catch
             {
@@ -34,6 +34,8 @@ namespace XPORT
             }
 
             Dictionary<Document, List<ElementId>> linkelements = new Dictionary<Document, List<ElementId>>();
+
+            Dictionary<Document, Transform> transforms = new Dictionary<Document, Transform>();
 
             foreach (Reference element in selected)
             {
@@ -43,36 +45,56 @@ namespace XPORT
 
                 Document linkedDoc = (doc.GetElement(id) as RevitLinkInstance).GetLinkDocument();
 
+                Transform transform = (doc.GetElement(id) as RevitLinkInstance).GetTotalTransform();
+
+                if (!transforms.ContainsKey(linkedDoc))
+                {
+                    transforms.Add(linkedDoc, transform);
+                }
+
                 if (!linkelements.ContainsKey(linkedDoc))
                 {
                     List<ElementId> lst = new List<ElementId>();
                     linkelements.Add(linkedDoc,lst);
-                    count++;
                 }
 
                 linkelements[linkedDoc].Add(linkedDoc.GetElement(linkid).Id);
+                count++;
             }
 
             CopyPasteOptions cp = new CopyPasteOptions();
             cp.SetDuplicateTypeNamesHandler(new CustomCopyHandler());
 
+            Transaction t1 = new Transaction(doc, "Copy Elements From Links");
+
+            t1.Start();            
+
             try
             {
-                Transaction t1 = new Transaction(doc, "Copy From Link");
-
-                t1.Start();
+                DateTime start = DateTime.Now;
 
                 foreach (Document d in linkelements.Keys)
                 {
-                    ElementTransformUtils.CopyElements(d, linkelements[d], doc, null, cp);
+                    ElementTransformUtils.CopyElements(d, linkelements[d], doc, transforms[d], cp);
                 }
 
-                t1.Commit();                
+                t1.Commit();
+
+                DateTime end = DateTime.Now;
+
+                int hours = (end - start).Hours;
+
+                int minutes = (end - start).Minutes;
+
+                int seconds = (end - start).Seconds;
+
+                TaskDialog.Show("Results", "Copied " + count.ToString() + " Elements in " + hours.ToString() + " h " + minutes.ToString() + " m " + seconds.ToString() + " s");
 
                 return Result.Succeeded;
             }
             catch
             {
+                t1.RollBack();
                 TaskDialog.Show("Results", "Failed to copy Elements from Links");
                 return Result.Failed;
             }
