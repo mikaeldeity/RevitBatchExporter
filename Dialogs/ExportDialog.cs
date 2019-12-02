@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace XPORT.Dialogs
+namespace RevitBatchExporter.Dialogs
 {
     public partial class ExportDialog : Form
     {
@@ -22,11 +22,11 @@ namespace XPORT.Dialogs
         }
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            if (XPORT.Export.destinationpath == "")
+            if (RevitBatchExporter.Export.destinationpath == "")
             {
                 TaskDialog.Show("XPORT", "Set a valid destination folder to continue.");
             }
-            else if(XPORT.Export.documents.Count == 0)
+            else if(RevitBatchExporter.Export.documents.Count == 0)
             {
                 TaskDialog.Show("XPORT", "Add Documents to continue.");
             }
@@ -41,10 +41,10 @@ namespace XPORT.Dialogs
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             foreach (string file in files)
             {
-                if (file.EndsWith(".rvt") && !XPORT.Export.documents.Contains(file))
+                if (file.EndsWith(".rvt") && !RevitBatchExporter.Export.documents.Contains(file))
                 {
                     DocumentListBox.Items.Add(file);
-                    XPORT.Export.documents.Add(file);                    
+                    RevitBatchExporter.Export.documents.Add(file);                    
                 }
             }                
         }
@@ -75,11 +75,11 @@ namespace XPORT.Dialogs
         {
             if (Directory.Exists(PathTextBox.Text))
             {
-                XPORT.Export.destinationpath = PathTextBox.Text + "\\";
+                RevitBatchExporter.Export.destinationpath = PathTextBox.Text + "\\";
             }
             else
             {
-                XPORT.Export.destinationpath = "";
+                RevitBatchExporter.Export.destinationpath = "";
             }
         }
         private void RemoveButton_Click(object sender, EventArgs e)
@@ -88,7 +88,7 @@ namespace XPORT.Dialogs
             {
                 string selected = DocumentListBox.SelectedItem.ToString();
                 DocumentListBox.Items.Remove(selected);
-                XPORT.Export.documents.Remove(selected);
+                RevitBatchExporter.Export.documents.Remove(selected);
             }
             catch { }
             
@@ -112,9 +112,9 @@ namespace XPORT.Dialogs
             sb.AppendLine(SchedulesCheckBox.Checked.ToString());
             sb.AppendLine(PathTextBox.Text.ToString());
 
-            if (XPORT.Export.documents.Count > 0)
+            if (RevitBatchExporter.Export.documents.Count > 0)
             {
-                foreach (string file in XPORT.Export.documents)
+                foreach (string file in RevitBatchExporter.Export.documents)
                 {
                     sb.AppendLine(file);
                 }
@@ -173,14 +173,14 @@ namespace XPORT.Dialogs
                     SchedulesCheckBox.Checked = bool.Parse(settings[12]);
                     PathTextBox.Text = settings[13];
 
-                    XPORT.Export.documents.Clear();
+                    RevitBatchExporter.Export.documents.Clear();
                     DocumentListBox.Items.Clear();
 
                     for (int i = 14; i < settings.Count() - 1; i++)
                     {
                         if(settings[i] != "")
                         {
-                            XPORT.Export.documents.Add(settings[i]);
+                            RevitBatchExporter.Export.documents.Add(settings[i]);
                             DocumentListBox.Items.Add(settings[i]);
                         }                        
                     }

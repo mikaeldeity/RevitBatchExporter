@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace XPORT
+namespace RevitBatchExporter
 {
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
@@ -47,7 +47,7 @@ namespace XPORT
 
             int failed = 0;
 
-            var exportdialog = new XPORT.Dialogs.ExportDialog();
+            var exportdialog = new RevitBatchExporter.Dialogs.ExportDialog();
 
             var dialog = exportdialog.ShowDialog();
 
@@ -331,7 +331,7 @@ namespace XPORT
 
                 case TaskDialogResult.CommandLink2:
 
-                    var resultsdialog = new XPORT.Dialogs.ResultsDialog();                 
+                    var resultsdialog = new RevitBatchExporter.Dialogs.ResultsDialog();                 
 
                     foreach (string[] r in results)
                     {

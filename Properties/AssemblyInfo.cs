@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("XPORT")]
-[assembly: AssemblyDescription("Export Revit Projects")]
+[assembly: AssemblyTitle("Revit Batch Exporter")]
+[assembly: AssemblyDescription("Batch export Revit Projects")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Export Project")]
+[assembly: AssemblyProduct("Revit Batch Exporter")]
 [assembly: AssemblyCopyright("Copyright © 2019 Mikael Santrolli ")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace XPORT.Dialogs
+namespace RevitBatchExporter.Dialogs
 {
     public partial class ResultsDialog : Form
     {

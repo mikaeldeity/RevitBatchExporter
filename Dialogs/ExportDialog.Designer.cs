@@ -1,4 +1,4 @@
-﻿namespace XPORT.Dialogs
+﻿namespace RevitBatchExporter.Dialogs
 {
     partial class ExportDialog
     {

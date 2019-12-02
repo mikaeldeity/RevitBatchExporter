@@ -7,17 +7,17 @@
     <ProjectGuid>{8E96F26A-9217-4D7A-8EC2-9ED84BBB7832}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XPORT</RootNamespace>
-    <AssemblyName>XPORT</AssemblyName>
+    <RootNamespace>RevitBatchExporter</RootNamespace>
+    <AssemblyName>RevitBatchExporter</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Release\XPORT\</OutputPath>
+    <OutputPath>Release\RevitBatchExporter\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>none</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -92,7 +92,7 @@
       <DependentUpon>ResultsDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XPORT.cs" />
+    <Compile Include="Export.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Dialogs\ExportDialog.resx">
@@ -103,7 +103,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="XPORT.addin" />
+    <None Include="RevitBatchExporter.addin" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\XP.png" />
