@@ -1,7 +1,0 @@
-C:\Users\MSantrolli\source\repos\XPORT\Release\2018\XPORT\XPORT.dll
-C:\Users\MSantrolli\source\repos\XPORT\obj\2018\XPORT.csprojAssemblyReference.cache
-C:\Users\MSantrolli\source\repos\XPORT\obj\2018\XPORT.Dialogs.ExportDialog.resources
-C:\Users\MSantrolli\source\repos\XPORT\obj\2018\XPORT.csproj.GenerateResource.cache
-C:\Users\MSantrolli\source\repos\XPORT\obj\2018\XPORT.csproj.CoreCompileInputs.cache
-C:\Users\MSantrolli\source\repos\XPORT\obj\2018\XPORT.dll
-C:\Users\MSantrolli\source\repos\XPORT\obj\2018\XPORT.Dialogs.ResultsDialog.resources
