@@ -25,12 +25,6 @@ namespace XPORT
             pb1.ToolTip = "Export Revit documents.";
             BitmapImage pb1Image = new BitmapImage(new Uri(thisAssemblyPath.Replace("XPORT.dll","") + "XP.png"));
             pb1.LargeImage = pb1Image;
-
-            PushButtonData b2Data = new PushButtonData("XCOPY", "XCOPY", thisAssemblyPath, "XPORT.Copy");
-            PushButton pb2 = ribbonPanel.AddItem(b2Data) as PushButton;
-            pb2.ToolTip = "Copy Elements from Link Instance to current Document.";
-            BitmapImage pb2Image = new BitmapImage(new Uri(thisAssemblyPath.Replace("XPORT.dll", "") + "XC.png"));
-            pb2.LargeImage = pb2Image;
         }
 
         public Result OnShutdown(UIControlledApplication application)
