@@ -24,20 +24,6 @@ namespace RevitBatchExporter
         {
             UIApplication uiapp = commandData.Application;
 
-            WorksetConfiguration openConfig = new WorksetConfiguration(WorksetConfigurationOption.CloseAllWorksets);
-            OpenOptions openOptions = new OpenOptions();
-            openOptions.SetOpenWorksetsConfiguration(openConfig);
-            openOptions.DetachFromCentralOption = DetachFromCentralOption.DetachAndPreserveWorksets;
-
-            SaveAsOptions wsaveAs = new SaveAsOptions();
-            WorksharingSaveAsOptions saveConfig = new WorksharingSaveAsOptions();
-            saveConfig.SaveAsCentral = true;
-            wsaveAs.SetWorksharingOptions(saveConfig);
-            wsaveAs.OverwriteExistingFile = true;
-
-            SaveAsOptions saveAs = new SaveAsOptions();
-            saveAs.OverwriteExistingFile = true;
-
             destinationpath = "";
             documents.Clear();
 
@@ -55,6 +41,20 @@ namespace RevitBatchExporter
             {
                 return Result.Cancelled;
             }
+
+            WorksetConfiguration openConfig = new WorksetConfiguration(WorksetConfigurationOption.CloseAllWorksets);
+            OpenOptions openOptions = new OpenOptions();
+            openOptions.SetOpenWorksetsConfiguration(openConfig);
+            openOptions.DetachFromCentralOption = DetachFromCentralOption.DetachAndPreserveWorksets;
+
+            SaveAsOptions wsaveAs = new SaveAsOptions();
+            WorksharingSaveAsOptions saveConfig = new WorksharingSaveAsOptions();
+            saveConfig.SaveAsCentral = true;
+            wsaveAs.SetWorksharingOptions(saveConfig);
+            wsaveAs.OverwriteExistingFile = true;
+
+            SaveAsOptions saveAs = new SaveAsOptions();
+            saveAs.OverwriteExistingFile = true;
 
             bool purge = exportdialog.PurgeCheckBox.Checked;            
 
@@ -78,6 +78,8 @@ namespace RevitBatchExporter
 
             bool exportifc = exportdialog.IFCCheckBox.Checked;
 
+            bool exportrvt = exportdialog.RVTCheckBox.Checked;
+
             bool removeallsheetsviews = false;
 
             if(removesheets && removeviewsON && removeviewsNOT)
@@ -86,6 +88,12 @@ namespace RevitBatchExporter
                 removesheets = false;
                 removeviewsON = false;
                 removeviewsNOT = false;
+            }
+
+            if(exportifc | exportnwc)
+            {
+                openConfig = new WorksetConfiguration(WorksetConfigurationOption.OpenAllWorksets);
+                openOptions.SetOpenWorksetsConfiguration(openConfig);
             }
 
             string reason = exportdialog.IssueReasonTextBox.Text.TrimEnd().TrimStart();
@@ -150,15 +158,16 @@ namespace RevitBatchExporter
 
             foreach (string path in documents)
             {
-                string[] result = new string[5];
+                string[] result = new string[6];
 
                 if (!File.Exists(path))
                 {
                     result[0] = Path.GetFileName(path.Replace(".rvt", ""));
                     result[1] = "false";
                     result[2] = "false";
-                    result[3] = "File Not Found";
-                    result[4] = "";
+                    result[3] = "false";
+                    result[4] = "File Not Found";
+                    result[5] = "";
                     results.Add(result);
                     failed++;
                     continue;
@@ -232,6 +241,8 @@ namespace RevitBatchExporter
                         docname = docname + namesuffix;
                     }
 
+                    bool rvtexported = false;
+
                     bool nwcexported = false;
 
                     bool ifcexported = false;                    
@@ -239,20 +250,28 @@ namespace RevitBatchExporter
                     if (exportnwc) { nwcexported = ExportNWC(doc, destinationpath, docname); }
                     if (exportifc) { ifcexported = ExportIFC(doc, destinationpath, docname); }
 
-                    try
+                    if (exportrvt)
                     {
-                        if (doc.IsWorkshared)
+                        try
                         {
-                            doc.SaveAs(destinationpath + docname + ".rvt", wsaveAs);
-                            doc.Close(false);
+                            if (doc.IsWorkshared)
+                            {
+                                doc.SaveAs(destinationpath + docname + ".rvt", wsaveAs);
+                                doc.Close(false);
+                            }
+                            else
+                            {
+                                doc.SaveAs(destinationpath + docname + ".rvt", saveAs);
+                                doc.Close(false);
+                            }
+                            rvtexported = true;
                         }
-                        else
-                        {
-                            doc.SaveAs(destinationpath + docname + ".rvt", saveAs);
-                            doc.Close(false);
-                        }
+                        catch { doc.Close(false); }
                     }
-                    catch { doc.Close(false);}                                  
+                    else
+                    {
+                        doc.Close(false);
+                    }                    
 
                     try
                     {
@@ -279,10 +298,11 @@ namespace RevitBatchExporter
 
 
                     result[0] = Path.GetFileName(path.Replace(".rvt", ""));
-                    result[1] = nwcexported.ToString();
-                    result[2] = ifcexported.ToString();
-                    result[3] = "Completed";
-                    result[4] = h.ToString() + ":" + m.ToString() + ":" + s.ToString();
+                    result[1] = rvtexported.ToString();
+                    result[2] = nwcexported.ToString();
+                    result[3] = ifcexported.ToString();
+                    result[4] = "Completed";
+                    result[5] = h.ToString() + ":" + m.ToString() + ":" + s.ToString();
 
                     results.Add(result);
                 }
@@ -292,8 +312,9 @@ namespace RevitBatchExporter
                     result[0] = Path.GetFileName(path.Replace(".rvt", ""));
                     result[1] = "false";
                     result[2] = "false";
-                    result[3] = "Failed";
-                    result[4] = "";
+                    result[3] = "false";
+                    result[4] = "Failed";
+                    result[5] = "";
 
                     results.Add(result);
                     failed++;
@@ -311,9 +332,7 @@ namespace RevitBatchExporter
 
             int seconds = (end - start).Seconds;            
 
-            //TaskDialog.Show("Results", "Completed: " + completed.ToString() + "\nFailed: " + failed.ToString() + "\nTotal Time: " + hours.ToString() + " h " + minutes.ToString() + " m " + seconds.ToString() + " s" + debugmessage);
-
-            TaskDialog rd = new TaskDialog("XPORT");
+            TaskDialog rd = new TaskDialog("Revit Batch Exporter");
             rd.MainInstruction = "Results";
             rd.MainContent = "Exported to: " + destinationpath + "\n" + "Completed: " + completed.ToString() + "\nFailed: " + failed.ToString() + "\nTotal Time: " + hours.ToString() + " h " + minutes.ToString() + " m " + seconds.ToString() + " s";
 
@@ -704,18 +723,24 @@ namespace RevitBatchExporter
         }
         private bool ExportIFC(Document doc,string folder,string name)
         {
+            IFCExportOptions ifcoptions = new IFCExportOptions();
+
             try
             {
-                doc.Export(folder, name, new IFCExportOptions());
+                doc.Export(folder, name, ifcoptions);
                 return true;
             }
             catch { return false; }
         }
         private bool ExportNWC(Document doc, string folder, string name)
         {
+            NavisworksExportOptions navisoptions = new NavisworksExportOptions();
+            navisoptions.ExportLinks = false;
+            navisoptions.ConvertElementProperties = true;
+
             try
             {
-                doc.Export(folder, name, new NavisworksExportOptions());
+                doc.Export(folder, name, navisoptions);
                 return true;
             }
             catch { return false; }

@@ -34,6 +34,7 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // ResultsView
@@ -44,14 +45,15 @@
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
-            this.columnHeader5});
+            this.columnHeader5,
+            this.columnHeader6});
             this.ResultsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ResultsView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ResultsView.Location = new System.Drawing.Point(0, 0);
             this.ResultsView.Margin = new System.Windows.Forms.Padding(0);
             this.ResultsView.MultiSelect = false;
             this.ResultsView.Name = "ResultsView";
-            this.ResultsView.Size = new System.Drawing.Size(442, 333);
+            this.ResultsView.Size = new System.Drawing.Size(459, 333);
             this.ResultsView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.ResultsView.TabIndex = 0;
             this.ResultsView.UseCompatibleStateImageBehavior = false;
@@ -64,36 +66,46 @@
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "NWC";
+            this.columnHeader2.Text = "RVT";
+            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader2.Width = 50;
             // 
             // columnHeader3
             // 
-            this.columnHeader3.Text = "IFC";
+            this.columnHeader3.Text = "NWC";
+            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader3.Width = 50;
             // 
             // columnHeader4
             // 
-            this.columnHeader4.Text = "Results";
-            this.columnHeader4.Width = 100;
+            this.columnHeader4.Text = "IFC";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader4.Width = 50;
             // 
             // columnHeader5
             // 
-            this.columnHeader5.Text = "Time";
+            this.columnHeader5.Text = "Results";
+            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader5.Width = 80;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Time";
+            this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader6.Width = 100;
             // 
             // ResultsDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(442, 333);
+            this.ClientSize = new System.Drawing.Size(459, 333);
             this.Controls.Add(this.ResultsView);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ResultsDialog";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "XPORT";
+            this.Text = "Revit Batch Exporter";
             this.ResumeLayout(false);
 
         }
@@ -106,5 +118,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
     }
 }

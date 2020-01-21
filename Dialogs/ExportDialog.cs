@@ -24,11 +24,11 @@ namespace RevitBatchExporter.Dialogs
         {
             if (RevitBatchExporter.Export.destinationpath == "")
             {
-                TaskDialog.Show("XPORT", "Set a valid destination folder to continue.");
+                TaskDialog.Show("Revit Batch Exporter", "Set a valid destination folder to continue.");
             }
             else if(RevitBatchExporter.Export.documents.Count == 0)
             {
-                TaskDialog.Show("XPORT", "Add Documents to continue.");
+                TaskDialog.Show("Revit Batch Exporter", "Add Documents to continue.");
             }
             else
             {
