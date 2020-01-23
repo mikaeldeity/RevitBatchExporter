@@ -8,4 +8,4 @@ Issue Reason has to exist as a Revit Project Parameter to be assigned.
 
 copy zip contents to C:\ProgramData\Autodesk\Revit\Addins\20XX
 
-![XP](https://user-images.githubusercontent.com/22296105/68213267-24acd680-ffd3-11e9-986e-fb980bdb118d.PNG)
+![Panel](https://user-images.githubusercontent.com/22296105/72980143-e0f78b00-3dd1-11ea-9e7c-db40c9d67831.PNG)
