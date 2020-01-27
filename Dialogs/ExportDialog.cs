@@ -104,6 +104,7 @@ namespace RevitBatchExporter.Dialogs
             sb.AppendLine(AutoCheckBox.Checked.ToString());
             sb.AppendLine(RemoveRVTLinksCheckBox.Checked.ToString());
             sb.AppendLine(RemoveCADLinksCheckBox.Checked.ToString());
+            sb.AppendLine(RemoveCADImportsCheckBox.Checked.ToString());
             sb.AppendLine(PurgeCheckBox.Checked.ToString());
             sb.AppendLine(UngroupCheckBox.Checked.ToString());
             sb.AppendLine(ViewsNotSheetsCheckBox.Checked.ToString());
@@ -111,6 +112,9 @@ namespace RevitBatchExporter.Dialogs
             sb.AppendLine(SheetsCheckBox.Checked.ToString());
             sb.AppendLine(SchedulesCheckBox.Checked.ToString());
             sb.AppendLine(PathTextBox.Text.ToString());
+            sb.AppendLine(RVTCheckBox.Checked.ToString());
+            sb.AppendLine(NWCCheckBox.Checked.ToString());
+            sb.AppendLine(IFCCheckBox.Checked.ToString());
 
             if (RevitBatchExporter.Export.documents.Count > 0)
             {
@@ -165,18 +169,23 @@ namespace RevitBatchExporter.Dialogs
                     AutoCheckBox.Checked = bool.Parse(settings[4]);
                     RemoveRVTLinksCheckBox.Checked = bool.Parse(settings[5]);
                     RemoveCADLinksCheckBox.Checked = bool.Parse(settings[6]);
-                    PurgeCheckBox.Checked = bool.Parse(settings[7]);
-                    UngroupCheckBox.Checked = bool.Parse(settings[8]);
-                    ViewsNotSheetsCheckBox.Checked = bool.Parse(settings[9]);
-                    ViewsONSheetsCheckBox.Checked = bool.Parse(settings[10]);
-                    SheetsCheckBox.Checked = bool.Parse(settings[11]);
-                    SchedulesCheckBox.Checked = bool.Parse(settings[12]);
-                    PathTextBox.Text = settings[13];
+                    RemoveCADImportsCheckBox.Checked = bool.Parse(settings[7]);
+                    PurgeCheckBox.Checked = bool.Parse(settings[8]);
+                    UngroupCheckBox.Checked = bool.Parse(settings[9]);
+                    ViewsNotSheetsCheckBox.Checked = bool.Parse(settings[10]);
+                    ViewsONSheetsCheckBox.Checked = bool.Parse(settings[11]);
+                    SheetsCheckBox.Checked = bool.Parse(settings[12]);
+                    SchedulesCheckBox.Checked = bool.Parse(settings[13]);
+                    PathTextBox.Text = settings[14];
+                    RVTCheckBox.Checked = bool.Parse(settings[15]);
+                    NWCCheckBox.Checked = bool.Parse(settings[16]);
+                    IFCCheckBox.Checked = bool.Parse(settings[17]);
+
 
                     RevitBatchExporter.Export.documents.Clear();
                     DocumentListBox.Items.Clear();
 
-                    for (int i = 14; i < settings.Count() - 1; i++)
+                    for (int i = 18; i < settings.Count() - 1; i++)
                     {
                         if(settings[i] != "")
                         {

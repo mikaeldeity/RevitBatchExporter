@@ -737,13 +737,45 @@ namespace RevitBatchExporter
             NavisworksExportOptions navisoptions = new NavisworksExportOptions();
             navisoptions.ExportLinks = false;
             navisoptions.ConvertElementProperties = true;
+            navisoptions.FindMissingMaterials = true;
+
+            ViewFamilyType viewFamilyType3D = new FilteredElementCollector(doc).OfClass(typeof(ViewFamilyType)).Cast<ViewFamilyType>().FirstOrDefault<ViewFamilyType>(x => ViewFamily.ThreeDimensional == x.ViewFamily);
+
+            Transaction t1 = new Transaction(doc, "Create View");
+
+            t1.Start();
+
+            View3D temp3Dview = View3D.CreateIsometric(doc, viewFamilyType3D.Id);
+
+            List<PhaseFilter> phaseFilters = new FilteredElementCollector(doc).OfClass(typeof(PhaseFilter)).Cast<PhaseFilter>().ToList();
+            foreach(PhaseFilter p in phaseFilters)
+            {
+                if(p.Name == "None")
+                {
+                    temp3Dview.get_Parameter(BuiltInParameter.VIEW_PHASE_FILTER).Set(p.Id);
+                }
+            }
+
+            navisoptions.ViewId = temp3Dview.Id;
+
+            t1.Commit();
 
             try
-            {
+            {                
                 doc.Export(folder, name, navisoptions);
+                t1.Start();
+                doc.Delete(temp3Dview.Id);
+                t1.Commit();
                 return true;
             }
-            catch { return false; }
+            catch (Exception e)
+            {               
+                string message = e.Message;
+                t1.Start();
+                doc.Delete(temp3Dview.Id);
+                t1.Commit();
+                return false;
+            }
         }
         private void FailureProcessor(object sender, FailuresProcessingEventArgs e)
         {
