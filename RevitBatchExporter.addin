@@ -2,7 +2,7 @@
 <RevitAddIns>
   <AddIn Type="Application">
     <Name>Revit Batch Exporter</Name>
-    <Assembly>.\RevitBatchExporter\RevitBatchExporter.dll</Assembly>
+    <Assembly>.\RevitBatchExporter.dll</Assembly>
     <AddInId>14b6cf75-f1d4-4dc1-ac14-7e97e4db9d17</AddInId>
     <FullClassName>RevitBatchExporter.App</FullClassName>
     <VendorId>Revit Batch Exporter</VendorId>
