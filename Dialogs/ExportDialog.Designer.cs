@@ -59,6 +59,8 @@
             this.ExportLabel = new System.Windows.Forms.Label();
             this.RemoveCADImportsCheckBox = new System.Windows.Forms.CheckBox();
             this.RVTCheckBox = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // PurgeCheckBox
@@ -123,7 +125,7 @@
             this.ExportButton.FlatAppearance.BorderSize = 0;
             this.ExportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExportButton.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExportButton.Location = new System.Drawing.Point(37, 617);
+            this.ExportButton.Location = new System.Drawing.Point(37, 644);
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(320, 36);
             this.ExportButton.TabIndex = 0;
@@ -353,7 +355,7 @@
             // NWCCheckBox
             // 
             this.NWCCheckBox.AutoSize = true;
-            this.NWCCheckBox.Location = new System.Drawing.Point(171, 582);
+            this.NWCCheckBox.Location = new System.Drawing.Point(37, 611);
             this.NWCCheckBox.Name = "NWCCheckBox";
             this.NWCCheckBox.Size = new System.Drawing.Size(52, 17);
             this.NWCCheckBox.TabIndex = 29;
@@ -364,7 +366,7 @@
             // IFCCheckBox
             // 
             this.IFCCheckBox.AutoSize = true;
-            this.IFCCheckBox.Location = new System.Drawing.Point(293, 582);
+            this.IFCCheckBox.Location = new System.Drawing.Point(106, 611);
             this.IFCCheckBox.Name = "IFCCheckBox";
             this.IFCCheckBox.Size = new System.Drawing.Size(42, 17);
             this.IFCCheckBox.TabIndex = 30;
@@ -406,13 +408,31 @@
             this.RVTCheckBox.Text = "RVT";
             this.RVTCheckBox.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(168, 583);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(113, 13);
+            this.label2.TabIndex = 35;
+            this.label2.Text = "NWC/IFC Export View";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(171, 608);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(186, 20);
+            this.textBox1.TabIndex = 36;
+            // 
             // ExportDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(394, 674);
+            this.ClientSize = new System.Drawing.Size(394, 702);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.RVTCheckBox);
             this.Controls.Add(this.RemoveCADImportsCheckBox);
             this.Controls.Add(this.ExportLabel);
@@ -489,5 +509,7 @@
         private System.Windows.Forms.Label ExportLabel;
         public System.Windows.Forms.CheckBox RemoveCADImportsCheckBox;
         public System.Windows.Forms.CheckBox RVTCheckBox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
