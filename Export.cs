@@ -56,53 +56,16 @@ namespace RevitBatchExporter
             SaveAsOptions saveAs = new SaveAsOptions();
             saveAs.OverwriteExistingFile = true;
 
-            bool purge = exportdialog.PurgeCheckBox.Checked;            
-
-            bool removeCADlinks = exportdialog.RemoveCADLinksCheckBox.Checked;
-
-            bool removeCADImports = exportdialog.RemoveCADImportsCheckBox.Checked;
-
-            bool removeRVTlinks = exportdialog.RemoveRVTLinksCheckBox.Checked;
-
-            bool removeSchedules = exportdialog.SchedulesCheckBox.Checked;
-
-            bool ungroup = exportdialog.UngroupCheckBox.Checked;
-
-            bool removesheets = exportdialog.SheetsCheckBox.Checked;
-
-            bool removeviewsON = exportdialog.ViewsONSheetsCheckBox.Checked;
-
-            bool removeviewsNOT = exportdialog.ViewsNotSheetsCheckBox.Checked;
-
             bool exportnwc = exportdialog.NWCCheckBox.Checked;
 
             bool exportifc = exportdialog.IFCCheckBox.Checked;
 
-            bool exportrvt = exportdialog.RVTCheckBox.Checked;
-
-            bool removeallsheetsviews = false;
-
-            if(removesheets && removeviewsON && removeviewsNOT)
-            {
-                removeallsheetsviews = true;
-                removesheets = false;
-                removeviewsON = false;
-                removeviewsNOT = false;
-            }
 
             if(exportifc | exportnwc)
             {
                 openConfig = new WorksetConfiguration(WorksetConfigurationOption.OpenAllWorksets);
                 openOptions.SetOpenWorksetsConfiguration(openConfig);
             }
-
-            string reason = exportdialog.IssueReasonTextBox.Text.TrimEnd().TrimStart();
-
-            string customdate = exportdialog.DateTextBox.Text.TrimEnd().TrimStart();
-
-            string nameprefix = exportdialog.PrefixTextBox.Text.TrimEnd().TrimStart();
-
-            string namesuffix = exportdialog.SuffixTextBox.Text.TrimEnd().TrimStart();
 
             string debugmessage = "";
 
@@ -208,17 +171,7 @@ namespace RevitBatchExporter
                         }
                         catch { }
                     }
-                    
-                    if (removeCADlinks) { DeleteCADLinks(doc); }
-                    if (removeCADImports) { DeleteCADImports(doc); }
-                    if (removeRVTlinks) { DeleteRVTLinks(doc); }                    
-                    if (removeviewsNOT) { DeleteViewsNotOnSheets(doc); }
-                    if (removeviewsON) { DeleteViewsONSheets(doc); }
-                    if (removesheets) { DeleteSheets(doc); }
-                    if (removeallsheetsviews) { DeleteAllViewsSheets(doc); }
-                    if (removeSchedules) { DeleteSchedules(doc); }
-                    if (ungroup) { UngroupGroups(doc); }
-                    if (purge) { PurgeDocument(doc); }                    
+                                
 
                     t1.Commit();
 
@@ -366,365 +319,364 @@ namespace RevitBatchExporter
                     return Result.Succeeded;
             }
         }
-        private void DeleteRVTLinks(Document doc)
-        {
-            var collector = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_RvtLinks).ToElementIds();
+        //private void DeleteRVTLinks(Document doc)
+        //{
+        //    var collector = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_RvtLinks).ToElementIds();
 
-            if (collector.Count != 0)
-            {
-                foreach (ElementId id in collector)
-                {
-                    try
-                    {
-                        doc.Delete(id);
-                    }
-                    catch { }
-                }
-            }            
-        }
-        private void DeleteCADLinks(Document doc)
-        {
-            var collector = new FilteredElementCollector(doc).OfClass(typeof(ImportInstance)).ToElementIds();
+        //    if (collector.Count != 0)
+        //    {
+        //        foreach (ElementId id in collector)
+        //        {
+        //            try
+        //            {
+        //                doc.Delete(id);
+        //            }
+        //            catch { }
+        //        }
+        //    }            
+        //}
+        //private void DeleteCADLinks(Document doc)
+        //{
+        //    var collector = new FilteredElementCollector(doc).OfClass(typeof(ImportInstance)).ToElementIds();
 
-            if (collector.Count != 0)
-            {
-                foreach (ElementId id in collector)
-                {
-                    ImportInstance cad = doc.GetElement(id) as ImportInstance;
+        //    if (collector.Count != 0)
+        //    {
+        //        foreach (ElementId id in collector)
+        //        {
+        //            ImportInstance cad = doc.GetElement(id) as ImportInstance;
 
-                    if (cad.IsLinked)
-                    {
-                        try
-                        {
-                            doc.Delete(id);
-                        }
-                        catch { }
-                    }
-                }
-            }            
-        }
-        private void DeleteCADImports(Document doc)
-        {
-            var collector = new FilteredElementCollector(doc).OfClass(typeof(ImportInstance)).ToElementIds();
+        //            if (cad.IsLinked)
+        //            {
+        //                try
+        //                {
+        //                    doc.Delete(id);
+        //                }
+        //                catch { }
+        //            }
+        //        }
+        //    }            
+        //}
+        //private void DeleteCADImports(Document doc)
+        //{
+        //    var collector = new FilteredElementCollector(doc).OfClass(typeof(ImportInstance)).ToElementIds();
 
-            if (collector.Count != 0)
-            {
-                foreach (ElementId id in collector)
-                {
-                    ImportInstance cad = doc.GetElement(id) as ImportInstance;
+        //    if (collector.Count != 0)
+        //    {
+        //        foreach (ElementId id in collector)
+        //        {
+        //            ImportInstance cad = doc.GetElement(id) as ImportInstance;
 
-                    if (!cad.IsLinked)
-                    {
-                        try
-                        {
-                            doc.Delete(id);
-                        }
-                        catch { }
-                    }                    
-                }
-            }
-        }
-        private void DeleteViewsNotOnSheets(Document doc)
-        {
-            var sheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
+        //            if (!cad.IsLinked)
+        //            {
+        //                try
+        //                {
+        //                    doc.Delete(id);
+        //                }
+        //                catch { }
+        //            }                    
+        //        }
+        //    }
+        //}
+        //private void DeleteViewsNotOnSheets(Document doc)
+        //{
+        //    var sheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
 
-            List<ElementId> viewsONsheets = new List<ElementId>();
+        //    List<ElementId> viewsONsheets = new List<ElementId>();
 
-            //get views on sheets
-            if (sheets.Count != 0)
-            {
-                foreach (ElementId id in sheets)
-                {
-                    ViewSheet sheet = doc.GetElement(id) as ViewSheet;
+        //    //get views on sheets
+        //    if (sheets.Count != 0)
+        //    {
+        //        foreach (ElementId id in sheets)
+        //        {
+        //            ViewSheet sheet = doc.GetElement(id) as ViewSheet;
 
-                    viewsONsheets.AddRange(sheet.GetAllPlacedViews());
-                }
-            }
+        //            viewsONsheets.AddRange(sheet.GetAllPlacedViews());
+        //        }
+        //    }
 
-            List<ElementId> usedtemplates = new List<ElementId>();
+        //    List<ElementId> usedtemplates = new List<ElementId>();
 
-            //get used templates
-            foreach (ElementId id in viewsONsheets)
-            {
-                Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
+        //    //get used templates
+        //    foreach (ElementId id in viewsONsheets)
+        //    {
+        //        Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
 
-                if (view.ViewTemplateId != ElementId.InvalidElementId)
-                {
-                    if (!usedtemplates.Contains(id))
-                    {
-                        usedtemplates.Add(view.ViewTemplateId);
-                    }
-                }
-            }
+        //        if (view.ViewTemplateId != ElementId.InvalidElementId)
+        //        {
+        //            if (!usedtemplates.Contains(id))
+        //            {
+        //                usedtemplates.Add(view.ViewTemplateId);
+        //            }
+        //        }
+        //    }
 
-            ICollection<ElementId> viewsNOTsheets = null;
+        //    ICollection<ElementId> viewsNOTsheets = null;
 
-            //if no views on sheets collect differently
-            if (viewsONsheets.Count != 0)
-            {
-                viewsNOTsheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).Excluding(viewsONsheets).ToElementIds();
-            }
-            else
-            {
-                viewsNOTsheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElementIds();
-            }
+        //    //if no views on sheets collect differently
+        //    if (viewsONsheets.Count != 0)
+        //    {
+        //        viewsNOTsheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).Excluding(viewsONsheets).ToElementIds();
+        //    }
+        //    else
+        //    {
+        //        viewsNOTsheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElementIds();
+        //    }
 
-            //if no views not on sheets return
-            if (viewsNOTsheets.Count == 0) { return; }
+        //    //if no views not on sheets return
+        //    if (viewsNOTsheets.Count == 0) { return; }
 
-            //delete views not on sheets and unused templates skip views with dependancy
-            foreach (ElementId id in viewsNOTsheets)
-            {
-                Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
+        //    //delete views not on sheets and unused templates skip views with dependancy
+        //    foreach (ElementId id in viewsNOTsheets)
+        //    {
+        //        Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
 
-                if (!view.IsTemplate && view.GetDependentViewIds().Count == 0)
-                {
-                    try
-                    {
-                        doc.Delete(id);
-                    }
-                    catch { }
-                }
-                else if (view.IsTemplate && !usedtemplates.Contains(id))
-                {
-                    try
-                    {
-                        doc.Delete(id);
-                    }
-                    catch { }
-                }
-            }
+        //        if (!view.IsTemplate && view.GetDependentViewIds().Count == 0)
+        //        {
+        //            try
+        //            {
+        //                doc.Delete(id);
+        //            }
+        //            catch { }
+        //        }
+        //        else if (view.IsTemplate && !usedtemplates.Contains(id))
+        //        {
+        //            try
+        //            {
+        //                doc.Delete(id);
+        //            }
+        //            catch { }
+        //        }
+        //    }
 
-            //get remaining views
-            ICollection<ElementId> remainingviews;
+        //    //get remaining views
+        //    ICollection<ElementId> remainingviews;
 
-            if (viewsONsheets.Count != 0)
-            {
-                remainingviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).Excluding(viewsONsheets).ToElementIds();
-            }
-            else
-            {
-                remainingviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElementIds();
-            }
+        //    if (viewsONsheets.Count != 0)
+        //    {
+        //        remainingviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).Excluding(viewsONsheets).ToElementIds();
+        //    }
+        //    else
+        //    {
+        //        remainingviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElementIds();
+        //    }
 
-            //delete views without dependent views
-            foreach (ElementId id in remainingviews)
-            {
-                Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
-                if (!view.IsTemplate && view.GetDependentViewIds().Count == 0)
-                {
-                    try
-                    {
-                        doc.Delete(id);
-                    }
-                    catch { }
-                }
-            }
-        }
-        private void DeleteViewsONSheets(Document doc)
-        {
-            var sheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
+        //    //delete views without dependent views
+        //    foreach (ElementId id in remainingviews)
+        //    {
+        //        Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
+        //        if (!view.IsTemplate && view.GetDependentViewIds().Count == 0)
+        //        {
+        //            try
+        //            {
+        //                doc.Delete(id);
+        //            }
+        //            catch { }
+        //        }
+        //    }
+        //}
+        //private void DeleteViewsONSheets(Document doc)
+        //{
+        //    var sheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
 
-            if (sheets.Count == 0) { return; }
+        //    if (sheets.Count == 0) { return; }
 
-            List<ElementId> viewsONsheets = new List<ElementId>();
+        //    List<ElementId> viewsONsheets = new List<ElementId>();
 
-            foreach (ElementId id in sheets)
-            {
-                ViewSheet sheet = doc.GetElement(id) as ViewSheet;
+        //    foreach (ElementId id in sheets)
+        //    {
+        //        ViewSheet sheet = doc.GetElement(id) as ViewSheet;
 
-                viewsONsheets.AddRange(sheet.GetAllPlacedViews());
-            }
+        //        viewsONsheets.AddRange(sheet.GetAllPlacedViews());
+        //    }
 
-            if(viewsONsheets.Count == 0) { return; }
+        //    if(viewsONsheets.Count == 0) { return; }
 
-            foreach (ElementId id in viewsONsheets)
-            {
-                Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
+        //    foreach (ElementId id in viewsONsheets)
+        //    {
+        //        Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
 
-                if (!view.IsTemplate)
-                {
-                    try
-                    {
-                        doc.Delete(id);
-                    }
-                    catch { }                                      
-                }
-            }
+        //        if (!view.IsTemplate)
+        //        {
+        //            try
+        //            {
+        //                doc.Delete(id);
+        //            }
+        //            catch { }                                      
+        //        }
+        //    }
 
-            var views = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElementIds();
+        //    var views = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElementIds();
 
-            if(views.Count == 0) { return; }
+        //    if(views.Count == 0) { return; }
 
-            List<ElementId> usedtemplates = new List<ElementId>();
+        //    List<ElementId> usedtemplates = new List<ElementId>();
 
-            foreach (ElementId id in views)
-            {
-                Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
+        //    foreach (ElementId id in views)
+        //    {
+        //        Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
 
-                if (view.ViewTemplateId != ElementId.InvalidElementId)
-                {
-                    if (!usedtemplates.Contains(id))
-                    {
-                        usedtemplates.Add(view.ViewTemplateId);
-                    }
-                }
-            }
+        //        if (view.ViewTemplateId != ElementId.InvalidElementId)
+        //        {
+        //            if (!usedtemplates.Contains(id))
+        //            {
+        //                usedtemplates.Add(view.ViewTemplateId);
+        //            }
+        //        }
+        //    }
 
-            foreach (ElementId id in views)
-            {
-                Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
+        //    foreach (ElementId id in views)
+        //    {
+        //        Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
 
-                if (view.IsTemplate && !usedtemplates.Contains(id))
-                {
-                    try
-                    {
-                        doc.Delete(id);
-                    }
-                    catch { }
-                }
-            }
-        }
-        private void DeleteSheets(Document doc)
-        {
-            var sheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
+        //        if (view.IsTemplate && !usedtemplates.Contains(id))
+        //        {
+        //            try
+        //            {
+        //                doc.Delete(id);
+        //            }
+        //            catch { }
+        //        }
+        //    }
+        //}
+        //private void DeleteSheets(Document doc)
+        //{
+        //    var sheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
 
-            if (sheets.Count != 0)
-            {
-                foreach (ElementId id in sheets)
-                {
-                    if (!doc.GetElement(id).Name.Contains(splash))
-                    {
-                        try
-                        {
-                            doc.Delete(id);
-                        }
-                        catch { }
-                    }
-                }
-            }            
-        }
-        private void DeleteAllViewsSheets(Document doc)
-        {            
-            var views = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElementIds();
+        //    if (sheets.Count != 0)
+        //    {
+        //        foreach (ElementId id in sheets)
+        //        {
+        //            if (!doc.GetElement(id).Name.Contains(splash))
+        //            {
+        //                try
+        //                {
+        //                    doc.Delete(id);
+        //                }
+        //                catch { }
+        //            }
+        //        }
+        //    }            
+        //}
+        //private void DeleteAllViewsSheets(Document doc)
+        //{            
+        //    var views = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElementIds();
 
-            if (views.Count != 0)
-            {
-                foreach (ElementId id in views)
-                {
-                    try
-                    {
-                        doc.Delete(id);
-                    }
-                    catch { }
-                }
-            }            
+        //    if (views.Count != 0)
+        //    {
+        //        foreach (ElementId id in views)
+        //        {
+        //            try
+        //            {
+        //                doc.Delete(id);
+        //            }
+        //            catch { }
+        //        }
+        //    }            
 
-            var sheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
+        //    var sheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
 
-            if (sheets.Count != 0)
-            {
-                foreach (ElementId id in sheets)
-                {
-                    if (!doc.GetElement(id).Name.Contains(splash))
-                    {
-                        try
-                        {
-                            doc.Delete(id);
-                        }
-                        catch { }
-                    }
-                }
-            }            
-        }
-        private void DeleteSchedules(Document doc)
-        {
-            var collector = new FilteredElementCollector(doc).OfClass(typeof(ViewSchedule)).ToElementIds();
+        //    if (sheets.Count != 0)
+        //    {
+        //        foreach (ElementId id in sheets)
+        //        {
+        //            if (!doc.GetElement(id).Name.Contains(splash))
+        //            {
+        //                try
+        //                {
+        //                    doc.Delete(id);
+        //                }
+        //                catch { }
+        //            }
+        //        }
+        //    }            
+        //}
+        //private void DeleteSchedules(Document doc)
+        //{
+        //    var collector = new FilteredElementCollector(doc).OfClass(typeof(ViewSchedule)).ToElementIds();
 
-            if (collector.Count != 0)
-            {
-                foreach (ElementId id in collector)
-                {
-                    try
-                    {
-                        doc.Delete(id);
-                    }
-                    catch { }
-                }
-            }            
-        }
-        private void UngroupGroups(Document doc)
-        {
-            var collector = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_IOSModelGroups).WhereElementIsNotElementType().ToElements();
+        //    if (collector.Count != 0)
+        //    {
+        //        foreach (ElementId id in collector)
+        //        {
+        //            try
+        //            {
+        //                doc.Delete(id);
+        //            }
+        //            catch { }
+        //        }
+        //    }            
+        //}
+        //private void UngroupGroups(Document doc)
+        //{
+        //    var collector = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_IOSModelGroups).WhereElementIsNotElementType().ToElements();
 
-            if (collector.Count == 0)
-            {
-                return;
-            }
+        //    if (collector.Count == 0)
+        //    {
+        //        return;
+        //    }
 
-            foreach (Group g in collector)
-            {
-                try
-                {
-                    g.UngroupMembers();
-                }
-                catch { }
-            }
+        //    foreach (Group g in collector)
+        //    {
+        //        try
+        //        {
+        //            g.UngroupMembers();
+        //        }
+        //        catch { }
+        //    }
 
-            var groups = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_IOSModelGroups).ToElementIds();
+        //    var groups = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_IOSModelGroups).ToElementIds();
 
-            foreach (ElementId id in groups)
-            {
-                try
-                {
-                    doc.Delete(id);
-                }
-                catch { }
-            }
-        }
-        private void PurgeDocument(Document doc)
-        {
-            Guid guid = new Guid("e8c63650-70b7-435a-9010-ec97660c1bda");
+        //    foreach (ElementId id in groups)
+        //    {
+        //        try
+        //        {
+        //            doc.Delete(id);
+        //        }
+        //        catch { }
+        //    }
+        //}
+        //private void PurgeDocument(Document doc)
+        //{
+        //    Guid guid = new Guid("e8c63650-70b7-435a-9010-ec97660c1bda");
 
-            var performanceAdviser = PerformanceAdviser.GetPerformanceAdviser();
+        //    var performanceAdviser = PerformanceAdviser.GetPerformanceAdviser();
 
-            List<PerformanceAdviserRuleId> ruleId = new List<PerformanceAdviserRuleId>();
+        //    List<PerformanceAdviserRuleId> ruleId = new List<PerformanceAdviserRuleId>();
 
-            var allRuleIds = performanceAdviser.GetAllRuleIds();
+        //    var allRuleIds = performanceAdviser.GetAllRuleIds();
 
-            foreach (var r in allRuleIds)
-            {
-                if (r.Guid == guid)
-                {
-                    ruleId.Add(r);
-                }
-            }
+        //    foreach (var r in allRuleIds)
+        //    {
+        //        if (r.Guid == guid)
+        //        {
+        //            ruleId.Add(r);
+        //        }
+        //    }
 
-            IList<PerformanceAdviserRuleId> ruleIds = ruleId;
+        //    IList<PerformanceAdviserRuleId> ruleIds = ruleId;
 
-            var failureMessages = performanceAdviser.ExecuteRules(doc, ruleId);
+        //    var failureMessages = performanceAdviser.ExecuteRules(doc, ruleId);
 
-            if (failureMessages.Count > 0)
-            {
-                var purgableElementIds = failureMessages[0].GetFailingElements();
+        //    if (failureMessages.Count > 0)
+        //    {
+        //        var purgableElementIds = failureMessages[0].GetFailingElements();
 
-                try
-                {
-                    doc.Delete(purgableElementIds);
-                }
-                catch
-                {
-                    foreach(ElementId id in purgableElementIds)
-                    {
-                        doc.Delete(id);
-                    }
-                }
-            }
-        }
+        //        try
+        //        {
+        //            doc.Delete(purgableElementIds);
+        //        }
+        //        catch
+        //        {
+        //            foreach(ElementId id in purgableElementIds)
+        //            {
+        //                doc.Delete(id);
+        //            }
+        //        }
+        //    }
+        //}
         private bool ExportIFC(Document doc,string folder,string name)
         {
             IFCExportOptions ifcoptions = new IFCExportOptions();
-
             try
             {
                 doc.Export(folder, name, ifcoptions);
@@ -738,6 +690,7 @@ namespace RevitBatchExporter
             navisoptions.ExportLinks = false;
             navisoptions.ConvertElementProperties = true;
             navisoptions.FindMissingMaterials = true;
+            navisoptions.Coordinates = NavisworksCoordinates.Shared;
 
             ViewFamilyType viewFamilyType3D = new FilteredElementCollector(doc).OfClass(typeof(ViewFamilyType)).Cast<ViewFamilyType>().FirstOrDefault<ViewFamilyType>(x => ViewFamily.ThreeDimensional == x.ViewFamily);
 
@@ -776,6 +729,11 @@ namespace RevitBatchExporter
                 t1.Commit();
                 return false;
             }
+        }
+        private bool ExportDWG(View3D view, string folder)
+        {
+
+            return false;
         }
         private void FailureProcessor(object sender, FailuresProcessingEventArgs e)
         {
