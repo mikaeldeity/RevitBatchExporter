@@ -31,10 +31,10 @@ namespace RevitBatchExporter.Dialogs
             {
                 TaskDialog.Show("Revit Batch Exporter", "Set a valid destination folder to continue.");
             }
-            else if(RevitBatchExporter.Export.documents.Count == 0)
-            {
-                TaskDialog.Show("Revit Batch Exporter", "Add Documents to continue.");
-            }
+            //else if(RevitBatchExporter.Export.documents.Count == 0)
+            //{
+            //    TaskDialog.Show("Revit Batch Exporter", "Add Documents to continue.");
+            //}
             else
             {
                 DialogResult = DialogResult.OK;
@@ -127,25 +127,19 @@ namespace RevitBatchExporter.Dialogs
             }
         }
 
-        private void RVTCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void NWCCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void IFCCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void ExportLabel_Click(object sender, EventArgs e)
         {
 
         }
 
+        private void DWGCheckbox_CheckStateChanged(object sender, EventArgs e)
+        {
+            DWGCombobox.Enabled = DWGCheckbox.Checked;
+        }
+
+        private void IFCCheckBox_CheckStateChanged(object sender, EventArgs e)
+        {
+            IFCCombobox.Enabled = IFCCheckBox.Checked;
+        }
     }
 }

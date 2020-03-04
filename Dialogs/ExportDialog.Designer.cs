@@ -35,8 +35,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.PathLabel = new System.Windows.Forms.Label();
             this.PathTextBox = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.DWGCheckbox = new System.Windows.Forms.CheckBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.DWGCombobox = new System.Windows.Forms.ComboBox();
+            this.IFCCombobox = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ExportButton
@@ -65,7 +68,6 @@
             this.NWCCheckBox.TabStop = false;
             this.NWCCheckBox.Text = "NWC";
             this.NWCCheckBox.UseVisualStyleBackColor = true;
-            this.NWCCheckBox.CheckedChanged += new System.EventHandler(this.NWCCheckBox_CheckedChanged);
             // 
             // IFCCheckBox
             // 
@@ -77,7 +79,7 @@
             this.IFCCheckBox.TabStop = false;
             this.IFCCheckBox.Text = "IFC";
             this.IFCCheckBox.UseVisualStyleBackColor = true;
-            this.IFCCheckBox.CheckedChanged += new System.EventHandler(this.IFCCheckBox_CheckedChanged);
+            this.IFCCheckBox.CheckStateChanged += new System.EventHandler(this.IFCCheckBox_CheckStateChanged);
             // 
             // ExportLabel
             // 
@@ -119,16 +121,17 @@
             this.PathTextBox.TabStop = false;
             this.PathTextBox.TextChanged += new System.EventHandler(this.PathTextBox_TextChanged);
             // 
-            // checkBox1
+            // DWGCheckbox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(37, 148);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(53, 17);
-            this.checkBox1.TabIndex = 37;
-            this.checkBox1.TabStop = false;
-            this.checkBox1.Text = "DWG";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.DWGCheckbox.AutoSize = true;
+            this.DWGCheckbox.Location = new System.Drawing.Point(37, 148);
+            this.DWGCheckbox.Name = "DWGCheckbox";
+            this.DWGCheckbox.Size = new System.Drawing.Size(53, 17);
+            this.DWGCheckbox.TabIndex = 37;
+            this.DWGCheckbox.TabStop = false;
+            this.DWGCheckbox.Text = "DWG";
+            this.DWGCheckbox.UseVisualStyleBackColor = true;
+            this.DWGCheckbox.CheckStateChanged += new System.EventHandler(this.DWGCheckbox_CheckStateChanged);
             // 
             // comboBox1
             // 
@@ -139,6 +142,35 @@
             this.comboBox1.Size = new System.Drawing.Size(232, 21);
             this.comboBox1.TabIndex = 38;
             // 
+            // DWGCombobox
+            // 
+            this.DWGCombobox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.DWGCombobox.FormattingEnabled = true;
+            this.DWGCombobox.Location = new System.Drawing.Point(120, 146);
+            this.DWGCombobox.Name = "DWGCombobox";
+            this.DWGCombobox.Size = new System.Drawing.Size(232, 21);
+            this.DWGCombobox.TabIndex = 39;
+            // 
+            // IFCCombobox
+            // 
+            this.IFCCombobox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.IFCCombobox.FormattingEnabled = true;
+            this.IFCCombobox.Location = new System.Drawing.Point(120, 119);
+            this.IFCCombobox.Name = "IFCCombobox";
+            this.IFCCombobox.Size = new System.Drawing.Size(232, 21);
+            this.IFCCombobox.TabIndex = 40;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(117, 76);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(60, 13);
+            this.label1.TabIndex = 31;
+            this.label1.Text = "Settings";
+            this.label1.Click += new System.EventHandler(this.ExportLabel_Click);
+            // 
             // ExportDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -146,9 +178,12 @@
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(394, 329);
+            this.Controls.Add(this.IFCCombobox);
+            this.Controls.Add(this.DWGCombobox);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.DWGCheckbox);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.ExportLabel);
             this.Controls.Add(this.IFCCheckBox);
             this.Controls.Add(this.NWCCheckBox);
@@ -176,7 +211,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label PathLabel;
         public System.Windows.Forms.TextBox PathTextBox;
-        public System.Windows.Forms.CheckBox checkBox1;
+        public System.Windows.Forms.CheckBox DWGCheckbox;
         public System.Windows.Forms.ComboBox comboBox1;
+        public System.Windows.Forms.ComboBox DWGCombobox;
+        public System.Windows.Forms.ComboBox IFCCombobox;
+        private System.Windows.Forms.Label label1;
     }
 }

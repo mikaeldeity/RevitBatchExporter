@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Autodesk.Revit.DB.ExternalService;
+using System.Reflection;
+using Autodesk.Revit.DB.IFC;
 
 namespace RevitBatchExporter
 {
@@ -37,9 +40,22 @@ namespace RevitBatchExporter
             }
             return views;
         }
-        private bool ExportIFC(Document doc,string folder,string name, ElementId viewid)
+
+        internal static IList<string> optionname(Document doc)
         {
+            IList<string> setupNames = BaseExportOptions.GetPredefinedSetupNames(doc);
+            return setupNames;
+        }
+
+        private bool ExportIFC(Document doc,string folder,string name, ElementId viewid)
+        {          
+            ExporterIFC exporterIFC = null;
+            exporterIFC.GetOptions();
+
+            //IDictionary<String, String> IFCOptions = new 
             IFCExportOptions ifcoptions = new IFCExportOptions();
+            ifcoptions.ExportBaseQuantities = true;
+            
             try
             {
                 doc.Export(folder, name, ifcoptions);
@@ -49,13 +65,13 @@ namespace RevitBatchExporter
         }
         private bool ExportNWC(Document doc, string folder, string name, ElementId viewid)
         {
-            
             NavisworksExportOptions navisoptions = new NavisworksExportOptions();
             navisoptions.ExportLinks = false;
             navisoptions.ConvertElementProperties = true;
             navisoptions.FindMissingMaterials = true;
             navisoptions.Coordinates = NavisworksCoordinates.Shared;
-            navisoptions.ViewId = viewid;                     
+            navisoptions.ViewId = viewid;
+            
             
             try
             {                
@@ -69,19 +85,27 @@ namespace RevitBatchExporter
                 return false;
             }
         }
-        private bool ExportDWG(Document doc, string folder, string name, ElementId viewid)
+        private bool ExportDWG(Document doc, string folder, string name, ElementId viewid, string optionname)
         {
 
-            NavisworksExportOptions navisoptions = new NavisworksExportOptions();
-            navisoptions.ExportLinks = false;
-            navisoptions.ConvertElementProperties = true;
-            navisoptions.FindMissingMaterials = true;
-            navisoptions.Coordinates = NavisworksCoordinates.Shared;
-            navisoptions.ViewId = viewid;
+            DWGExportOptions dwgOptions = null;
+            IList<string> setupNames = BaseExportOptions.GetPredefinedSetupNames(doc);
+            List<ElementId> ids = new List<ElementId>();
+            foreach (string n in setupNames)
+            {
+                //if (name.CompareTo(name) == 0)
+                if (n == optionname)
+                {
+                    // Export using the predefined options
+                    dwgOptions = DWGExportOptions.GetPredefinedOptions(doc, name);
+                }
+            }
 
+            ids.Add(viewid);
+            
             try
             {
-                doc.Export(folder, name, navisoptions);
+                doc.Export(folder, name, ids, dwgOptions);
                 return true;
             }
             catch (Exception e)
@@ -93,7 +117,7 @@ namespace RevitBatchExporter
         }
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-
+            
             UIApplication uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
@@ -107,20 +131,27 @@ namespace RevitBatchExporter
 
             var exportdialog = new RevitBatchExporter.Dialogs.ExportDialog();
 
-            exportdialog.comboBox1.DataSource = views.Keys.ToList();        
+            exportdialog.comboBox1.DataSource = views.Keys.ToList();
+
+            exportdialog.DWGCombobox.DataSource = optionname(doc);
+
+            exportdialog.DWGCombobox.Enabled = false;
+            exportdialog.IFCCombobox.Enabled = false;
 
             var dialog = exportdialog.ShowDialog();
 
             if (dialog != DialogResult.OK)
             {
                 return Result.Cancelled;
-            }
-
+            }    
+       
             ElementId selectedview = views[exportdialog.comboBox1.SelectedItem.ToString()];
+            string dwgoption = exportdialog.DWGCombobox.SelectedItem.ToString();
 
             if (destinationpath.Trim() != "" && Directory.Exists(destinationpath))
-            {
-                
+            {               
+                ExportDWG(doc, destinationpath, doc.Title, selectedview, dwgoption);
+                ExportIFC(doc, destinationpath, doc.Title, selectedview);
                 ExportNWC(doc, destinationpath, doc.Title, selectedview);
                 return Result.Succeeded;
             }   

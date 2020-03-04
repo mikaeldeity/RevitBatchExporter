@@ -37,11 +37,18 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IFCExportUI">
+      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2020\AddIns\IFCExporterUI\IFCExportUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="RevitAPI, Version=20.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIIFC">
+      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPIIFC.dll</HintPath>
     </Reference>
     <Reference Include="RevitAPIUI, Version=20.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
