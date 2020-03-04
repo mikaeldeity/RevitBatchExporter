@@ -20,7 +20,6 @@ namespace RevitBatchExporter
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;            
 
             PushButtonData b1Data = new PushButtonData("Export", "Export", thisAssemblyPath, "RevitBatchExporter.Export");
-            b1Data.AvailabilityClassName = "RevitBatchExporter.Availability";
             PushButton pb1 = ribbonPanel.AddItem(b1Data) as PushButton;
             pb1.ToolTip = "Batch export Revit documents.";
             BitmapImage pb1Image = new BitmapImage(new Uri("pack://application:,,,/RevitBatchExporter;component/Resources/RevitBatchExporter.png"));

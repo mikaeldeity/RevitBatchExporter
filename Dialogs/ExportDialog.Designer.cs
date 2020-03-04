@@ -33,10 +33,10 @@
             this.IFCCheckBox = new System.Windows.Forms.CheckBox();
             this.ExportLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.PathLabel = new System.Windows.Forms.Label();
             this.PathTextBox = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // ExportButton
@@ -58,7 +58,7 @@
             // NWCCheckBox
             // 
             this.NWCCheckBox.AutoSize = true;
-            this.NWCCheckBox.Location = new System.Drawing.Point(42, 157);
+            this.NWCCheckBox.Location = new System.Drawing.Point(37, 102);
             this.NWCCheckBox.Name = "NWCCheckBox";
             this.NWCCheckBox.Size = new System.Drawing.Size(52, 17);
             this.NWCCheckBox.TabIndex = 29;
@@ -70,7 +70,7 @@
             // IFCCheckBox
             // 
             this.IFCCheckBox.AutoSize = true;
-            this.IFCCheckBox.Location = new System.Drawing.Point(42, 180);
+            this.IFCCheckBox.Location = new System.Drawing.Point(37, 125);
             this.IFCCheckBox.Name = "IFCCheckBox";
             this.IFCCheckBox.Size = new System.Drawing.Size(42, 17);
             this.IFCCheckBox.TabIndex = 30;
@@ -83,7 +83,7 @@
             // 
             this.ExportLabel.AutoSize = true;
             this.ExportLabel.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExportLabel.Location = new System.Drawing.Point(39, 131);
+            this.ExportLabel.Location = new System.Drawing.Point(34, 76);
             this.ExportLabel.Name = "ExportLabel";
             this.ExportLabel.Size = new System.Drawing.Size(50, 13);
             this.ExportLabel.TabIndex = 31;
@@ -93,25 +93,18 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(244, 91);
+            this.label2.Location = new System.Drawing.Point(34, 39);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(113, 13);
+            this.label2.Size = new System.Drawing.Size(80, 13);
             this.label2.TabIndex = 35;
-            this.label2.Text = "NWC/IFC Export View";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(37, 88);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(186, 20);
-            this.textBox1.TabIndex = 36;
+            this.label2.Text = "Select 3DView ";
             // 
             // PathLabel
             // 
             this.PathLabel.AutoEllipsis = true;
             this.PathLabel.AutoSize = true;
             this.PathLabel.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PathLabel.Location = new System.Drawing.Point(34, 32);
+            this.PathLabel.Location = new System.Drawing.Point(34, 188);
             this.PathLabel.Name = "PathLabel";
             this.PathLabel.Size = new System.Drawing.Size(114, 13);
             this.PathLabel.TabIndex = 0;
@@ -119,7 +112,7 @@
             // 
             // PathTextBox
             // 
-            this.PathTextBox.Location = new System.Drawing.Point(37, 53);
+            this.PathTextBox.Location = new System.Drawing.Point(37, 209);
             this.PathTextBox.Name = "PathTextBox";
             this.PathTextBox.Size = new System.Drawing.Size(320, 20);
             this.PathTextBox.TabIndex = 19;
@@ -129,13 +122,22 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(42, 203);
+            this.checkBox1.Location = new System.Drawing.Point(37, 148);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(53, 17);
             this.checkBox1.TabIndex = 37;
             this.checkBox1.TabStop = false;
             this.checkBox1.Text = "DWG";
             this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(120, 36);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(232, 21);
+            this.comboBox1.TabIndex = 38;
             // 
             // ExportDialog
             // 
@@ -144,8 +146,8 @@
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(394, 329);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ExportLabel);
             this.Controls.Add(this.IFCCheckBox);
@@ -160,7 +162,7 @@
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Revit Batch Exporter";
+            this.Text = "Weekly Export";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -172,9 +174,9 @@
         public System.Windows.Forms.CheckBox IFCCheckBox;
         private System.Windows.Forms.Label ExportLabel;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label PathLabel;
         public System.Windows.Forms.TextBox PathTextBox;
         public System.Windows.Forms.CheckBox checkBox1;
+        public System.Windows.Forms.ComboBox comboBox1;
     }
 }
