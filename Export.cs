@@ -46,12 +46,15 @@ namespace RevitBatchExporter
             IList<string> setupNames = BaseExportOptions.GetPredefinedSetupNames(doc);
             return setupNames;
         }
+
         internal static List<string> IFCExportpredefined()
         {
-            List<string> ifcs = new List<string>(); 
+            
+            List<string> ifcs = new List<string>();
             IFCExportConfigurationsMap configurationsMap = new IFCExportConfigurationsMap();
             configurationsMap.AddBuiltInConfigurations();
             configurationsMap.Add(IFCExportConfiguration.GetInSession());
+            configurationsMap.AddSavedConfigurations();
 
             int n = configurationsMap.Values.Count();
 
@@ -65,13 +68,14 @@ namespace RevitBatchExporter
         }
         private bool ExportIFC(Document doc,string folder,string name, ElementId viewid, string settings)
         {
+            
             //Create an instance of IFCExportOptions
             IFCExportOptions IFCOptions = new IFCExportOptions();
             
             IFCExportConfigurationsMap configurationsMap = new IFCExportConfigurationsMap();        
             configurationsMap.AddBuiltInConfigurations();
             configurationsMap.Add(IFCExportConfiguration.GetInSession());
-
+            configurationsMap.AddSavedConfigurations();
             int n = configurationsMap.Values.Count();
 
             for (int i = 0; i < n; i++)

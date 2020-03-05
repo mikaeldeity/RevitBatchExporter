@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\ProgramData\Autodesk\Revit\Addins\2020\</OutputPath>
+    <OutputPath>..\..\..\AppData\Roaming\Autodesk\Revit\Addins\2020\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>none</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -39,7 +39,6 @@
   <ItemGroup>
     <Reference Include="IFCExportUI">
       <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2020\AddIns\IFCExporterUI\IFCExportUI.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="RevitAPI, Version=20.0.0.0, Culture=neutral, processorArchitecture=AMD64">

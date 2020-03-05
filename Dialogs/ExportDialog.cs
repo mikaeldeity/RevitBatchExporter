@@ -130,17 +130,14 @@ namespace RevitBatchExporter.Dialogs
         {
 
         }
-
         private void DWGCheckbox_CheckStateChanged(object sender, EventArgs e)
         {
             DWGCombobox.Enabled = DWGCheckbox.Checked;
         }
-
         private void IFCCheckBox_CheckStateChanged(object sender, EventArgs e)
         {
             IFCCombobox.Enabled = IFCCheckBox.Checked;
         }
-
         private void NWCCheckBox_CheckStateChanged(object sender, EventArgs e)
         {
             this.SharedRadio.Enabled = NWCCheckBox.Checked;
