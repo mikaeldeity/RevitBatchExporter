@@ -49,7 +49,7 @@ namespace RevitBatchExporter
 
         internal static List<string> IFCExportpredefined()
         {
-            
+            //import
             List<string> ifcs = new List<string>();
             IFCExportConfigurationsMap configurationsMap = new IFCExportConfigurationsMap();
             configurationsMap.AddBuiltInConfigurations();
@@ -78,6 +78,8 @@ namespace RevitBatchExporter
             configurationsMap.AddSavedConfigurations();
             int n = configurationsMap.Values.Count();
 
+            
+
             for (int i = 0; i < n; i++)
             {
                 //var values = configurationsMap.Values;
@@ -86,7 +88,9 @@ namespace RevitBatchExporter
                     List<IFCExportConfiguration> val = configurationsMap.Values.ToList();
                     if (val[j].Name == settings)
                     {
+                        val[j].VisibleElementsOfCurrentView = true;
                         val[j].UpdateOptions(IFCOptions, viewid);
+                        val[j].VisibleElementsOfCurrentView = true;
 
                     }
 
@@ -131,6 +135,7 @@ namespace RevitBatchExporter
             navisoptions.ViewId = viewid;
             navisoptions.FacetingFactor = 1;
             navisoptions.FindMissingMaterials = true;
+            navisoptions.ExportScope = NavisworksExportScope.View;
 
             try
             {
