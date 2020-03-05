@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using Autodesk.Revit.DB.ExternalService;
 using System.Reflection;
 using Autodesk.Revit.DB.IFC;
+using BIM.IFC.Export.UI;
+
 
 namespace RevitBatchExporter
 {
@@ -48,9 +50,18 @@ namespace RevitBatchExporter
         }
 
         private bool ExportIFC(Document doc,string folder,string name, ElementId viewid)
-        {          
-            ExporterIFC exporterIFC = null;
-            exporterIFC.GetOptions();
+        {
+            //Create an instance of IFCExportOptions
+            IFCExportOptions IFCOptions = new IFCExportOptions();
+            //Get an instance of IFCExportConfiguration
+            //IFCExportConfiguration selectedConfig = modelSelection.Configuration;
+
+            IFCExportConfigurationsMap configurationsMap = new IFCExportConfigurationsMap();
+            configurationsMap.Add(IFCExportConfiguration.GetInSession());
+
+            //electedConfig.Name
+            //Update the IFCExportOptions
+            //selectedConfig.UpdateOptions(IFCOptions, viewid);
 
             //IDictionary<String, String> IFCOptions = new 
             IFCExportOptions ifcoptions = new IFCExportOptions();
@@ -58,7 +69,8 @@ namespace RevitBatchExporter
             
             try
             {
-                doc.Export(folder, name, ifcoptions);
+                //Export the model to IFC
+                doc.Export(folder, name, IFCOptions);
                 return true;
             }
             catch { return false; }
