@@ -13,6 +13,7 @@ using Autodesk.Revit.DB.IFC;
 using BIM.IFC.Export.UI;
 
 
+
 namespace RevitBatchExporter
 {
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
@@ -21,9 +22,7 @@ namespace RevitBatchExporter
     class Export : IExternalCommand
     {
         internal static List<string> documents = new List<string>();
-
         internal static string destinationpath = "";
-
         internal static Dictionary<string, ElementId> GetViews(Document doc)
         {
             FilteredElementCollector collector = new FilteredElementCollector(doc).OfClass(typeof(View3D));
@@ -42,51 +41,95 @@ namespace RevitBatchExporter
             }
             return views;
         }
-
         internal static IList<string> optionname(Document doc)
         {
             IList<string> setupNames = BaseExportOptions.GetPredefinedSetupNames(doc);
             return setupNames;
         }
+        internal static List<string> IFCExportpredefined()
+        {
+            List<string> ifcs = new List<string>(); 
+            IFCExportConfigurationsMap configurationsMap = new IFCExportConfigurationsMap();
+            configurationsMap.AddBuiltInConfigurations();
+            configurationsMap.Add(IFCExportConfiguration.GetInSession());
 
-        private bool ExportIFC(Document doc,string folder,string name, ElementId viewid)
+            int n = configurationsMap.Values.Count();
+
+            for (int j = 0; j < configurationsMap.Values.Count(); j++)
+            {
+                List<IFCExportConfiguration> val = configurationsMap.Values.ToList();
+                ifcs.Add(val[j].Name);
+                    
+            }
+            return ifcs;
+        }
+        private bool ExportIFC(Document doc,string folder,string name, ElementId viewid, string settings)
         {
             //Create an instance of IFCExportOptions
             IFCExportOptions IFCOptions = new IFCExportOptions();
-            //Get an instance of IFCExportConfiguration
-            //IFCExportConfiguration selectedConfig = modelSelection.Configuration;
-
-            IFCExportConfigurationsMap configurationsMap = new IFCExportConfigurationsMap();
+            
+            IFCExportConfigurationsMap configurationsMap = new IFCExportConfigurationsMap();        
+            configurationsMap.AddBuiltInConfigurations();
             configurationsMap.Add(IFCExportConfiguration.GetInSession());
 
-            //electedConfig.Name
-            //Update the IFCExportOptions
-            //selectedConfig.UpdateOptions(IFCOptions, viewid);
+            int n = configurationsMap.Values.Count();
 
-            //IDictionary<String, String> IFCOptions = new 
-            IFCExportOptions ifcoptions = new IFCExportOptions();
-            ifcoptions.ExportBaseQuantities = true;
-            
+            for (int i = 0; i < n; i++)
+            {
+                //var values = configurationsMap.Values;
+                for (int j = 0; j < configurationsMap.Values.Count(); j++)
+                {
+                    List<IFCExportConfiguration> val = configurationsMap.Values.ToList();
+                    if (val[j].Name == settings)
+                    {
+                        val[j].UpdateOptions(IFCOptions, viewid);
+
+                    }
+
+                }
+
+            }
             try
             {
-                //Export the model to IFC
+                Transaction k = new Transaction(doc, "export ifc");
+                k.Start();
                 doc.Export(folder, name, IFCOptions);
+                k.Commit();
                 return true;
             }
-            catch { return false; }
+            catch (Exception e)
+            {
+                string error = e.Message;
+                return false;
+            }     
+                      
         }
-        private bool ExportNWC(Document doc, string folder, string name, ElementId viewid)
+        private bool ExportNWC(Document doc, string folder, string name, ElementId viewid, bool shared)
         {
             NavisworksExportOptions navisoptions = new NavisworksExportOptions();
-            navisoptions.ExportLinks = false;
+            if (shared)
+            {
+                navisoptions.Coordinates = NavisworksCoordinates.Shared;
+            }
+            else
+            {
+                navisoptions.Coordinates = NavisworksCoordinates.Internal;
+            }
+
             navisoptions.ConvertElementProperties = true;
-            navisoptions.FindMissingMaterials = true;
-            navisoptions.Coordinates = NavisworksCoordinates.Shared;
+            navisoptions.Parameters = NavisworksParameters.All;
+            navisoptions.ConvertLinkedCADFormats = true;
+            navisoptions.ExportLinks = false;
+            navisoptions.ExportRoomAsAttribute = true;
+            navisoptions.ExportUrls = true;
+            navisoptions.DivideFileIntoLevels = true;
+            navisoptions.ExportRoomGeometry = true;
             navisoptions.ViewId = viewid;
-            
-            
+            navisoptions.FacetingFactor = 1;
+            navisoptions.FindMissingMaterials = true;
+
             try
-            {                
+            {
                 doc.Export(folder, name, navisoptions);
                 return true;
             }
@@ -99,16 +142,13 @@ namespace RevitBatchExporter
         }
         private bool ExportDWG(Document doc, string folder, string name, ElementId viewid, string optionname)
         {
-
             DWGExportOptions dwgOptions = null;
             IList<string> setupNames = BaseExportOptions.GetPredefinedSetupNames(doc);
             List<ElementId> ids = new List<ElementId>();
             foreach (string n in setupNames)
             {
-                //if (name.CompareTo(name) == 0)
                 if (n == optionname)
                 {
-                    // Export using the predefined options
                     dwgOptions = DWGExportOptions.GetPredefinedOptions(doc, name);
                 }
             }
@@ -128,8 +168,7 @@ namespace RevitBatchExporter
             }
         }
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
-        {
-            
+        {          
             UIApplication uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
@@ -147,6 +186,8 @@ namespace RevitBatchExporter
 
             exportdialog.DWGCombobox.DataSource = optionname(doc);
 
+            exportdialog.IFCCombobox.DataSource = IFCExportpredefined();
+
             exportdialog.DWGCombobox.Enabled = false;
             exportdialog.IFCCombobox.Enabled = false;
 
@@ -156,15 +197,30 @@ namespace RevitBatchExporter
             {
                 return Result.Cancelled;
             }    
-       
+            
             ElementId selectedview = views[exportdialog.comboBox1.SelectedItem.ToString()];
             string dwgoption = exportdialog.DWGCombobox.SelectedItem.ToString();
+            string settings = exportdialog.IFCCombobox.SelectedItem.ToString();
+            int count = 0;
 
             if (destinationpath.Trim() != "" && Directory.Exists(destinationpath))
-            {               
-                ExportDWG(doc, destinationpath, doc.Title, selectedview, dwgoption);
-                ExportIFC(doc, destinationpath, doc.Title, selectedview);
-                ExportNWC(doc, destinationpath, doc.Title, selectedview);
+            {
+                if (exportdialog.IFCCheckBox.Checked)
+                {
+                    ExportIFC(doc, destinationpath, doc.Title, selectedview, settings);
+                    count++;
+                }
+                if (exportdialog.NWCCheckBox.Checked)
+                {
+                    ExportNWC(doc, destinationpath, doc.Title, selectedview, exportdialog.SharedRadio.Checked);
+                    count++;
+                }
+                if (exportdialog.DWGCheckbox.Checked)
+                {
+                    ExportDWG(doc, destinationpath, doc.Title, selectedview, dwgoption);
+                    count++;
+                }
+                TaskDialog.Show("Success", "exported " + count + " documents");        
                 return Result.Succeeded;
             }   
             else

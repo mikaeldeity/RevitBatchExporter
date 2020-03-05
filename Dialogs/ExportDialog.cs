@@ -21,9 +21,9 @@ namespace RevitBatchExporter.Dialogs
 
         public ExportDialog()
         {
-
             InitializeComponent();
-            
+            this.SharedRadio.Enabled = false;
+            this.InternalRadio.Enabled = false;
         }
         private void ExportButton_Click(object sender, EventArgs e)
         {
@@ -126,7 +126,6 @@ namespace RevitBatchExporter.Dialogs
                 }
             }
         }
-
         private void ExportLabel_Click(object sender, EventArgs e)
         {
 
@@ -140,6 +139,12 @@ namespace RevitBatchExporter.Dialogs
         private void IFCCheckBox_CheckStateChanged(object sender, EventArgs e)
         {
             IFCCombobox.Enabled = IFCCheckBox.Checked;
+        }
+
+        private void NWCCheckBox_CheckStateChanged(object sender, EventArgs e)
+        {
+            this.SharedRadio.Enabled = NWCCheckBox.Checked;
+            this.InternalRadio.Enabled = NWCCheckBox.Checked;
         }
     }
 }

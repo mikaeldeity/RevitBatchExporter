@@ -15,13 +15,13 @@ namespace RevitBatchExporter
     {
         static void AddRibbonPanel(UIControlledApplication application)
         {
-            RibbonPanel ribbonPanel = application.CreateRibbonPanel("Revit Batch Exporter");
+            RibbonPanel ribbonPanel = application.CreateRibbonPanel("Export");
 
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;            
 
             PushButtonData b1Data = new PushButtonData("Export", "Export", thisAssemblyPath, "RevitBatchExporter.Export");
             PushButton pb1 = ribbonPanel.AddItem(b1Data) as PushButton;
-            pb1.ToolTip = "Batch export Revit documents.";
+            pb1.ToolTip = "Export Models in different formats";
             BitmapImage pb1Image = new BitmapImage(new Uri("pack://application:,,,/RevitBatchExporter;component/Resources/RevitBatchExporter.png"));
             pb1.LargeImage = pb1Image;
         }

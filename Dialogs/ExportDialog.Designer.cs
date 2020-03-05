@@ -40,6 +40,8 @@
             this.DWGCombobox = new System.Windows.Forms.ComboBox();
             this.IFCCombobox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.InternalRadio = new System.Windows.Forms.RadioButton();
+            this.SharedRadio = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // ExportButton
@@ -49,7 +51,7 @@
             this.ExportButton.FlatAppearance.BorderSize = 0;
             this.ExportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExportButton.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExportButton.Location = new System.Drawing.Point(42, 251);
+            this.ExportButton.Location = new System.Drawing.Point(37, 266);
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(320, 36);
             this.ExportButton.TabIndex = 0;
@@ -61,18 +63,19 @@
             // NWCCheckBox
             // 
             this.NWCCheckBox.AutoSize = true;
-            this.NWCCheckBox.Location = new System.Drawing.Point(37, 102);
+            this.NWCCheckBox.Location = new System.Drawing.Point(35, 114);
             this.NWCCheckBox.Name = "NWCCheckBox";
             this.NWCCheckBox.Size = new System.Drawing.Size(52, 17);
             this.NWCCheckBox.TabIndex = 29;
             this.NWCCheckBox.TabStop = false;
             this.NWCCheckBox.Text = "NWC";
             this.NWCCheckBox.UseVisualStyleBackColor = true;
+            this.NWCCheckBox.CheckStateChanged += new System.EventHandler(this.NWCCheckBox_CheckStateChanged);
             // 
             // IFCCheckBox
             // 
             this.IFCCheckBox.AutoSize = true;
-            this.IFCCheckBox.Location = new System.Drawing.Point(37, 125);
+            this.IFCCheckBox.Location = new System.Drawing.Point(35, 140);
             this.IFCCheckBox.Name = "IFCCheckBox";
             this.IFCCheckBox.Size = new System.Drawing.Size(42, 17);
             this.IFCCheckBox.TabIndex = 30;
@@ -85,7 +88,7 @@
             // 
             this.ExportLabel.AutoSize = true;
             this.ExportLabel.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExportLabel.Location = new System.Drawing.Point(34, 76);
+            this.ExportLabel.Location = new System.Drawing.Point(32, 85);
             this.ExportLabel.Name = "ExportLabel";
             this.ExportLabel.Size = new System.Drawing.Size(50, 13);
             this.ExportLabel.TabIndex = 31;
@@ -106,7 +109,7 @@
             this.PathLabel.AutoEllipsis = true;
             this.PathLabel.AutoSize = true;
             this.PathLabel.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PathLabel.Location = new System.Drawing.Point(34, 188);
+            this.PathLabel.Location = new System.Drawing.Point(34, 199);
             this.PathLabel.Name = "PathLabel";
             this.PathLabel.Size = new System.Drawing.Size(114, 13);
             this.PathLabel.TabIndex = 0;
@@ -114,7 +117,7 @@
             // 
             // PathTextBox
             // 
-            this.PathTextBox.Location = new System.Drawing.Point(37, 209);
+            this.PathTextBox.Location = new System.Drawing.Point(37, 225);
             this.PathTextBox.Name = "PathTextBox";
             this.PathTextBox.Size = new System.Drawing.Size(320, 20);
             this.PathTextBox.TabIndex = 19;
@@ -124,7 +127,7 @@
             // DWGCheckbox
             // 
             this.DWGCheckbox.AutoSize = true;
-            this.DWGCheckbox.Location = new System.Drawing.Point(37, 148);
+            this.DWGCheckbox.Location = new System.Drawing.Point(35, 167);
             this.DWGCheckbox.Name = "DWGCheckbox";
             this.DWGCheckbox.Size = new System.Drawing.Size(53, 17);
             this.DWGCheckbox.TabIndex = 37;
@@ -135,7 +138,7 @@
             // 
             // comboBox1
             // 
-            this.comboBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(120, 36);
             this.comboBox1.Name = "comboBox1";
@@ -144,18 +147,18 @@
             // 
             // DWGCombobox
             // 
-            this.DWGCombobox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.DWGCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.DWGCombobox.FormattingEnabled = true;
-            this.DWGCombobox.Location = new System.Drawing.Point(120, 146);
+            this.DWGCombobox.Location = new System.Drawing.Point(119, 165);
             this.DWGCombobox.Name = "DWGCombobox";
             this.DWGCombobox.Size = new System.Drawing.Size(232, 21);
             this.DWGCombobox.TabIndex = 39;
             // 
             // IFCCombobox
             // 
-            this.IFCCombobox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.IFCCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.IFCCombobox.FormattingEnabled = true;
-            this.IFCCombobox.Location = new System.Drawing.Point(120, 119);
+            this.IFCCombobox.Location = new System.Drawing.Point(119, 138);
             this.IFCCombobox.Name = "IFCCombobox";
             this.IFCCombobox.Size = new System.Drawing.Size(232, 21);
             this.IFCCombobox.TabIndex = 40;
@@ -164,12 +167,34 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(117, 76);
+            this.label1.Location = new System.Drawing.Point(116, 85);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 31;
             this.label1.Text = "Settings";
             this.label1.Click += new System.EventHandler(this.ExportLabel_Click);
+            // 
+            // InternalRadio
+            // 
+            this.InternalRadio.AutoSize = true;
+            this.InternalRadio.Location = new System.Drawing.Point(119, 114);
+            this.InternalRadio.Name = "InternalRadio";
+            this.InternalRadio.Size = new System.Drawing.Size(63, 17);
+            this.InternalRadio.TabIndex = 41;
+            this.InternalRadio.Text = "Internal ";
+            this.InternalRadio.UseVisualStyleBackColor = true;
+            // 
+            // SharedRadio
+            // 
+            this.SharedRadio.AutoSize = true;
+            this.SharedRadio.Checked = true;
+            this.SharedRadio.Location = new System.Drawing.Point(188, 114);
+            this.SharedRadio.Name = "SharedRadio";
+            this.SharedRadio.Size = new System.Drawing.Size(59, 17);
+            this.SharedRadio.TabIndex = 42;
+            this.SharedRadio.TabStop = true;
+            this.SharedRadio.Text = "Shared";
+            this.SharedRadio.UseVisualStyleBackColor = true;
             // 
             // ExportDialog
             // 
@@ -178,6 +203,8 @@
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(394, 329);
+            this.Controls.Add(this.SharedRadio);
+            this.Controls.Add(this.InternalRadio);
             this.Controls.Add(this.IFCCombobox);
             this.Controls.Add(this.DWGCombobox);
             this.Controls.Add(this.comboBox1);
@@ -216,5 +243,7 @@
         public System.Windows.Forms.ComboBox DWGCombobox;
         public System.Windows.Forms.ComboBox IFCCombobox;
         private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.RadioButton InternalRadio;
+        public System.Windows.Forms.RadioButton SharedRadio;
     }
 }
