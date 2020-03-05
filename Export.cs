@@ -96,13 +96,13 @@ namespace RevitBatchExporter
                 openOptions.SetOpenWorksetsConfiguration(openConfig);
             }
 
-            string reason = exportdialog.IssueReasonTextBox.Text.TrimEnd().TrimStart();
+            string reason = exportdialog.IssueReasonTextBox.Text.Trim();
 
-            string customdate = exportdialog.DateTextBox.Text.TrimEnd().TrimStart();
+            string customdate = exportdialog.DateTextBox.Text.Trim();
 
-            string nameprefix = exportdialog.PrefixTextBox.Text.TrimEnd().TrimStart();
+            string nameprefix = exportdialog.PrefixTextBox.Text.Trim();
 
-            string namesuffix = exportdialog.SuffixTextBox.Text.TrimEnd().TrimStart();
+            string namesuffix = exportdialog.SuffixTextBox.Text.Trim();
 
             string debugmessage = "";
 
@@ -112,7 +112,7 @@ namespace RevitBatchExporter
 
             foreach(string path in documents)
             {
-                string destdoc = nameprefix + Path.GetFileName(path.Replace(".rvt", "")) + namesuffix + ".rvt";
+                string destdoc = nameprefix + Path.GetFileName(path.Substring(path.Length - 4)) + namesuffix + ".rvt";
 
                 if (File.Exists(destinationpath + destdoc))
                 {
@@ -120,9 +120,9 @@ namespace RevitBatchExporter
                     break;
                 }
 
-                string pathOnly = Path.GetDirectoryName(path) + "\\";
+                string pathonly = Path.GetDirectoryName(path) + "\\";
 
-                if(pathOnly == destinationpath)
+                if(pathonly == destinationpath)
                 {
                     samepath = true;
                     break;
