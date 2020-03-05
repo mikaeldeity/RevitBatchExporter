@@ -1,6 +1,6 @@
 ﻿namespace RevitBatchExporter.Dialogs
 {
-    partial class ExportDialog
+    partial class BatchExportDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -59,14 +59,14 @@
             this.ExportLabel = new System.Windows.Forms.Label();
             this.RemoveCADImportsCheckBox = new System.Windows.Forms.CheckBox();
             this.RVTCheckBox = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.KeepViewLabel = new System.Windows.Forms.Label();
+            this.SafeNameTextbox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // PurgeCheckBox
             // 
             this.PurgeCheckBox.AutoSize = true;
-            this.PurgeCheckBox.Location = new System.Drawing.Point(37, 506);
+            this.PurgeCheckBox.Location = new System.Drawing.Point(36, 541);
             this.PurgeCheckBox.Name = "PurgeCheckBox";
             this.PurgeCheckBox.Size = new System.Drawing.Size(54, 17);
             this.PurgeCheckBox.TabIndex = 1;
@@ -77,7 +77,7 @@
             // UngroupCheckBox
             // 
             this.UngroupCheckBox.AutoSize = true;
-            this.UngroupCheckBox.Location = new System.Drawing.Point(37, 529);
+            this.UngroupCheckBox.Location = new System.Drawing.Point(36, 564);
             this.UngroupCheckBox.Name = "UngroupCheckBox";
             this.UngroupCheckBox.Size = new System.Drawing.Size(104, 17);
             this.UngroupCheckBox.TabIndex = 2;
@@ -88,7 +88,7 @@
             // SchedulesCheckBox
             // 
             this.SchedulesCheckBox.AutoSize = true;
-            this.SchedulesCheckBox.Location = new System.Drawing.Point(212, 506);
+            this.SchedulesCheckBox.Location = new System.Drawing.Point(211, 541);
             this.SchedulesCheckBox.Name = "SchedulesCheckBox";
             this.SchedulesCheckBox.Size = new System.Drawing.Size(76, 17);
             this.SchedulesCheckBox.TabIndex = 4;
@@ -99,7 +99,7 @@
             // RemoveCADLinksCheckBox
             // 
             this.RemoveCADLinksCheckBox.AutoSize = true;
-            this.RemoveCADLinksCheckBox.Location = new System.Drawing.Point(37, 460);
+            this.RemoveCADLinksCheckBox.Location = new System.Drawing.Point(36, 495);
             this.RemoveCADLinksCheckBox.Name = "RemoveCADLinksCheckBox";
             this.RemoveCADLinksCheckBox.Size = new System.Drawing.Size(76, 17);
             this.RemoveCADLinksCheckBox.TabIndex = 5;
@@ -110,7 +110,7 @@
             // RemoveRVTLinksCheckBox
             // 
             this.RemoveRVTLinksCheckBox.AutoSize = true;
-            this.RemoveRVTLinksCheckBox.Location = new System.Drawing.Point(37, 437);
+            this.RemoveRVTLinksCheckBox.Location = new System.Drawing.Point(36, 472);
             this.RemoveRVTLinksCheckBox.Name = "RemoveRVTLinksCheckBox";
             this.RemoveRVTLinksCheckBox.Size = new System.Drawing.Size(79, 17);
             this.RemoveRVTLinksCheckBox.TabIndex = 6;
@@ -125,7 +125,7 @@
             this.ExportButton.FlatAppearance.BorderSize = 0;
             this.ExportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExportButton.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExportButton.Location = new System.Drawing.Point(37, 644);
+            this.ExportButton.Location = new System.Drawing.Point(36, 651);
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(320, 36);
             this.ExportButton.TabIndex = 0;
@@ -280,7 +280,7 @@
             // ViewsNotSheetsCheckBox
             // 
             this.ViewsNotSheetsCheckBox.AutoSize = true;
-            this.ViewsNotSheetsCheckBox.Location = new System.Drawing.Point(212, 437);
+            this.ViewsNotSheetsCheckBox.Location = new System.Drawing.Point(211, 472);
             this.ViewsNotSheetsCheckBox.Name = "ViewsNotSheetsCheckBox";
             this.ViewsNotSheetsCheckBox.Size = new System.Drawing.Size(123, 17);
             this.ViewsNotSheetsCheckBox.TabIndex = 23;
@@ -291,7 +291,7 @@
             // SheetsCheckBox
             // 
             this.SheetsCheckBox.AutoSize = true;
-            this.SheetsCheckBox.Location = new System.Drawing.Point(212, 483);
+            this.SheetsCheckBox.Location = new System.Drawing.Point(211, 518);
             this.SheetsCheckBox.Name = "SheetsCheckBox";
             this.SheetsCheckBox.Size = new System.Drawing.Size(59, 17);
             this.SheetsCheckBox.TabIndex = 24;
@@ -302,7 +302,7 @@
             // ViewsONSheetsCheckBox
             // 
             this.ViewsONSheetsCheckBox.AutoSize = true;
-            this.ViewsONSheetsCheckBox.Location = new System.Drawing.Point(212, 460);
+            this.ViewsONSheetsCheckBox.Location = new System.Drawing.Point(211, 495);
             this.ViewsONSheetsCheckBox.Name = "ViewsONSheetsCheckBox";
             this.ViewsONSheetsCheckBox.Size = new System.Drawing.Size(105, 17);
             this.ViewsONSheetsCheckBox.TabIndex = 25;
@@ -314,7 +314,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(34, 413);
+            this.label1.Location = new System.Drawing.Point(33, 448);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 26;
@@ -355,30 +355,32 @@
             // NWCCheckBox
             // 
             this.NWCCheckBox.AutoSize = true;
-            this.NWCCheckBox.Location = new System.Drawing.Point(37, 611);
+            this.NWCCheckBox.Location = new System.Drawing.Point(163, 617);
             this.NWCCheckBox.Name = "NWCCheckBox";
             this.NWCCheckBox.Size = new System.Drawing.Size(52, 17);
             this.NWCCheckBox.TabIndex = 29;
             this.NWCCheckBox.TabStop = false;
             this.NWCCheckBox.Text = "NWC";
             this.NWCCheckBox.UseVisualStyleBackColor = true;
+            this.NWCCheckBox.Visible = false;
             // 
             // IFCCheckBox
             // 
             this.IFCCheckBox.AutoSize = true;
-            this.IFCCheckBox.Location = new System.Drawing.Point(106, 611);
+            this.IFCCheckBox.Location = new System.Drawing.Point(308, 617);
             this.IFCCheckBox.Name = "IFCCheckBox";
             this.IFCCheckBox.Size = new System.Drawing.Size(42, 17);
             this.IFCCheckBox.TabIndex = 30;
             this.IFCCheckBox.TabStop = false;
             this.IFCCheckBox.Text = "IFC";
             this.IFCCheckBox.UseVisualStyleBackColor = true;
+            this.IFCCheckBox.Visible = false;
             // 
             // ExportLabel
             // 
             this.ExportLabel.AutoSize = true;
             this.ExportLabel.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExportLabel.Location = new System.Drawing.Point(34, 556);
+            this.ExportLabel.Location = new System.Drawing.Point(33, 591);
             this.ExportLabel.Name = "ExportLabel";
             this.ExportLabel.Size = new System.Drawing.Size(50, 13);
             this.ExportLabel.TabIndex = 31;
@@ -387,7 +389,7 @@
             // RemoveCADImportsCheckBox
             // 
             this.RemoveCADImportsCheckBox.AutoSize = true;
-            this.RemoveCADImportsCheckBox.Location = new System.Drawing.Point(37, 483);
+            this.RemoveCADImportsCheckBox.Location = new System.Drawing.Point(36, 518);
             this.RemoveCADImportsCheckBox.Name = "RemoveCADImportsCheckBox";
             this.RemoveCADImportsCheckBox.Size = new System.Drawing.Size(85, 17);
             this.RemoveCADImportsCheckBox.TabIndex = 32;
@@ -400,7 +402,7 @@
             this.RVTCheckBox.AutoSize = true;
             this.RVTCheckBox.Checked = true;
             this.RVTCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.RVTCheckBox.Location = new System.Drawing.Point(37, 582);
+            this.RVTCheckBox.Location = new System.Drawing.Point(36, 617);
             this.RVTCheckBox.Name = "RVTCheckBox";
             this.RVTCheckBox.Size = new System.Drawing.Size(48, 17);
             this.RVTCheckBox.TabIndex = 33;
@@ -408,31 +410,34 @@
             this.RVTCheckBox.Text = "RVT";
             this.RVTCheckBox.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // KeepViewLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(168, 583);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(113, 13);
-            this.label2.TabIndex = 35;
-            this.label2.Text = "NWC/IFC Export View";
+            this.KeepViewLabel.AutoSize = true;
+            this.KeepViewLabel.Location = new System.Drawing.Point(34, 414);
+            this.KeepViewLabel.Name = "KeepViewLabel";
+            this.KeepViewLabel.Size = new System.Drawing.Size(125, 13);
+            this.KeepViewLabel.TabIndex = 34;
+            this.KeepViewLabel.Text = "Keep Views that contain:";
             // 
-            // textBox1
+            // SafeNameTextbox
             // 
-            this.textBox1.Location = new System.Drawing.Point(171, 608);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(186, 20);
-            this.textBox1.TabIndex = 36;
+            this.SafeNameTextbox.Location = new System.Drawing.Point(163, 410);
+            this.SafeNameTextbox.MaxLength = 100;
+            this.SafeNameTextbox.Name = "SafeNameTextbox";
+            this.SafeNameTextbox.Size = new System.Drawing.Size(194, 20);
+            this.SafeNameTextbox.TabIndex = 35;
+            this.SafeNameTextbox.TabStop = false;
+            this.SafeNameTextbox.Text = "Splash";
             // 
-            // ExportDialog
+            // BatchExportDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(394, 702);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(394, 716);
+            this.Controls.Add(this.SafeNameTextbox);
+            this.Controls.Add(this.KeepViewLabel);
             this.Controls.Add(this.RVTCheckBox);
             this.Controls.Add(this.RemoveCADImportsCheckBox);
             this.Controls.Add(this.ExportLabel);
@@ -467,7 +472,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ExportDialog";
+            this.Name = "BatchExportDialog";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -509,7 +514,7 @@
         private System.Windows.Forms.Label ExportLabel;
         public System.Windows.Forms.CheckBox RemoveCADImportsCheckBox;
         public System.Windows.Forms.CheckBox RVTCheckBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label KeepViewLabel;
+        public System.Windows.Forms.TextBox SafeNameTextbox;
     }
 }

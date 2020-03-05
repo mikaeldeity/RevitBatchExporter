@@ -13,13 +13,13 @@ namespace RevitBatchExporter
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
 
-    class Export : IExternalCommand
+    class BatchExport : IExternalCommand
     {
         internal static List<string> documents = new List<string>();
 
         internal static string destinationpath = "";
 
-        internal static string splash = "Splash";
+        internal static string splash = "";
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             UIApplication uiapp = commandData.Application;
@@ -33,7 +33,7 @@ namespace RevitBatchExporter
 
             int failed = 0;
 
-            var exportdialog = new RevitBatchExporter.Dialogs.ExportDialog();
+            var exportdialog = new RevitBatchExporter.Dialogs.BatchExportDialog();
 
             var dialog = exportdialog.ShowDialog();
 
@@ -81,6 +81,11 @@ namespace RevitBatchExporter
             bool exportrvt = exportdialog.RVTCheckBox.Checked;
 
             bool removeallsheetsviews = false;
+
+            if(exportdialog.SafeNameTextbox.Text.Trim() != "")
+            {
+                splash = exportdialog.SafeNameTextbox.Text.Trim();
+            }            
 
             if(removesheets && removeviewsON && removeviewsNOT)
             {
@@ -238,7 +243,7 @@ namespace RevitBatchExporter
 
                     if (namesuffix != "")
                     {
-                        docname = docname + namesuffix;
+                        docname += namesuffix;
                     }
 
                     bool rvtexported = false;
@@ -796,7 +801,6 @@ namespace RevitBatchExporter
             {
                 e1.OverrideResult((int)TaskDialogResult.CommandLink1);
             }
-
         }
     }
 }

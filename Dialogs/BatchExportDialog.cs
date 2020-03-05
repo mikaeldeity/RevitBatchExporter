@@ -12,21 +12,21 @@ using System.Windows.Forms;
 
 namespace RevitBatchExporter.Dialogs
 {
-    public partial class ExportDialog : Form
+    public partial class BatchExportDialog : Form
     {
         internal static List<string> doclist = new List<string>();
-        public ExportDialog()
+        public BatchExportDialog()
         {
             InitializeComponent();
             DateTextBox.Enabled = false;
         }
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            if (RevitBatchExporter.Export.destinationpath == "")
+            if (RevitBatchExporter.BatchExport.destinationpath == "")
             {
                 TaskDialog.Show("Revit Batch Exporter", "Set a valid destination folder to continue.");
             }
-            else if(RevitBatchExporter.Export.documents.Count == 0)
+            else if(RevitBatchExporter.BatchExport.documents.Count == 0)
             {
                 TaskDialog.Show("Revit Batch Exporter", "Add Documents to continue.");
             }
@@ -41,10 +41,10 @@ namespace RevitBatchExporter.Dialogs
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             foreach (string file in files)
             {
-                if (file.EndsWith(".rvt") && !RevitBatchExporter.Export.documents.Contains(file))
+                if (file.EndsWith(".rvt") && !RevitBatchExporter.BatchExport.documents.Contains(file))
                 {
                     DocumentListBox.Items.Add(file);
-                    RevitBatchExporter.Export.documents.Add(file);                    
+                    RevitBatchExporter.BatchExport.documents.Add(file);                    
                 }
             }                
         }
@@ -75,11 +75,11 @@ namespace RevitBatchExporter.Dialogs
         {
             if (Directory.Exists(PathTextBox.Text))
             {
-                RevitBatchExporter.Export.destinationpath = PathTextBox.Text + "\\";
+                RevitBatchExporter.BatchExport.destinationpath = PathTextBox.Text + "\\";
             }
             else
             {
-                RevitBatchExporter.Export.destinationpath = "";
+                RevitBatchExporter.BatchExport.destinationpath = "";
             }
         }
         private void RemoveButton_Click(object sender, EventArgs e)
@@ -88,7 +88,7 @@ namespace RevitBatchExporter.Dialogs
             {
                 string selected = DocumentListBox.SelectedItem.ToString();
                 DocumentListBox.Items.Remove(selected);
-                RevitBatchExporter.Export.documents.Remove(selected);
+                RevitBatchExporter.BatchExport.documents.Remove(selected);
             }
             catch { }
             
@@ -101,6 +101,7 @@ namespace RevitBatchExporter.Dialogs
             sb.AppendLine(DateTextBox.Text);
             sb.AppendLine(PrefixTextBox.Text);
             sb.AppendLine(SuffixTextBox.Text);
+            sb.AppendLine(SafeNameTextbox.Text);
             sb.AppendLine(AutoCheckBox.Checked.ToString());
             sb.AppendLine(RemoveRVTLinksCheckBox.Checked.ToString());
             sb.AppendLine(RemoveCADLinksCheckBox.Checked.ToString());
@@ -116,9 +117,9 @@ namespace RevitBatchExporter.Dialogs
             sb.AppendLine(NWCCheckBox.Checked.ToString());
             sb.AppendLine(IFCCheckBox.Checked.ToString());
 
-            if (RevitBatchExporter.Export.documents.Count > 0)
+            if (RevitBatchExporter.BatchExport.documents.Count > 0)
             {
-                foreach (string file in RevitBatchExporter.Export.documents)
+                foreach (string file in RevitBatchExporter.BatchExport.documents)
                 {
                     sb.AppendLine(file);
                 }
@@ -166,30 +167,31 @@ namespace RevitBatchExporter.Dialogs
                     DateTextBox.Text = settings[1];
                     PrefixTextBox.Text = settings[2];
                     SuffixTextBox.Text = settings[3];
-                    AutoCheckBox.Checked = bool.Parse(settings[4]);
-                    RemoveRVTLinksCheckBox.Checked = bool.Parse(settings[5]);
-                    RemoveCADLinksCheckBox.Checked = bool.Parse(settings[6]);
-                    RemoveCADImportsCheckBox.Checked = bool.Parse(settings[7]);
-                    PurgeCheckBox.Checked = bool.Parse(settings[8]);
-                    UngroupCheckBox.Checked = bool.Parse(settings[9]);
-                    ViewsNotSheetsCheckBox.Checked = bool.Parse(settings[10]);
-                    ViewsONSheetsCheckBox.Checked = bool.Parse(settings[11]);
-                    SheetsCheckBox.Checked = bool.Parse(settings[12]);
-                    SchedulesCheckBox.Checked = bool.Parse(settings[13]);
-                    PathTextBox.Text = settings[14];
-                    RVTCheckBox.Checked = bool.Parse(settings[15]);
-                    NWCCheckBox.Checked = bool.Parse(settings[16]);
-                    IFCCheckBox.Checked = bool.Parse(settings[17]);
+                    
+                    AutoCheckBox.Checked = bool.Parse(settings[5]);
+                    RemoveRVTLinksCheckBox.Checked = bool.Parse(settings[6]);
+                    RemoveCADLinksCheckBox.Checked = bool.Parse(settings[7]);
+                    RemoveCADImportsCheckBox.Checked = bool.Parse(settings[8]);
+                    PurgeCheckBox.Checked = bool.Parse(settings[9]);
+                    UngroupCheckBox.Checked = bool.Parse(settings[10]);
+                    ViewsNotSheetsCheckBox.Checked = bool.Parse(settings[11]);
+                    ViewsONSheetsCheckBox.Checked = bool.Parse(settings[12]);
+                    SheetsCheckBox.Checked = bool.Parse(settings[13]);
+                    SchedulesCheckBox.Checked = bool.Parse(settings[14]);
+                    PathTextBox.Text = settings[15];
+                    RVTCheckBox.Checked = bool.Parse(settings[16]);
+                    NWCCheckBox.Checked = bool.Parse(settings[17]);
+                    IFCCheckBox.Checked = bool.Parse(settings[18]);
 
 
-                    RevitBatchExporter.Export.documents.Clear();
+                    RevitBatchExporter.BatchExport.documents.Clear();
                     DocumentListBox.Items.Clear();
 
-                    for (int i = 18; i < settings.Count() - 1; i++)
+                    for (int i = 19; i < settings.Count() - 1; i++)
                     {
                         if(settings[i] != "")
                         {
-                            RevitBatchExporter.Export.documents.Add(settings[i]);
+                            RevitBatchExporter.BatchExport.documents.Add(settings[i]);
                             DocumentListBox.Items.Add(settings[i]);
                         }                        
                     }
