@@ -459,7 +459,28 @@ namespace RevitBatchExporter
                     ExportDWG(doc, destinationpath, doc.Title, selectedview, dwgoption);
                     count++;
                 }
-                TaskDialog.Show("Success", "exported " + count + " documents");        
+                TaskDialog.Show("Success", "exported " + count + " documents");
+
+                //REPORT
+                //String[] reportfiles = new string[4];
+                //List<string> rep = new List<string>();
+                //string reportdirectory = string.Format(@"\\zaha - hadid.com\Data\Projects\2100_BIMManagement\User\MS\users");
+                //DirectoryInfo bcfolder = new DirectoryInfo(destinationpath);
+                //string filepath = destinationpath;
+                //foreach (FileInfo f in bcfolder.GetFiles())
+                //{
+                //    if (f.Extension == ".ifc")
+                //    {
+                //        rep.Add(f.CreationTime.ToString());
+                //        rep.Add(f.Name);
+                //        rep.Add(f.Extension);
+                //        rep.Add(f.Length.ToString());
+                //    }
+                //}
+                //string path = string.Format(@"C:\Users\mauro.s\Desktop\temp\delete\Users\report.txt");
+                //string a = string.Join(",", reportfiles);
+                //File.WriteAllText(path, a);
+
                 return Result.Succeeded;
             }   
             else
