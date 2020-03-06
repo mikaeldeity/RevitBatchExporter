@@ -37,14 +37,28 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autodesk.UI.Windows">
+      <HintPath>..\..\..\..\..\ProgramData\Autodesk\Revit\Addins\2020\Autodesk.UI.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="IFCExportUI">
       <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2020\AddIns\IFCExporterUI\IFCExportUI.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="Revit.IFC.Common, Version=19.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2020\Revit.IFC.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Revit.IFC.Export">
+      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2020\Revit.IFC.Export.dll</HintPath>
+    </Reference>
     <Reference Include="RevitAPI, Version=20.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIIFC, Version=20.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPIIFC.dll</HintPath>
     </Reference>
     <Reference Include="RevitAPIUI, Version=20.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
@@ -86,6 +100,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\RevitBatchExporter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="PresentationFramework">
+      <Version>4.6.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
