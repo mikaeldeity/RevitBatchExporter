@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Revit Exporter")]
-[assembly: AssemblyCopyright("Copyright © 2020 Mikael Santrolli")]
+[assembly: AssemblyCopyright("Copyright © 2020 Mikael Santrolli/Mauro Sabiu")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

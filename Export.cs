@@ -94,18 +94,13 @@ namespace RevitBatchExporter
         // Used for COBie 2.4
         private const string s_cobieCompanyInfo = "COBieCompanyInfo";
         private const string s_cobieProjectInfo = "COBieProjectInfo";
-        private const string s_includeSteelElements = "IncludeSteelElements";
-        
-
-
-
+        private const string s_includeSteelElements = "IncludeSteelElements";     
         public IFCExportConfigurationsMap AddSavedConfigurations(IFCExportConfigurationsMap conf, Document doc)
         {
             Guid m_schemaId = new Guid("A1E672E5-AC88-4933-A019-F9068402CFA7");
             Schema m_schema = Schema.Lookup(m_schemaId);
             Guid m_mapSchemaId = new Guid("DCB88B13-594F-44F6-8F5D-AE9477305AC3");
             Schema m_mapSchema = Schema.Lookup(m_mapSchemaId);
-
             try
             {
                 if (m_mapSchema != null)
@@ -265,9 +260,6 @@ namespace RevitBatchExporter
                 return conf;// to avoid fail to show the dialog if any exception throws in reading schema.
             }
         }
-
-
-
         private IList<DataStorage> GetSavedConfigurations(Document doc, Schema schema)
         {
 
@@ -277,7 +269,6 @@ namespace RevitBatchExporter
 
             return collector.Cast<DataStorage>().Where<DataStorage>(hasTargetData).ToList<DataStorage>();
         }
-
         internal List<string> IFCExportpredefined(Document doc)
         {
             //import
@@ -453,14 +444,14 @@ namespace RevitBatchExporter
 
             if (destinationpath.Trim() != "" && Directory.Exists(destinationpath))
             {
-                if (exportdialog.IFCCheckBox.Checked)
-                {
-                    ExportIFC(doc, destinationpath, doc.Title, selectedview, settings);
-                    count++;
-                }
                 if (exportdialog.NWCCheckBox.Checked)
                 {
                     ExportNWC(doc, destinationpath, doc.Title, selectedview, exportdialog.SharedRadio.Checked);
+                    count++;
+                }
+                if (exportdialog.IFCCheckBox.Checked)
+                {
+                    ExportIFC(doc, destinationpath, doc.Title, selectedview, settings);
                     count++;
                 }
                 if (exportdialog.DWGCheckbox.Checked)
