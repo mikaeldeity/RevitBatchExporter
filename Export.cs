@@ -99,7 +99,7 @@ namespace RevitBatchExporter
         // Used for COBie 2.4
         private const string s_cobieCompanyInfo = "COBieCompanyInfo";
         private const string s_cobieProjectInfo = "COBieProjectInfo";
-        private const string s_includeSteelElements = "IncludeSteelElements";     
+        private const string s_includeSteelElements = "IncludeSteelElements"; 
         //public void PrintPDF(Document doc)
         //{
         //    PrintManager pm = doc.PrintManager;           
@@ -270,6 +270,20 @@ namespace RevitBatchExporter
                 string error = e.Message;
                 return conf;// to avoid fail to show the dialog if any exception throws in reading schema.
             }
+        }
+        private void DeleteLog(string directory)
+        {
+            DirectoryInfo destfolder = new DirectoryInfo(directory);
+            foreach (FileInfo f in destfolder.GetFiles())
+            {
+                if (f.Extension != ".ifc" && f.Extension != ".nwc" && f.Extension != ".dwg")
+                {
+                    f.Delete();
+                    
+                }
+                
+            }
+
         }
         private IList<DataStorage> GetSavedConfigurations(Document doc, Schema schema)
         {
@@ -479,6 +493,8 @@ namespace RevitBatchExporter
                     count++;
                 }
                 TaskDialog.Show("Success", "exported " + count + " documents");
+                //clear the folder
+                DeleteLog(destinationpath);
 
                 //REPORT
                 //String[] reportfiles = new string[4];
