@@ -1,23 +1,23 @@
 ﻿using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Events;
+//using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Events;
+//using Autodesk.Revit.UI.Events;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Autodesk.Revit.DB.ExternalService;
-using System.Reflection;
+//using Autodesk.Revit.DB.ExternalService;
+//using System.Reflection;
 using Autodesk.Revit.DB.IFC;
 using BIM.IFC.Export.UI;
-using Revit.IFC.Common.Extensions;
-using Revit.IFC.Common.Utility;
-using Autodesk.UI.Windows;
-using Revit.IFC.Export.Utility;
+//using Revit.IFC.Common.Extensions;
+//using Revit.IFC.Common.Utility;
+//using Autodesk.UI.Windows;
+//using Revit.IFC.Export.Utility;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using System.Text;
-using Autodesk.Revit;
+//using System.Text;
+//using Autodesk.Revit;
 
 
 namespace RevitBatchExporter
@@ -51,6 +51,11 @@ namespace RevitBatchExporter
         internal static IList<string> optionname(Document doc)
         {
             IList<string> setupNames = BaseExportOptions.GetPredefinedSetupNames(doc);
+            
+            if (setupNames.Count == 0)
+            {
+                setupNames.Add("<in-session export setup>");
+            }
             return setupNames;
         }
 
@@ -95,6 +100,12 @@ namespace RevitBatchExporter
         private const string s_cobieCompanyInfo = "COBieCompanyInfo";
         private const string s_cobieProjectInfo = "COBieProjectInfo";
         private const string s_includeSteelElements = "IncludeSteelElements";     
+        //public void PrintPDF(Document doc)
+        //{
+        //    PrintManager pm = doc.PrintManager;           
+        //    ViewSet viewSet = new ViewSet();         
+                     
+        //}
         public IFCExportConfigurationsMap AddSavedConfigurations(IFCExportConfigurationsMap conf, Document doc)
         {
             Guid m_schemaId = new Guid("A1E672E5-AC88-4933-A019-F9068402CFA7");
@@ -319,7 +330,15 @@ namespace RevitBatchExporter
                     if (val[j].Name == settings)
                     {
                         val[j].VisibleElementsOfCurrentView = true;
-                        val[j].UpdateOptions(IFCOptions, viewid);
+                        try
+                        {
+                            val[j].UpdateOptions(IFCOptions, viewid);
+                        }
+                        catch
+                        {
+
+                        }
+                        
                         val[j].VisibleElementsOfCurrentView = true;
 
                     }
