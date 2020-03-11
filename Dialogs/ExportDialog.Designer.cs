@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.ExportButton = new System.Windows.Forms.Button();
             this.NWCCheckBox = new System.Windows.Forms.CheckBox();
             this.IFCCheckBox = new System.Windows.Forms.CheckBox();
@@ -42,6 +43,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.InternalRadio = new System.Windows.Forms.RadioButton();
             this.SharedRadio = new System.Windows.Forms.RadioButton();
+            this.DeleteLogFilesButton = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // ExportButton
@@ -51,7 +54,7 @@
             this.ExportButton.FlatAppearance.BorderSize = 0;
             this.ExportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExportButton.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExportButton.Location = new System.Drawing.Point(37, 266);
+            this.ExportButton.Location = new System.Drawing.Point(37, 301);
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(320, 36);
             this.ExportButton.TabIndex = 0;
@@ -98,6 +101,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(34, 39);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(80, 13);
@@ -108,16 +112,16 @@
             // 
             this.PathLabel.AutoEllipsis = true;
             this.PathLabel.AutoSize = true;
-            this.PathLabel.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PathLabel.Location = new System.Drawing.Point(34, 199);
+            this.PathLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PathLabel.Location = new System.Drawing.Point(34, 238);
             this.PathLabel.Name = "PathLabel";
-            this.PathLabel.Size = new System.Drawing.Size(114, 13);
+            this.PathLabel.Size = new System.Drawing.Size(85, 13);
             this.PathLabel.TabIndex = 0;
             this.PathLabel.Text = "Destination Path";
             // 
             // PathTextBox
             // 
-            this.PathTextBox.Location = new System.Drawing.Point(37, 225);
+            this.PathTextBox.Location = new System.Drawing.Point(37, 260);
             this.PathTextBox.Name = "PathTextBox";
             this.PathTextBox.Size = new System.Drawing.Size(320, 20);
             this.PathTextBox.TabIndex = 19;
@@ -196,13 +200,27 @@
             this.SharedRadio.Text = "Shared";
             this.SharedRadio.UseVisualStyleBackColor = true;
             // 
+            // DeleteLogFilesButton
+            // 
+            this.DeleteLogFilesButton.AutoSize = true;
+            this.DeleteLogFilesButton.Checked = true;
+            this.DeleteLogFilesButton.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.DeleteLogFilesButton.Location = new System.Drawing.Point(119, 203);
+            this.DeleteLogFilesButton.Name = "DeleteLogFilesButton";
+            this.DeleteLogFilesButton.Size = new System.Drawing.Size(144, 17);
+            this.DeleteLogFilesButton.TabIndex = 43;
+            this.DeleteLogFilesButton.Text = "Delete the additional files";
+            this.toolTip1.SetToolTip(this.DeleteLogFilesButton, "Delete the additional .txt, log export files.");
+            this.DeleteLogFilesButton.UseVisualStyleBackColor = true;
+            // 
             // ExportDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(394, 329);
+            this.ClientSize = new System.Drawing.Size(394, 366);
+            this.Controls.Add(this.DeleteLogFilesButton);
             this.Controls.Add(this.SharedRadio);
             this.Controls.Add(this.InternalRadio);
             this.Controls.Add(this.IFCCombobox);
@@ -245,5 +263,7 @@
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.RadioButton InternalRadio;
         public System.Windows.Forms.RadioButton SharedRadio;
+        private System.Windows.Forms.ToolTip toolTip1;
+        public System.Windows.Forms.CheckBox DeleteLogFilesButton;
     }
 }

@@ -493,30 +493,41 @@ namespace RevitBatchExporter
                     count++;
                 }
                 TaskDialog.Show("Success", "exported " + count + " documents");
+
                 //clear the folder
-                DeleteLog(destinationpath);
+                if (exportdialog.DeleteLogFilesButton.Checked)
+                {
+                    DeleteLog(destinationpath);
+                }
+                //REPORT---------------
+                try
+                {
+                    string[] log = new string[6];
+                    List<string> rep = new List<string>();
+                    string locationpath = "\\\\zaha-hadid.com\\Data\\Projects\\2100_BIMManagement\\User\\MS\\users";
+                    DirectoryInfo exportFolder = new DirectoryInfo(destinationpath);
+                    string filepath = destinationpath;
+                    string path = string.Format(locationpath + "\\report.txt");
+                    string[] vs = new string[1];
+                    string a = "";
+                    foreach (FileInfo f in exportFolder.GetFiles())
+                    {
+                        log[0] = (Environment.UserName.ToString());
+                        log[1] = (DateTime.UtcNow.ToString("yyyy/MM/dd HH:mm"));//date;;
+                        log[2] = Path.GetFileNameWithoutExtension(f.Name);
+                        log[3] = f.Extension;
+                        log[4] = (f.Length * 0.001).ToString();
+                        log[5] = Environment.NewLine;
+                        a = log[0] + "," + log[1] + "," + log[2] + "," + log[3] + "," + log[4] + log[5];
+                        File.AppendAllText(path, a);
+                    }
+                }
+                catch
+                {
 
-                //REPORT
-                //String[] reportfiles = new string[4];
-                //List<string> rep = new List<string>();
-                //string reportdirectory = string.Format(@"\\zaha - hadid.com\Data\Projects\2100_BIMManagement\User\MS\users");
-                //DirectoryInfo bcfolder = new DirectoryInfo(destinationpath);
-                //string filepath = destinationpath;
-                //foreach (FileInfo f in bcfolder.GetFiles())
-                //{
-                //    if (f.Extension == ".ifc")
-                //    {
-                //        rep.Add(f.CreationTime.ToString());
-                //        rep.Add(f.Name);
-                //        rep.Add(f.Extension);
-                //        rep.Add(f.Length.ToString());
-                //    }
-                //}
-                //string path = string.Format(@"C:\Users\mauro.s\Desktop\temp\delete\Users\report.txt");
-                //string a = string.Join(",", reportfiles);
-                //File.WriteAllText(path, a);
+            }
 
-                return Result.Succeeded;
+            return Result.Succeeded;
             }   
             else
             {
