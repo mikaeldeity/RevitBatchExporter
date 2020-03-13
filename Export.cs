@@ -335,30 +335,21 @@ namespace RevitBatchExporter
             AddSavedConfigurations(configurationsMap, doc);
 
             
-            for (int i = 0; i < n; i++)
+            for (int j = 0; j < configurationsMap.Values.Count(); j++)
             {
-                //var values = configurationsMap.Values;
-                for (int j = 0; j < configurationsMap.Values.Count(); j++)
+                List<IFCExportConfiguration> val = configurationsMap.Values.ToList();
+                if (val[j].Name == settings)
                 {
-                    List<IFCExportConfiguration> val = configurationsMap.Values.ToList();
-                    if (val[j].Name == settings)
+                    val[j].VisibleElementsOfCurrentView = true;
+                    try
                     {
-                        val[j].VisibleElementsOfCurrentView = true;
-                        try
-                        {
-                            val[j].UpdateOptions(IFCOptions, viewid);
-                        }
-                        catch
-                        {
-
-                        }
-                        
-                        val[j].VisibleElementsOfCurrentView = true;
-
+                        val[j].UpdateOptions(IFCOptions, viewid);
                     }
-
+                    catch
+                    {
+                    }
+                    val[j].VisibleElementsOfCurrentView = true;
                 }
-
             }
             try
             {
