@@ -24,7 +24,7 @@ namespace RevitBatchExporter
         {
             UIApplication uiapp = commandData.Application;
 
-            destinationpath = "";
+            destinationpath = string.Empty;
             documents.Clear();
 
             string date = DateTime.Now.ToString("dd/MM/yyyy");
@@ -80,9 +80,11 @@ namespace RevitBatchExporter
 
             bool exportrvt = exportdialog.RVTCheckBox.Checked;
 
+            bool audit = exportdialog.AuditCheckBox.Checked;
+
             bool removeallsheetsviews = false;
 
-            if(exportdialog.SafeNameTextbox.Text.Trim() != "")
+            if(exportdialog.SafeNameTextbox.Text.Trim() != string.Empty)
             {
                 splash = exportdialog.SafeNameTextbox.Text.Trim();
             }            
@@ -101,15 +103,20 @@ namespace RevitBatchExporter
                 openOptions.SetOpenWorksetsConfiguration(openConfig);
             }
 
+            if (audit)
+            {
+                openOptions.Audit = true;
+            }
+
             string reason = exportdialog.IssueReasonTextBox.Text.Trim();
 
-            string customdate = exportdialog.DateTextBox.Text.Trim();
+            string customdate = exportdialog.DateTimePickerIssue.Value.ToString("yyyy/MM/dd");
 
             string nameprefix = exportdialog.PrefixTextBox.Text.Trim();
 
             string namesuffix = exportdialog.SuffixTextBox.Text.Trim();
 
-            string debugmessage = "";
+            string debugmessage = string.Empty;
 
             bool samepath = false;
 
@@ -446,22 +453,6 @@ namespace RevitBatchExporter
                 }
             }
 
-            List<ElementId> usedtemplates = new List<ElementId>();
-
-            //get used templates
-            foreach (ElementId id in viewsONsheets)
-            {
-                Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
-
-                if (view.ViewTemplateId != ElementId.InvalidElementId)
-                {
-                    if (!usedtemplates.Contains(id))
-                    {
-                        usedtemplates.Add(view.ViewTemplateId);
-                    }
-                }
-            }
-
             ICollection<ElementId> viewsNOTsheets = null;
 
             //if no views on sheets collect differently
@@ -477,20 +468,12 @@ namespace RevitBatchExporter
             //if no views not on sheets return
             if (viewsNOTsheets.Count == 0) { return; }
 
-            //delete views not on sheets and unused templates skip views with dependancy
+            //delete views not on sheets skip views with dependancy
             foreach (ElementId id in viewsNOTsheets)
             {
                 Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
 
-                if (!view.IsTemplate && view.GetDependentViewIds().Count == 0)
-                {
-                    try
-                    {
-                        doc.Delete(id);
-                    }
-                    catch { }
-                }
-                else if (view.IsTemplate && !usedtemplates.Contains(id))
+                if (!view.IsTemplate && view.GetDependentViewIds().Count == 0 && view.CanBePrinted)
                 {
                     try
                     {
@@ -516,7 +499,7 @@ namespace RevitBatchExporter
             foreach (ElementId id in remainingviews)
             {
                 Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
-                if (!view.IsTemplate && view.GetDependentViewIds().Count == 0)
+                if (!view.IsTemplate && view.GetDependentViewIds().Count == 0 && view.CanBePrinted)
                 {
                     try
                     {
@@ -530,6 +513,7 @@ namespace RevitBatchExporter
         {
             var sheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
 
+            //If no sheets return
             if (sheets.Count == 0) { return; }
 
             List<ElementId> viewsONsheets = new List<ElementId>();
@@ -554,39 +538,6 @@ namespace RevitBatchExporter
                         doc.Delete(id);
                     }
                     catch { }                                      
-                }
-            }
-
-            var views = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElementIds();
-
-            if(views.Count == 0) { return; }
-
-            List<ElementId> usedtemplates = new List<ElementId>();
-
-            foreach (ElementId id in views)
-            {
-                Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
-
-                if (view.ViewTemplateId != ElementId.InvalidElementId)
-                {
-                    if (!usedtemplates.Contains(id))
-                    {
-                        usedtemplates.Add(view.ViewTemplateId);
-                    }
-                }
-            }
-
-            foreach (ElementId id in views)
-            {
-                Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
-
-                if (view.IsTemplate && !usedtemplates.Contains(id))
-                {
-                    try
-                    {
-                        doc.Delete(id);
-                    }
-                    catch { }
                 }
             }
         }
@@ -617,11 +568,16 @@ namespace RevitBatchExporter
             {
                 foreach (ElementId id in views)
                 {
-                    try
+                    Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
+
+                    if (!view.IsTemplate && view.CanBePrinted)
                     {
-                        doc.Delete(id);
-                    }
-                    catch { }
+                        try
+                        {
+                            doc.Delete(id);
+                        }
+                        catch { }
+                    }                    
                 }
             }            
 
@@ -641,6 +597,39 @@ namespace RevitBatchExporter
                     }
                 }
             }            
+        }
+        private void PurgeUnusedViewTemplates(Document doc)
+        {
+            var views = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElementIds();
+            
+            List<ElementId> usedtemplates = new List<ElementId>();
+
+            foreach (ElementId id in views)
+            {
+                Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
+
+                if (view.ViewTemplateId != ElementId.InvalidElementId)
+                {
+                    if (!usedtemplates.Contains(id))
+                    {
+                        usedtemplates.Add(view.ViewTemplateId);
+                    }
+                }
+            }
+
+            foreach(ElementId id in views)
+            {
+                Autodesk.Revit.DB.View view = doc.GetElement(id) as Autodesk.Revit.DB.View;
+
+                if (view.IsTemplate && !usedtemplates.Contains(id))
+                {
+                    try
+                    {
+                        doc.Delete(id);
+                    }
+                    catch { }
+                }
+            }
         }
         private void DeleteSchedules(Document doc)
         {

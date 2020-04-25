@@ -25,12 +25,6 @@ namespace RevitBatchExporter
             pb1.ToolTip = "Batch export Revit documents.";
             BitmapImage pb1Image = new BitmapImage(new Uri("pack://application:,,,/RevitBatchExporter;component/Resources/RevitBatchExporter.png"));
             pb1.LargeImage = pb1Image;
-
-            PushButtonData b2Data = new PushButtonData("Export", "Export", thisAssemblyPath, "RevitBatchExporter.Export");
-            PushButton pb2 = ribbonPanel.AddItem(b2Data) as PushButton;
-            pb2.ToolTip = "Export Current Revit document in different formats.";
-            BitmapImage pb2Image = new BitmapImage(new Uri("pack://application:,,,/RevitBatchExporter;component/Resources/RevitBatchExporter.png"));
-            pb2.LargeImage = pb2Image;
         }
         public Result OnShutdown(UIControlledApplication application)
         {

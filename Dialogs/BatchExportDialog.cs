@@ -1,13 +1,9 @@
 ﻿using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RevitBatchExporter.Dialogs
@@ -18,7 +14,6 @@ namespace RevitBatchExporter.Dialogs
         public BatchExportDialog()
         {
             InitializeComponent();
-            DateTextBox.Enabled = false;
         }
         private void ExportButton_Click(object sender, EventArgs e)
         {
@@ -63,12 +58,11 @@ namespace RevitBatchExporter.Dialogs
         {
             if (AutoCheckBox.Checked)
             {
-                DateTextBox.Text = "";
-                DateTextBox.Enabled = false;
+                DateTimePickerIssue.Enabled = false;
             }
             else
             {
-                DateTextBox.Enabled = true;
+                DateTimePickerIssue.Enabled = true;
             }
         }
         private void PathTextBox_TextChanged(object sender, EventArgs e)
@@ -98,7 +92,7 @@ namespace RevitBatchExporter.Dialogs
             StringBuilder sb = new StringBuilder();
 
             sb.AppendLine(IssueReasonTextBox.Text);
-            sb.AppendLine(DateTextBox.Text);
+            sb.AppendLine(DateTimePickerIssue.Value.ToString("yyyy/MM/dd"));
             sb.AppendLine(PrefixTextBox.Text);
             sb.AppendLine(SuffixTextBox.Text);
             sb.AppendLine(SafeNameTextbox.Text);
@@ -116,6 +110,7 @@ namespace RevitBatchExporter.Dialogs
             sb.AppendLine(RVTCheckBox.Checked.ToString());
             sb.AppendLine(NWCCheckBox.Checked.ToString());
             sb.AppendLine(IFCCheckBox.Checked.ToString());
+            sb.AppendLine(AuditCheckBox.Checked.ToString());
 
             if (RevitBatchExporter.BatchExport.documents.Count > 0)
             {
@@ -145,7 +140,7 @@ namespace RevitBatchExporter.Dialogs
             }
             catch 
             {
-                TaskDialog.Show("XPORT", "Cannot overwrite the file.");                    
+                TaskDialog.Show("Revit Batch Exporter", "Cannot overwrite the file.");                    
             }
         }
         private void ImportSettingsButton_Click(object sender, EventArgs e)
@@ -164,7 +159,7 @@ namespace RevitBatchExporter.Dialogs
                     string[] settings = settingsfile.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
                     IssueReasonTextBox.Text = settings[0];
-                    DateTextBox.Text = settings[1];
+                    DateTimePickerIssue.Value = DateTime.Parse(settings[1]);
                     PrefixTextBox.Text = settings[2];
                     SuffixTextBox.Text = settings[3];
                     
@@ -182,12 +177,13 @@ namespace RevitBatchExporter.Dialogs
                     RVTCheckBox.Checked = bool.Parse(settings[16]);
                     NWCCheckBox.Checked = bool.Parse(settings[17]);
                     IFCCheckBox.Checked = bool.Parse(settings[18]);
+                    AuditCheckBox.Checked = bool.Parse(settings[19]);
 
 
                     RevitBatchExporter.BatchExport.documents.Clear();
                     DocumentListBox.Items.Clear();
 
-                    for (int i = 19; i < settings.Count() - 1; i++)
+                    for (int i = 20; i < settings.Count() - 1; i++)
                     {
                         if(settings[i] != "")
                         {
@@ -198,9 +194,14 @@ namespace RevitBatchExporter.Dialogs
                 }
                 catch
                 {
-                    TaskDialog.Show("XPORT", "Cannot read the file.");
+                    TaskDialog.Show("Revit Batch Exporter", "Cannot read the file.");
                 }
             }
+        }
+
+        private void BatchExportDialog_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBox.Show("Subcategories Manager", "Developed by Mikael Santrolli\n\nmikael.santrolli@gmail.com");
         }
     }
 }
