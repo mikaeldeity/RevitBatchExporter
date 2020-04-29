@@ -403,7 +403,6 @@
             this.RVTCheckBox.TabStop = false;
             this.RVTCheckBox.Text = "RVT";
             this.RVTCheckBox.UseVisualStyleBackColor = true;
-            this.RVTCheckBox.Visible = false;
             // 
             // KeepViewLabel
             // 
@@ -413,9 +412,9 @@
             this.KeepViewLabel.Location = new System.Drawing.Point(3, 86);
             this.KeepViewLabel.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
             this.KeepViewLabel.Name = "KeepViewLabel";
-            this.KeepViewLabel.Size = new System.Drawing.Size(71, 22);
+            this.KeepViewLabel.Size = new System.Drawing.Size(68, 22);
             this.KeepViewLabel.TabIndex = 34;
-            this.KeepViewLabel.Text = "Keep Sheets that contain:";
+            this.KeepViewLabel.Text = "Keep Sheets";
             // 
             // SafeNameTextbox
             // 

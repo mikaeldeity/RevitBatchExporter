@@ -14,6 +14,7 @@ namespace RevitBatchExporter.Dialogs
         public BatchExportDialog()
         {
             InitializeComponent();
+            this.RVTCheckBox.Enabled = false;
         }
         private void ExportButton_Click(object sender, EventArgs e)
         {
