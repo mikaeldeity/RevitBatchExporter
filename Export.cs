@@ -459,8 +459,8 @@ namespace RevitBatchExporter
             if (dialog != DialogResult.OK)
             {
                 return Result.Cancelled;
-            }    
-            
+            }
+
             ElementId selectedview = views[exportdialog.comboBox1.SelectedItem.ToString()];
             string dwgoption = exportdialog.DWGCombobox.SelectedItem.ToString();
             string settings = exportdialog.IFCCombobox.SelectedItem.ToString();

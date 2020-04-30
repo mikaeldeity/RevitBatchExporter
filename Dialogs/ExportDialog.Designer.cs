@@ -45,6 +45,8 @@
             this.SharedRadio = new System.Windows.Forms.RadioButton();
             this.DeleteLogFilesButton = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.Path_Button = new System.Windows.Forms.Button();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.SuspendLayout();
             // 
             // ExportButton
@@ -123,7 +125,7 @@
             // 
             this.PathTextBox.Location = new System.Drawing.Point(37, 260);
             this.PathTextBox.Name = "PathTextBox";
-            this.PathTextBox.Size = new System.Drawing.Size(320, 20);
+            this.PathTextBox.Size = new System.Drawing.Size(286, 20);
             this.PathTextBox.TabIndex = 19;
             this.PathTextBox.TabStop = false;
             this.PathTextBox.TextChanged += new System.EventHandler(this.PathTextBox_TextChanged);
@@ -213,6 +215,16 @@
             this.toolTip1.SetToolTip(this.DeleteLogFilesButton, "Delete the additional .txt, log export files.");
             this.DeleteLogFilesButton.UseVisualStyleBackColor = true;
             // 
+            // Path_Button
+            // 
+            this.Path_Button.Location = new System.Drawing.Point(329, 260);
+            this.Path_Button.Margin = new System.Windows.Forms.Padding(0);
+            this.Path_Button.Name = "Path_Button";
+            this.Path_Button.Size = new System.Drawing.Size(28, 20);
+            this.Path_Button.TabIndex = 44;
+            this.Path_Button.UseVisualStyleBackColor = true;
+            this.Path_Button.Click += new System.EventHandler(this.Path_Button_Click);
+            // 
             // ExportDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -220,6 +232,7 @@
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(394, 366);
+            this.Controls.Add(this.Path_Button);
             this.Controls.Add(this.DeleteLogFilesButton);
             this.Controls.Add(this.SharedRadio);
             this.Controls.Add(this.InternalRadio);
@@ -265,5 +278,7 @@
         public System.Windows.Forms.RadioButton SharedRadio;
         private System.Windows.Forms.ToolTip toolTip1;
         public System.Windows.Forms.CheckBox DeleteLogFilesButton;
+        public System.Windows.Forms.Button Path_Button;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }

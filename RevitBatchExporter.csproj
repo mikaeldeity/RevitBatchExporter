@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RevitBatchExporter</RootNamespace>
     <AssemblyName>RevitBatchExporter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\AppData\Roaming\Autodesk\Revit\Addins\2020\</OutputPath>
+    <OutputPath>Release\RevitBatchExporter\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>none</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -37,10 +37,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autodesk.UI.Windows">
-      <HintPath>..\..\..\..\..\ProgramData\Autodesk\Revit\Addins\2020\Autodesk.UI.Windows.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="IFCExportUI">
       <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2020\AddIns\IFCExporterUI\IFCExportUI.dll</HintPath>
       <Private>False</Private>

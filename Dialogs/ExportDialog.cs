@@ -31,10 +31,6 @@ namespace RevitBatchExporter.Dialogs
             {
                 TaskDialog.Show("Revit Batch Exporter", "Set a valid destination folder to continue.");
             }
-            //else if(RevitBatchExporter.Export.documents.Count == 0)
-            //{
-            //    TaskDialog.Show("Revit Batch Exporter", "Add Documents to continue.");
-            //}
             else
             {
                 DialogResult = DialogResult.OK;
@@ -143,5 +139,18 @@ namespace RevitBatchExporter.Dialogs
             this.SharedRadio.Enabled = NWCCheckBox.Checked;
             this.InternalRadio.Enabled = NWCCheckBox.Checked;
         }
+
+        private void Path_Button_Click(object sender, EventArgs e)
+        {        
+            var fbd = new FolderBrowserDialog();
+            string foldername = "";
+            DialogResult result = fbd.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                foldername = fbd.SelectedPath;
+                PathTextBox.Text = foldername;
+            }
+        }
+
     }
 }
