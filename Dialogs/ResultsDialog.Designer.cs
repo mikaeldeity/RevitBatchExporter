@@ -29,26 +29,27 @@
         private void InitializeComponent()
         {
             this.ResultsView = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DocumentHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RVTHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.NWCHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.IFCHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ResultsHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TimeHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // ResultsView
             // 
             this.ResultsView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ResultsView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5,
-            this.columnHeader6});
+            this.DocumentHeader,
+            this.RVTHeader,
+            this.NWCHeader,
+            this.IFCHeader,
+            this.ResultsHeader,
+            this.TimeHeader});
             this.ResultsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ResultsView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ResultsView.HideSelection = false;
             this.ResultsView.Location = new System.Drawing.Point(0, 0);
             this.ResultsView.Margin = new System.Windows.Forms.Padding(0);
             this.ResultsView.MultiSelect = false;
@@ -59,40 +60,40 @@
             this.ResultsView.UseCompatibleStateImageBehavior = false;
             this.ResultsView.View = System.Windows.Forms.View.Details;
             // 
-            // columnHeader1
+            // DocumentHeader
             // 
-            this.columnHeader1.Text = "Document";
-            this.columnHeader1.Width = 120;
+            this.DocumentHeader.Text = "Document";
+            this.DocumentHeader.Width = 120;
             // 
-            // columnHeader2
+            // RVTHeader
             // 
-            this.columnHeader2.Text = "RVT";
-            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader2.Width = 50;
+            this.RVTHeader.Text = "RVT";
+            this.RVTHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.RVTHeader.Width = 50;
             // 
-            // columnHeader3
+            // NWCHeader
             // 
-            this.columnHeader3.Text = "NWC";
-            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader3.Width = 50;
+            this.NWCHeader.Text = "NWC";
+            this.NWCHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NWCHeader.Width = 50;
             // 
-            // columnHeader4
+            // IFCHeader
             // 
-            this.columnHeader4.Text = "IFC";
-            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader4.Width = 50;
+            this.IFCHeader.Text = "IFC";
+            this.IFCHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.IFCHeader.Width = 50;
             // 
-            // columnHeader5
+            // ResultsHeader
             // 
-            this.columnHeader5.Text = "Results";
-            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader5.Width = 80;
+            this.ResultsHeader.Text = "Results";
+            this.ResultsHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ResultsHeader.Width = 80;
             // 
-            // columnHeader6
+            // TimeHeader
             // 
-            this.columnHeader6.Text = "Time";
-            this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader6.Width = 100;
+            this.TimeHeader.Text = "Time";
+            this.TimeHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.TimeHeader.Width = 100;
             // 
             // ResultsDialog
             // 
@@ -113,11 +114,11 @@
         #endregion
 
         public System.Windows.Forms.ListView ResultsView;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ColumnHeader DocumentHeader;
+        private System.Windows.Forms.ColumnHeader RVTHeader;
+        private System.Windows.Forms.ColumnHeader NWCHeader;
+        private System.Windows.Forms.ColumnHeader IFCHeader;
+        private System.Windows.Forms.ColumnHeader ResultsHeader;
+        private System.Windows.Forms.ColumnHeader TimeHeader;
     }
 }

@@ -202,7 +202,7 @@ namespace RevitBatchExporter.Dialogs
 
         private void BatchExportDialog_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MessageBox.Show("Subcategories Manager", "Developed by Mikael Santrolli\n\nmikael.santrolli@gmail.com");
+            MessageBox.Show("Developed by Mikael Santrolli\n\nmikael.santrolli@gmail.com", "Revit Batch Exporter");
         }
     }
 }
