@@ -63,7 +63,6 @@
             this.SettingsPanel = new System.Windows.Forms.Panel();
             this.ExportGroupBox = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.DestinationGroupBox = new System.Windows.Forms.GroupBox();
             this.DataGroupBox = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.RemoveGroupBox = new System.Windows.Forms.GroupBox();
@@ -73,13 +72,13 @@
             this.DateTimePickerIssue = new System.Windows.Forms.DateTimePicker();
             this.FileTable = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.DestinationGroupBox = new System.Windows.Forms.GroupBox();
             this.MainTable.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.SettingsPanel.SuspendLayout();
             this.ExportGroupBox.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
-            this.DestinationGroupBox.SuspendLayout();
             this.DataGroupBox.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.RemoveGroupBox.SuspendLayout();
@@ -88,6 +87,7 @@
             this.tableLayoutPanel8.SuspendLayout();
             this.FileTable.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.DestinationGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // PurgeCheckBox
@@ -195,7 +195,7 @@
             this.DocumentListBox.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.DocumentListBox.Name = "DocumentListBox";
             this.DocumentListBox.ScrollAlwaysVisible = true;
-            this.DocumentListBox.Size = new System.Drawing.Size(270, 423);
+            this.DocumentListBox.Size = new System.Drawing.Size(395, 420);
             this.DocumentListBox.TabIndex = 11;
             this.DocumentListBox.TabStop = false;
             this.DocumentListBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.DocumentListBox_DragDrop);
@@ -209,7 +209,7 @@
             this.DocsLabel.Location = new System.Drawing.Point(3, 5);
             this.DocsLabel.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.DocsLabel.Name = "DocsLabel";
-            this.DocsLabel.Size = new System.Drawing.Size(184, 24);
+            this.DocsLabel.Size = new System.Drawing.Size(309, 24);
             this.DocsLabel.TabIndex = 12;
             this.DocsLabel.Text = "Drag and Drop Revit Documents";
             // 
@@ -255,7 +255,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PathTextBox.Location = new System.Drawing.Point(6, 21);
             this.PathTextBox.Name = "PathTextBox";
-            this.PathTextBox.Size = new System.Drawing.Size(553, 20);
+            this.PathTextBox.Size = new System.Drawing.Size(678, 20);
             this.PathTextBox.TabIndex = 19;
             this.PathTextBox.TabStop = false;
             this.PathTextBox.TextChanged += new System.EventHandler(this.PathTextBox_TextChanged);
@@ -288,7 +288,7 @@
             this.RemoveButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RemoveButton.FlatAppearance.BorderSize = 0;
             this.RemoveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RemoveButton.Location = new System.Drawing.Point(193, 3);
+            this.RemoveButton.Location = new System.Drawing.Point(318, 3);
             this.RemoveButton.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.RemoveButton.Name = "RemoveButton";
             this.RemoveButton.Size = new System.Drawing.Size(77, 23);
@@ -462,7 +462,7 @@
             this.MainTable.Name = "MainTable";
             this.MainTable.RowCount = 1;
             this.MainTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.MainTable.Size = new System.Drawing.Size(585, 477);
+            this.MainTable.Size = new System.Drawing.Size(710, 477);
             this.MainTable.TabIndex = 37;
             // 
             // tableLayoutPanel2
@@ -472,7 +472,7 @@
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.SettingsPanel, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(285, 3);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(410, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -540,18 +540,6 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(271, 25);
             this.tableLayoutPanel4.TabIndex = 1;
-            // 
-            // DestinationGroupBox
-            // 
-            this.DestinationGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.DestinationGroupBox.Controls.Add(this.PathTextBox);
-            this.DestinationGroupBox.Location = new System.Drawing.Point(18, 12);
-            this.DestinationGroupBox.Name = "DestinationGroupBox";
-            this.DestinationGroupBox.Size = new System.Drawing.Size(568, 54);
-            this.DestinationGroupBox.TabIndex = 41;
-            this.DestinationGroupBox.TabStop = false;
-            this.DestinationGroupBox.Text = "Destination Path";
             // 
             // DataGroupBox
             // 
@@ -660,6 +648,7 @@
             this.DateTimePickerIssue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.DateTimePickerIssue.Enabled = false;
             this.DateTimePickerIssue.Location = new System.Drawing.Point(5, 3);
             this.DateTimePickerIssue.Margin = new System.Windows.Forms.Padding(5, 3, 3, 3);
             this.DateTimePickerIssue.Name = "DateTimePickerIssue";
@@ -679,7 +668,7 @@
             this.FileTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.FileTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.FileTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.FileTable.Size = new System.Drawing.Size(276, 471);
+            this.FileTable.Size = new System.Drawing.Size(401, 471);
             this.FileTable.TabIndex = 1;
             // 
             // tableLayoutPanel1
@@ -694,16 +683,28 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(270, 29);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(395, 29);
             this.tableLayoutPanel1.TabIndex = 38;
+            // 
+            // DestinationGroupBox
+            // 
+            this.DestinationGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DestinationGroupBox.Controls.Add(this.PathTextBox);
+            this.DestinationGroupBox.Location = new System.Drawing.Point(18, 12);
+            this.DestinationGroupBox.Name = "DestinationGroupBox";
+            this.DestinationGroupBox.Size = new System.Drawing.Size(693, 54);
+            this.DestinationGroupBox.TabIndex = 41;
+            this.DestinationGroupBox.TabStop = false;
+            this.DestinationGroupBox.Text = "Destination Path";
             // 
             // BatchExportDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Menu;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(609, 561);
+            this.ClientSize = new System.Drawing.Size(734, 561);
             this.Controls.Add(this.MainTable);
             this.Controls.Add(this.DestinationGroupBox);
             this.HelpButton = true;
@@ -724,8 +725,6 @@
             this.ExportGroupBox.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
-            this.DestinationGroupBox.ResumeLayout(false);
-            this.DestinationGroupBox.PerformLayout();
             this.DataGroupBox.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
@@ -738,6 +737,8 @@
             this.FileTable.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.DestinationGroupBox.ResumeLayout(false);
+            this.DestinationGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
