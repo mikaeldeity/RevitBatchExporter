@@ -22,7 +22,7 @@ namespace RevitBatchExporter
             PushButtonData b1Data = new PushButtonData("Export", "Export", thisAssemblyPath, "RevitBatchExporter.Export");
             PushButton pb1 = ribbonPanel.AddItem(b1Data) as PushButton;
             pb1.ToolTip = "Export Models in different formats";
-            BitmapImage pb1Image = new BitmapImage(new Uri("pack://application:,,,/RevitBatchExporter;component/Resources/RevitBatchExporter.png"));
+            BitmapImage pb1Image = new BitmapImage(new Uri("pack://application:,,,/RevitBatchExporter;component/Resources/WeeklyExport.png"));
             pb1.LargeImage = pb1Image;
         }
 

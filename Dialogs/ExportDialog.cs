@@ -17,13 +17,12 @@ namespace RevitBatchExporter.Dialogs
 {
     public partial class ExportDialog : System.Windows.Forms.Form
     {
-        internal static List<string> doclist = new List<string>();
-
         public ExportDialog()
         {
             InitializeComponent();
             this.SharedRadio.Enabled = false;
             this.InternalRadio.Enabled = false;
+            this.FilenameTextbox.Text = "aaaaaaaa";
         }
         private void ExportButton_Click(object sender, EventArgs e)
         {
@@ -152,5 +151,9 @@ namespace RevitBatchExporter.Dialogs
             }
         }
 
+        private void SharedRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -1,23 +1,13 @@
 ﻿using Autodesk.Revit.DB;
-//using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
-//using Autodesk.Revit.UI.Events;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-//using Autodesk.Revit.DB.ExternalService;
-//using System.Reflection;
 using Autodesk.Revit.DB.IFC;
 using BIM.IFC.Export.UI;
-//using Revit.IFC.Common.Extensions;
-//using Revit.IFC.Common.Utility;
-//using Autodesk.UI.Windows;
-//using Revit.IFC.Export.Utility;
 using Autodesk.Revit.DB.ExtensibleStorage;
-//using System.Text;
-//using Autodesk.Revit;
 
 
 namespace RevitBatchExporter
@@ -397,9 +387,9 @@ namespace RevitBatchExporter
                 return true;
             }
             catch (Exception e)
-            {               
-                string message = e.Message;
-
+            {
+                MessageBox.Show(e.Message, "Error");
+                //string message = e.Message;
                 return false;
             }
         }
@@ -436,6 +426,7 @@ namespace RevitBatchExporter
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
 
+
             destinationpath = "";
             documents.Clear();
 
@@ -444,6 +435,8 @@ namespace RevitBatchExporter
             string date = DateTime.Now.ToString("dd/MM/yyyy");
 
             var exportdialog = new RevitBatchExporter.Dialogs.ExportDialog();
+
+            exportdialog.FilenameTextbox.Text = doc.Title;
 
             exportdialog.comboBox1.DataSource = views.Keys.ToList();
 
@@ -460,29 +453,41 @@ namespace RevitBatchExporter
             {
                 return Result.Cancelled;
             }
+          
+            string filename = exportdialog.FilenameTextbox.Text;
 
             ElementId selectedview = views[exportdialog.comboBox1.SelectedItem.ToString()];
             string dwgoption = exportdialog.DWGCombobox.SelectedItem.ToString();
             string settings = exportdialog.IFCCombobox.SelectedItem.ToString();
             int count = 0;
 
+
+
             if (destinationpath.Trim() != "" && Directory.Exists(destinationpath))
             {
                 if (exportdialog.NWCCheckBox.Checked)
-                {
-                    ExportNWC(doc, destinationpath, doc.Title, selectedview, exportdialog.SharedRadio.Checked);
-                    count++;
+                {     
+                    if(ExportNWC(doc, destinationpath, filename, selectedview, exportdialog.SharedRadio.Checked))
+                    {
+                        count++;
+                    }
+            
                 }
                 if (exportdialog.IFCCheckBox.Checked)
                 {
-                    ExportIFC(doc, destinationpath, doc.Title, selectedview, settings);
-                    count++;
+                    if (ExportIFC(doc, destinationpath, filename, selectedview, settings))
+                    {
+                        count++;
+                    }
                 }
                 if (exportdialog.DWGCheckbox.Checked)
                 {
-                    ExportDWG(doc, destinationpath, doc.Title, selectedview, dwgoption);
-                    count++;
-                }
+                    if (ExportDWG(doc, destinationpath, filename, selectedview, dwgoption)) 
+                    {
+                        count++;
+                    }
+                }          
+
                 TaskDialog.Show("Success", "exported " + count + " documents");
 
                 //clear the folder
@@ -490,33 +495,33 @@ namespace RevitBatchExporter
                 {
                     DeleteLog(destinationpath);
                 }
-                //REPORT---------------
-                try
-                {
-                    string[] log = new string[6];
-                    List<string> rep = new List<string>();
-                    string locationpath = "\\\\zaha-hadid.com\\Data\\Projects\\2100_BIMManagement\\User\\MS\\users";
-                    DirectoryInfo exportFolder = new DirectoryInfo(destinationpath);
-                    string filepath = destinationpath;
-                    string path = string.Format(locationpath + "\\report.txt");
-                    string[] vs = new string[1];
-                    string a = "";
-                    foreach (FileInfo f in exportFolder.GetFiles())
-                    {
-                        log[0] = (Environment.UserName.ToString());
-                        log[1] = (DateTime.UtcNow.ToString("yyyy/MM/dd HH:mm"));//date;;
-                        log[2] = Path.GetFileNameWithoutExtension(f.Name);
-                        log[3] = f.Extension;
-                        log[4] = (f.Length * 0.001).ToString();
-                        log[5] = Environment.NewLine;
-                        a = log[0] + "," + log[1] + "," + log[2] + "," + log[3] + "," + log[4] + log[5];
-                        File.AppendAllText(path, a);
-                    }
-                }
-                catch
-                {
+                //REPORT-------------- -
+                //try
+                //{
+                //    string[] log = new string[6];
+                //    List<string> rep = new List<string>();
+                //    string locationpath = "\\\\zaha-hadid.com\\Data\\Projects\\2100_BIMManagement\\User\\MS\\users";
+                //    DirectoryInfo exportFolder = new DirectoryInfo(destinationpath);
+                //    string filepath = destinationpath;
+                //    string path = string.Format(locationpath + "\\report.txt");
+                //    string[] vs = new string[1];
+                //    string a = "";
+                //    foreach (FileInfo f in exportFolder.GetFiles())
+                //    {
+                //        log[0] = (Environment.UserName.ToString());
+                //        log[1] = (DateTime.UtcNow.ToString("yyyy/MM/dd HH:mm"));//date;;
+                //        log[2] = Path.GetFileNameWithoutExtension(f.Name);
+                //        log[3] = f.Extension;
+                //        log[4] = (f.Length * 0.001).ToString();
+                //        log[5] = Environment.NewLine;
+                //        a = log[0] + "," + log[1] + "," + log[2] + "," + log[3] + "," + log[4] + log[5];
+                //        File.AppendAllText(path, a);
+                //    }
+                //}
+                //catch
+                //{
 
-            }
+                //}
 
             return Result.Succeeded;
             }   
