@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Revit Batch Exporter")]
-[assembly: AssemblyDescription("Batch Export Revit Projects")]
+[assembly: AssemblyDescription("Export Revit Projects")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Revit Batch Exporter")]

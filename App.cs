@@ -1,13 +1,8 @@
-﻿using Autodesk.Revit.UI;
+﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.IO;
 using System.Windows.Media.Imaging;
-using System.Text;
-using System.Threading.Tasks;
-using Autodesk.Revit.DB;
 
 namespace RevitBatchExporter
 {
@@ -17,14 +12,14 @@ namespace RevitBatchExporter
         {
             RibbonPanel ribbonPanel = application.CreateRibbonPanel("Exporter");
 
-            string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;            
+            string assembly = Assembly.GetExecutingAssembly().Location;
 
-            PushButtonData b1Data = new PushButtonData("Batch Export", "Batch Export", thisAssemblyPath, "RevitBatchExporter.BatchExport");
-            b1Data.AvailabilityClassName = "RevitBatchExporter.Availability";
-            PushButton pb1 = ribbonPanel.AddItem(b1Data) as PushButton;
-            pb1.ToolTip = "Batch export Revit documents.";
-            BitmapImage pb1Image = new BitmapImage(new Uri("pack://application:,,,/RevitBatchExporter;component/Resources/RevitBatchExporter.png"));
-            pb1.LargeImage = pb1Image;
+            PushButtonData buttondata = new PushButtonData("Batch Export", "Batch Export", assembly, "RevitBatchExporter.Export");
+            buttondata.AvailabilityClassName = "RevitBatchExporter.Availability";
+            PushButton button = ribbonPanel.AddItem(buttondata) as PushButton;
+            button.ToolTip = "Batch export Revit documents.";
+            BitmapImage image = new BitmapImage(new Uri("pack://application:,,,/RevitBatchExporter;component/Resources/RevitBatchExporter.png"));
+            button.LargeImage = image;
         }
         public Result OnShutdown(UIControlledApplication application)
         {
