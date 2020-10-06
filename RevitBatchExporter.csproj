@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\ProgramData\Autodesk\Revit\Addins\2019\RevitBatchExporter\</OutputPath>
+    <OutputPath>..\..\..\..\..\ProgramData\Autodesk\Revit\Addins\2020\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>none</ErrorReport>
     <WarningLevel>4</WarningLevel>

@@ -158,8 +158,8 @@ namespace RevitBatchExporter
 
                 Document doc = null;
 
-                try
-                {
+                //try
+                //{
                     doc = uiapp.Application.OpenDocumentFile(ModelPathUtils.ConvertUserVisiblePathToModelPath(path), openoptions);
 
                     string docname = nameprefix + Path.GetFileNameWithoutExtension(path) + namesuffix;
@@ -214,18 +214,18 @@ namespace RevitBatchExporter
 
                     resultmessage = "Completed";
                     completed++;
-                }
-                catch (Exception e)
-                {
-                    try
-                    {
-                        doc.Close(false);
-                    }
-                    catch { }
+                //}
+                // catch (Exception e)
+                //{
+                //    try
+                //    {
+                //        doc.Close(false);
+                //    }
+                //    catch { }
 
-                    resultmessage = e.Message;
-                    failed++;
-                }
+                //    resultmessage = e.Message;
+                //    failed++;
+                //}
 
                 DateTime e1 = DateTime.Now;
 
@@ -343,7 +343,7 @@ namespace RevitBatchExporter
 
             var allsheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
 
-            var allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted);
+            var allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted).ToList();
 
             if (onsheet)
             {
@@ -364,7 +364,7 @@ namespace RevitBatchExporter
                         }
                     }
 
-                    allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted);
+                    allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted).ToList();
                 }
             }
 
@@ -396,40 +396,46 @@ namespace RevitBatchExporter
 
                 if (viewsonsheets.Count > 0)
                 {
-                    allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).Excluding(viewsonsheets).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted);
+                    allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).Excluding(viewsonsheets).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted).ToList();
                 }
                 else
                 {
-                    allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted);
+                    allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted).ToList();
                 }
 
                 foreach (View view in allviews)
                 {
-                    if (view.GetDependentViewIds().Count == 0)
+                    if (view.IsValidObject)
                     {
                         if (doc.GetElement(view.Id) != null)
                         {
-                            doc.Delete(view.Id);
+                            if (view.GetDependentViewIds().Count == 0)
+                            {
+                                doc.Delete(view.Id);
+                            }
                         }
                     }
                 }
 
                 if (viewsonsheets.Count > 0)
                 {
-                    allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).Excluding(viewsonsheets).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted);
+                    allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).Excluding(viewsonsheets).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted).ToList();
                 }
                 else
                 {
-                    allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted);
+                    allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted).ToList();
                 }
 
                 foreach (View view in allviews)
                 {
-                    if (view.GetDependentViewIds().Count == 0)
+                    if (view.IsValidObject)
                     {
                         if (doc.GetElement(view.Id) != null)
                         {
-                            doc.Delete(view.Id);
+                            if (view.GetDependentViewIds().Count == 0)
+                            {
+                                doc.Delete(view.Id);
+                            }
                         }
                     }
                 }
@@ -448,7 +454,7 @@ namespace RevitBatchExporter
                 }
             }
 
-            allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted);
+            allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted).ToList();
 
             if (allviews.Count() == 0)
             {
