@@ -290,7 +290,10 @@ namespace RevitBatchExporter
             {
                 foreach (ElementId id in collector)
                 {
-                    doc.Delete(id);
+                    if (doc.GetElement(id) != null)
+                    {
+                        doc.Delete(id);
+                    }
                 }
             }
         }
@@ -331,7 +334,6 @@ namespace RevitBatchExporter
                             doc.Delete(id);
                         }
                     }
-
                 }
             }
         }
@@ -351,7 +353,15 @@ namespace RevitBatchExporter
                     {
                         ViewSheet sheet = doc.GetElement(id) as ViewSheet;
 
-                        doc.Delete(sheet.GetAllPlacedViews());
+                        ISet<ElementId> views = sheet.GetAllPlacedViews();
+
+                        foreach (ElementId view in views)
+                        {
+                            if (doc.GetElement(view) != null)
+                            {
+                                doc.Delete(view);
+                            }
+                        }
                     }
 
                     allviews = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElements().Cast<View>().Where(x => x.IsTemplate != true && x.CanBePrinted);
@@ -360,7 +370,13 @@ namespace RevitBatchExporter
 
             if (sheets)
             {
-                doc.Delete(allsheets);
+                foreach (ElementId sheet in allsheets)
+                {
+                    if (doc.GetElement(sheet) != null)
+                    {
+                        doc.Delete(sheet);
+                    }
+                }
                 allsheets = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElementIds();
             }
 
@@ -391,7 +407,10 @@ namespace RevitBatchExporter
                 {
                     if (view.GetDependentViewIds().Count == 0)
                     {
-                        doc.Delete(view.Id);
+                        if (doc.GetElement(view.Id) != null)
+                        {
+                            doc.Delete(view.Id);
+                        }
                     }
                 }
 
@@ -408,7 +427,10 @@ namespace RevitBatchExporter
                 {
                     if (view.GetDependentViewIds().Count == 0)
                     {
-                        doc.Delete(view.Id);
+                        if (doc.GetElement(view.Id) != null)
+                        {
+                            doc.Delete(view.Id);
+                        }
                     }
                 }
             }
@@ -419,7 +441,10 @@ namespace RevitBatchExporter
 
                 foreach (View template in alltemplates)
                 {
-                    doc.Delete(template.Id);
+                    if (doc.GetElement(template.Id) != null)
+                    {
+                        doc.Delete(template.Id);
+                    }
                 }
             }
 
@@ -436,9 +461,15 @@ namespace RevitBatchExporter
         {
             var collector = new FilteredElementCollector(doc).OfClass(typeof(ViewSchedule)).ToElementIds();
 
-            if (collector.Count != 0)
+            if (collector.Count > 0)
             {
-                doc.Delete(collector);
+                foreach (ElementId id in collector)
+                {
+                    if (doc.GetElement(id) != null)
+                    {
+                        doc.Delete(id);
+                    }
+                }
             }
         }
         private void UngroupGroups(Document doc)
@@ -459,7 +490,10 @@ namespace RevitBatchExporter
 
             foreach (ElementId id in groups)
             {
-                doc.Delete(id);
+                if (doc.GetElement(id) != null)
+                {
+                    doc.Delete(id);
+                }
             }
         }
         private void PurgeDocument(Document doc)
@@ -486,13 +520,9 @@ namespace RevitBatchExporter
             {
                 var purgableElementIds = failureMessages[0].GetFailingElements();
 
-                try
+                foreach (ElementId id in purgableElementIds)
                 {
-                    doc.Delete(purgableElementIds);
-                }
-                catch
-                {
-                    foreach (ElementId id in purgableElementIds)
+                    if (doc.GetElement(id) != null)
                     {
                         doc.Delete(id);
                     }
