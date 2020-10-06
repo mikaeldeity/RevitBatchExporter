@@ -520,17 +520,24 @@ namespace RevitBatchExporter
                 }
             }
 
-            var failureMessages = performanceAdviser.ExecuteRules(doc, ruleId);
-
-            if (failureMessages.Count > 0)
+            for(int i = 0; i < 3; i++)
             {
-                var purgableElementIds = failureMessages[0].GetFailingElements();
+                var failureMessages = performanceAdviser.ExecuteRules(doc, ruleId);
 
-                foreach (ElementId id in purgableElementIds)
+                if (failureMessages.Count > 0)
                 {
-                    if (doc.GetElement(id) != null)
+                    var purgableElementIds = failureMessages[0].GetFailingElements();
+
+                    foreach (ElementId id in purgableElementIds)
                     {
-                        doc.Delete(id);
+                        if (doc.GetElement(id) != null)
+                        {
+                            try
+                            {
+                                doc.Delete(id);
+                            }
+                            catch { }
+                        }
                     }
                 }
             }
